@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
+import { Compass, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
-import { Compass, MapPin, Phone, Mail } from "lucide-react";
 import VisitorStats from "./VisitorStats";
 
 export default function Footer() {

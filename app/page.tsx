@@ -1,21 +1,14 @@
-"use client";
-
-import React, { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
+import ProcessStepper from "@/components/ProcessStepper";
 import {
+  ArrowRight,
+  ChevronDown,
+  ChevronRight,
   Compass,
   Flag,
-  Users,
-  Award,
-  ArrowRight,
-  TrendingUp,
-  MapPin,
-  ChevronRight,
-  CheckCircle,
-  Briefcase,
-  ChevronDown,
+  MapPin
 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 // Client List Data
 const CLIENTS = [
@@ -87,7 +80,6 @@ const PROCESSES = [
 ];
 
 export default function Home() {
-  const [activeStep, setActiveStep] = useState(0);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -561,37 +553,7 @@ export default function Home() {
             Alur kerja yang sama untuk setiap proyek, sehingga progres mudah dipantau dari awal hingga serah terima.
           </p>
 
-          {/* Stepper Navigation */}
-          <div className="flex flex-wrap justify-center gap-3 mb-12 max-w-5xl mx-auto">
-            {PROCESSES.map((proc, idx) => (
-              <button
-                key={proc.step}
-                onClick={() => setActiveStep(idx)}
-                className={`px-5 py-3 rounded-full text-xs font-extrabold uppercase tracking-wider transition-all cursor-pointer ${
-                  activeStep === idx
-                    ? "bg-blue-600 text-white shadow-lg"
-                    : "bg-white border border-slate-200 text-slate-600 hover:border-slate-300"
-                }`}
-              >
-                {proc.step} {proc.title}
-              </button>
-            ))}
-          </div>
-
-          {/* Active Step Content */}
-          <div className="bg-white border border-slate-100 rounded-[2rem] p-8 md:p-12 max-w-3xl mx-auto text-left shadow-lg relative overflow-hidden flex flex-col md:flex-row gap-8 items-start md:items-center">
-            <div className="text-6xl md:text-8xl font-black text-blue-600/10 select-none shrink-0 md:leading-none">
-              {PROCESSES[activeStep].step}
-            </div>
-            <div>
-              <h3 className="font-extrabold text-2xl text-slate-900 mb-3">
-                {PROCESSES[activeStep].title}
-              </h3>
-              <p className="text-slate-500 text-base leading-relaxed">
-                {PROCESSES[activeStep].desc}
-              </p>
-            </div>
-          </div>
+          <ProcessStepper processes={PROCESSES} />
         </div>
       </section>
 

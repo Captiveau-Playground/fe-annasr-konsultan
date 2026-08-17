@@ -1,9 +1,6 @@
-"use client";
-
-import React from "react";
+import { ArrowRight, CheckCircle, Compass, Eye, FileText, Hammer } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Compass, Eye, FileText, Hammer, ArrowRight, CheckCircle } from "lucide-react";
 
 const SERVICES = [
   {
@@ -98,9 +95,8 @@ export default function LayananPage() {
               >
                 {/* Image Section */}
                 <div
-                  className={`lg:col-span-5 relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-lg border-4 border-slate-50 bg-slate-100 ${
-                    isEven ? "lg:order-1" : "lg:order-2"
-                  }`}
+                  className={`lg:col-span-5 relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-lg border-4 border-slate-50 bg-slate-100 ${isEven ? "lg:order-1" : "lg:order-2"
+                    }`}
                 >
                   <Image
                     src={serv.image}
@@ -112,9 +108,8 @@ export default function LayananPage() {
 
                 {/* Text Content Section */}
                 <div
-                  className={`lg:col-span-7 flex flex-col items-start text-left ${
-                    isEven ? "lg:order-2" : "lg:order-1"
-                  }`}
+                  className={`lg:col-span-7 flex flex-col items-start text-left ${isEven ? "lg:order-2" : "lg:order-1"
+                    }`}
                 >
                   <div className="w-12 h-12 rounded-xl bg-blue-600/10 text-blue-600 flex items-center justify-center mb-6">
                     {serv.icon}

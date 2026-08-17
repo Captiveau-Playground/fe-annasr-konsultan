@@ -1,9 +1,6 @@
-"use client";
-
-import React from "react";
+import { Award, CheckCircle, Compass, Flag, Shield, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Compass, Flag, Shield, Award, Users, CheckCircle } from "lucide-react";
 
 export default function TentangPage() {
   return (

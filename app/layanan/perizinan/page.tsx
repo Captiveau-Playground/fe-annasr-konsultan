@@ -1,9 +1,6 @@
-"use client";
-
-import React from "react";
+import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { FileText, ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
 
 export default function PerizinanDetailPage() {
   return (

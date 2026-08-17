@@ -1,8 +1,4 @@
-"use client";
-
-import React from "react";
 import Link from "next/link";
-import { Award, Shield, Users, CheckCircle } from "lucide-react";
 
 // Categorized Client Data
 const GOV_CLIENTS = [
