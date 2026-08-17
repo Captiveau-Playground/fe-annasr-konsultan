@@ -1,6 +1,7 @@
 import ContactForm from "@/components/ContactForm";
 import { Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import { CONTACT_INFO } from "@/lib/constant";
 
 export default function KontakPage() {
 
@@ -46,7 +47,7 @@ export default function KontakPage() {
                         Alamat Kantor
                       </h4>
                       <p className="text-slate-500 text-xs">
-                        Perumahan Candi Regency No. A10, Desa Candi Mulyo, Kecamatan Jombang, Kabupaten Jombang, Jawa Timur
+                        {CONTACT_INFO.addressDetail}
                       </p>
                     </div>
                   </li>
@@ -61,12 +62,12 @@ export default function KontakPage() {
                         Telepon & WhatsApp
                       </h4>
                       <Link
-                        href="https://wa.me/6281200000000"
+                        href={`https://wa.me/${CONTACT_INFO.phoneNumberClean}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 font-bold text-sm hover:underline"
                       >
-                        +62 812-0000-0000 (Konsultasi Umum)
+                        {CONTACT_INFO.phone} (Konsultasi Umum)
                       </Link>
                     </div>
                   </li>
@@ -81,10 +82,10 @@ export default function KontakPage() {
                         E-mail Perusahaan
                       </h4>
                       <Link
-                        href="mailto:annasrkonsultan@email.com"
+                        href={`mailto:${CONTACT_INFO.email}`}
                         className="text-blue-600 font-bold text-sm hover:underline"
                       >
-                        annasrkonsultan@email.com
+                        {CONTACT_INFO.email}
                       </Link>
                     </div>
                   </li>

@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { KONSTRUKSI_SCOPES, KONSTRUKSI_OUTPUTS, CONTACT_INFO } from "@/lib/constant";
 
 export default function KonstruksiDetailPage() {
   return (
@@ -49,24 +50,7 @@ export default function KonstruksiDetailPage() {
                 Lingkup Jasa Konstruksi Kami
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                {[
-                  {
-                    title: "Pembangunan Rumah Tinggal & Ruko",
-                    desc: "Konstruksi unit perumahan baru, villa, ruko usaha, dan kantor operasional dengan finishing premium dan pengerjaan rapi."
-                  },
-                  {
-                    title: "Renovasi Rumah & Gedung",
-                    desc: "Renovasi penambahan lantai (dak beton), perbaikan atap baja ringan, penggantian keramik/granit lantai, dan tata ulang ruangan."
-                  },
-                  {
-                    title: "Konstruksi Jalan & Paving",
-                    desc: "Pengecoran jalan beton rabat desa/kecamatan (rigid pavement), pengaspalan hotmix, dan penataan area parkir paving block."
-                  },
-                  {
-                    title: "Konstruksi Jembatan & Irigasi",
-                    desc: "Pembangunan jembatan beton bertulang sederhana, penataan dinding penahan tanah kali, dan normalisasi saluran irigasi."
-                  }
-                ].map((item, idx) => (
+                {KONSTRUKSI_SCOPES.map((item, idx) => (
                   <div key={idx} className="bg-slate-50 border border-slate-100 rounded-2xl p-6">
                     <h4 className="font-bold text-slate-900 mb-2">{item.title}</h4>
                     <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
@@ -79,14 +63,7 @@ export default function KonstruksiDetailPage() {
                 Komitmen Kualitas Pelaksanaan
               </h3>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-600 leading-relaxed text-sm">
-                {[
-                  "Jaminan Mutu Material Sesuai Kontrak (SNI Resmi)",
-                  "Jadwal Pelaksanaan Terarah (Kurva S Terpantau Berkala)",
-                  "Garansi Pemeliharaan Pasca Kontrak Fisik (Defects Liability)",
-                  "Metode Kerja Aman & Meminimalisir Gangguan Tetangga",
-                  "Penyediaan APD & Rambu K3 untuk Pekerja Konstruksi",
-                  "Pelaporan Progres Terbuka Melalui Foto & Video Lapangan"
-                ].map((out, idx) => (
+                {KONSTRUKSI_OUTPUTS.map((out, idx) => (
                   <li key={idx} className="flex gap-2.5 items-start">
                     <CheckCircle className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
                     <span>{out}</span>
@@ -114,7 +91,7 @@ export default function KonstruksiDetailPage() {
                   Dapatkan penawaran harga RAB konstruksi yang bersaing dengan kualitas pengerjaan premium. Hubungi estimator kami.
                 </p>
                 <Link
-                  href="https://wa.me/6281200000000"
+                  href={`https://wa.me/${CONTACT_INFO.phoneNumberClean}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full justify-center px-6 py-3.5 rounded-full text-xs font-bold bg-lime-500 text-slate-950 hover:bg-lime-400 flex items-center gap-1.5 transition-all shadow-md"

@@ -3,6 +3,7 @@
 import { Compass, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import VisitorStats from "./VisitorStats";
+import { CONTACT_INFO } from "@/lib/constant";
 
 export default function Footer() {
   return (
@@ -90,25 +91,25 @@ export default function Footer() {
               <li className="flex gap-3 items-start">
                 <MapPin className="w-5 h-5 text-lime-400 shrink-0 mt-0.5" />
                 <span className="text-slate-400 text-sm leading-relaxed">
-                  Perumahan Candi Regency No. A10, Desa Candi Mulyo, Kecamatan Jombang, Kabupaten Jombang
+                  {CONTACT_INFO.address}
                 </span>
               </li>
               <li className="flex gap-3 items-center">
                 <Phone className="w-5 h-5 text-lime-400 shrink-0" />
                 <Link
-                  href="tel:+6281200000000"
+                  href={`tel:${CONTACT_INFO.phoneNumberClean}`}
                   className="text-slate-400 text-sm hover:text-lime-400 transition-colors font-medium"
                 >
-                  +62 812-0000-0000
+                  {CONTACT_INFO.phone}
                 </Link>
               </li>
               <li className="flex gap-3 items-center">
                 <Mail className="w-5 h-5 text-lime-400 shrink-0" />
                 <Link
-                  href="mailto:annasrkonsultan@email.com"
+                  href={`mailto:${CONTACT_INFO.email}`}
                   className="text-slate-400 text-sm hover:text-lime-400 transition-colors font-medium"
                 >
-                  annasrkonsultan@email.com
+                  {CONTACT_INFO.email}
                 </Link>
               </li>
             </ul>

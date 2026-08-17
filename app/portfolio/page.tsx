@@ -1,74 +1,9 @@
 import PortfolioGrid from "@/components/PortfolioGrid";
 import Link from "next/link";
+import { PORTFOLIO_PROJECTS, PORTFOLIO_CATEGORIES } from "@/lib/constant";
 
-// Full Projects Data
-const PROJECTS = [
-  {
-    title: "Pembangunan Gedung Serbaguna",
-    location: "Kecamatan Jombang, Jombang",
-    category: "Gedung",
-    status: "Selesai",
-    year: "2025"
-  },
-  {
-    title: "Peningkatan Jalan Beton Desa",
-    location: "Kecamatan Tembelang, Jombang",
-    category: "Jalan",
-    status: "Selesai",
-    year: "2025"
-  },
-  {
-    title: "Pembangunan Jembatan Penghubung Desa",
-    location: "Kecamatan Ploso, Jombang",
-    category: "Jembatan",
-    status: "Selesai",
-    year: "2024"
-  },
-  {
-    title: "Rehabilitasi Saluran Irigasi Primer",
-    location: "Kecamatan Megaluh, Jombang",
-    category: "Irigasi",
-    status: "Selesai",
-    year: "2024"
-  },
-  {
-    title: "Renovasi Rumah Tinggal Dua Lantai",
-    location: "Candi Mulyo, Jombang",
-    category: "Renovasi",
-    status: "Selesai",
-    year: "2025"
-  },
-  {
-    title: "Pengawasan Bangunan Penahan Air",
-    location: "Kabupaten Jombang",
-    category: "Irigasi",
-    status: "Selesai",
-    year: "2023"
-  },
-  {
-    title: "Perencanaan Kantor Instansi Pemerintah",
-    location: "Kecamatan Jombang, Jombang",
-    category: "Gedung",
-    status: "Selesai",
-    year: "2024"
-  },
-  {
-    title: "Pembangunan Ruko Komersial 3 Unit",
-    location: "Mojoagung, Jombang",
-    category: "Gedung",
-    status: "Selesai",
-    year: "2025"
-  },
-  {
-    title: "Pelebaran Jalan Aspal Hotmix",
-    location: "Diwek, Jombang",
-    category: "Jalan",
-    status: "Selesai",
-    year: "2023"
-  }
-];
-
-const CATEGORIES = ["Semua", "Gedung", "Jalan", "Jembatan", "Irigasi", "Renovasi"];
+const PROJECTS = PORTFOLIO_PROJECTS;
+const CATEGORIES = PORTFOLIO_CATEGORIES;
 
 export default function PortfolioPage() {
 

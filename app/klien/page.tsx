@@ -1,34 +1,9 @@
 import Link from "next/link";
+import { KLIEN_GOV, KLIEN_PRIVATE, KLIEN_INSTITUTION } from "@/lib/constant";
 
-// Categorized Client Data
-const GOV_CLIENTS = [
-  { label: "PJ", name: "Pemkab Jombang" },
-  { label: "DP", name: "Dinas PUPR Jombang" },
-  { label: "KT", name: "Kecamatan Tembelang" },
-  { label: "KP", name: "Kecamatan Ploso" },
-  { label: "KM", name: "Kecamatan Megaluh" },
-  { label: "DB", name: "Desa Bedahlawak, Jombang" },
-  { label: "DC", name: "Desa Candi Mulyo, Jombang" },
-];
-
-const PRIVATE_CLIENTS = [
-  { label: "CM", name: "CV. Mitra Karya" },
-  { label: "CB", name: "CV. Bumi Persada" },
-  { label: "PS", name: "PT. Sarana Bangun" },
-  { label: "PT", name: "PT. Tirta Mandiri" },
-  { label: "KS", name: "Koperasi Sejahtera" },
-  { label: "RA", name: "RSU Amanah Jombang" },
-  { label: "BM", name: "BUMDes Makmur Jombang" },
-  { label: "PJ", name: "PDAM Jombang" },
-  { label: "PT", name: "Perumda Tirta" },
-];
-
-const INSTITUTION_CLIENTS = [
-  { label: "YA", name: "Yayasan Al Hikmah" },
-  { label: "SN", name: "SMK Nusantara" },
-  { label: "MA", name: "MI Al Falah" },
-  { label: "PD", name: "Ponpes Darul Ulum Jombang" },
-];
+const GOV_CLIENTS = KLIEN_GOV;
+const PRIVATE_CLIENTS = KLIEN_PRIVATE;
+const INSTITUTION_CLIENTS = KLIEN_INSTITUTION;
 
 export default function KlienPage() {
   return (

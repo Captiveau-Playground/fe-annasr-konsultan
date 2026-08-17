@@ -1,6 +1,7 @@
 import { Award, CheckCircle, Compass, Flag, Shield, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { TENTANG_VALUES } from "@/lib/constant";
 
 export default function TentangPage() {
   return (
@@ -113,28 +114,7 @@ export default function TentangPage() {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                icon: <Shield className="w-6 h-6" />,
-                title: "Integritas",
-                desc: "Kejujuran dan tanggung jawab moral adalah landasan utama dalam mengelola anggaran proyek dan menetapkan spesifikasi material konstruksi."
-              },
-              {
-                icon: <Award className="w-6 h-6" />,
-                title: "Tepat Mutu",
-                desc: "Penerapan standar teknis ketat pada perhitungan struktur dan pengawasan lapangan demi menjamin keamanan jangka panjang."
-              },
-              {
-                icon: <Users className="w-6 h-6" />,
-                title: "Profesionalisme",
-                desc: "Dukungan tenaga ahli teknik sipil bersertifikat dan berdedikasi tinggi yang memahami dinamika rekayasa konstruksi terkini."
-              },
-              {
-                icon: <CheckCircle className="w-6 h-6" />,
-                title: "Tepat Waktu & Biaya",
-                desc: "Manajemen penjadwalan terukur dan pengawasan RAB yang presisi untuk menghindari pemborosan biaya operasional di lapangan."
-              }
-            ].map((val, idx) => (
+            {TENTANG_VALUES.map((val, idx) => (
               <div
                 key={idx}
                 className="bg-slate-50 border border-slate-100 rounded-2xl p-8 hover:shadow-lg transition-shadow text-left"

@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { PERIZINAN_SCOPES, PERIZINAN_OUTPUTS, CONTACT_INFO } from "@/lib/constant";
 
 export default function PerizinanDetailPage() {
   return (
@@ -49,24 +50,7 @@ export default function PerizinanDetailPage() {
                 Lingkup Jasa Perizinan Kami
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                {[
-                  {
-                    title: "Persetujuan Bangunan Gedung (PBG)",
-                    desc: "Pengurusan izin pendirian bangunan baru (pengganti IMB), perubahan fungsi bangunan, dan perluasan bangunan eksisting."
-                  },
-                  {
-                    title: "Sertifikat Laik Fungsi (SLF)",
-                    desc: "Pemeriksaan teknis kelaikan fungsi bangunan gedung baru maupun perpanjangan SLF bangunan gedung eksisting (hotel, pabrik, sekolah)."
-                  },
-                  {
-                    title: "Kajian Teknis Kelayakan Struktur",
-                    desc: "Pengujian non-destructive testing (NDT) seperti Schmidt Hammer Test beton, pengukuran defleksi baja, dan rekomendasi perkuatan struktur."
-                  },
-                  {
-                    title: "Rekomendasi Proteksi Damkar & Petir",
-                    desc: "Penyusunan dokumen simulasi evakuasi kebakaran, ketersediaan hidran/APAR, dan pengujian tahanan grounding penangkal petir."
-                  }
-                ].map((item, idx) => (
+                {PERIZINAN_SCOPES.map((item, idx) => (
                   <div key={idx} className="bg-slate-50 border border-slate-100 rounded-2xl p-6">
                     <h4 className="font-bold text-slate-900 mb-2">{item.title}</h4>
                     <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
@@ -79,14 +63,7 @@ export default function PerizinanDetailPage() {
                 Dokumen Prasyarat Pengurusan SIMBG
               </h3>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-600 leading-relaxed text-sm">
-                {[
-                  "Gambar As Built Drawing Arsitektur, Struktur, MEP",
-                  "Laporan Hasil Kajian Teknis Kelaikan Fungsi Gedung (SLF)",
-                  "Dokumen Perhitungan Ulang Kekuatan Struktur Gedung",
-                  "Sertifikat Laik Operasi (SLO) Genset & Lift (bila ada)",
-                  "Dokumen Analisis Mengenai Dampak Lingkungan (AMDAL/UKL-UPL)",
-                  "Rekomendasi Damkar dan Hasil Uji Instalasi Petir"
-                ].map((out, idx) => (
+                {PERIZINAN_OUTPUTS.map((out, idx) => (
                   <li key={idx} className="flex gap-2.5 items-start">
                     <CheckCircle className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
                     <span>{out}</span>
@@ -114,7 +91,7 @@ export default function PerizinanDetailPage() {
                   Dapatkan pendampingan resmi dari tenaga ahli bersertifikat pengkaji teknis bangunan. Hubungi tim legal teknik kami.
                 </p>
                 <Link
-                  href="https://wa.me/6281200000000"
+                  href={`https://wa.me/${CONTACT_INFO.phoneNumberClean}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full justify-center px-6 py-3.5 rounded-full text-xs font-bold bg-lime-500 text-slate-950 hover:bg-lime-400 flex items-center gap-1.5 transition-all shadow-md"

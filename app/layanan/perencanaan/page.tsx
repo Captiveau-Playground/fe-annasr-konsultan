@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { PERENCANAAN_SCOPES, PERENCANAAN_OUTPUTS, CONTACT_INFO } from "@/lib/constant";
 
 export default function PerencanaanDetailPage() {
   return (
@@ -49,24 +50,7 @@ export default function PerencanaanDetailPage() {
                 Lingkup Jasa Perencanaan Kami
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                {[
-                  {
-                    title: "Perencanaan Bangunan Gedung",
-                    desc: "Penyusunan blueprint rumah tinggal, ruko, gedung kantor, gedung sekolah, dan fasilitas umum terintegrasi lengkap."
-                  },
-                  {
-                    title: "Perencanaan Jalan & Paving",
-                    desc: "Desain tebal perkerasan jalan (kaku/rigid beton maupun lentur/aspal), drainase jalan, dan pemasangan paving block."
-                  },
-                  {
-                    title: "Perencanaan Jembatan & DPT",
-                    desc: "Perhitungan kekuatan jembatan bentang pendek/menengah, gorong-gorong box culvert, dan dinding penahan tanah lereng."
-                  },
-                  {
-                    title: "Perencanaan Saluran Irigasi",
-                    desc: "Desain jaringan saluran air primer, sekunder, tersier, bangunan bagi air, pintu air, dan bangunan penahan air."
-                  }
-                ].map((item, idx) => (
+                {PERENCANAAN_SCOPES.map((item, idx) => (
                   <div key={idx} className="bg-slate-50 border border-slate-100 rounded-2xl p-6">
                     <h4 className="font-bold text-slate-900 mb-2">{item.title}</h4>
                     <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
@@ -79,14 +63,7 @@ export default function PerencanaanDetailPage() {
                 Output Dokumen yang Anda Terima
               </h3>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-600 leading-relaxed text-sm">
-                {[
-                  "Gambar Kerja / Gambar Rencana Lengkap (2D CAD & 3D Rendering)",
-                  "Dokumen Perhitungan Struktur Sipil (Disertai Lembar Pertanggungjawaban Ahli)",
-                  "Rencana Anggaran Biaya (RAB) Lengkap dengan Analisa Harga Satuan",
-                  "Daftar Rencana Kerja & Syarat-Syarat Teknis (RKS)",
-                  "Dokumen Spesifikasi Teknis Material Bangunan",
-                  "Dokumen Prasyarat Pengurusan PBG / SLF Bangunan"
-                ].map((out, idx) => (
+                {PERENCANAAN_OUTPUTS.map((out, idx) => (
                   <li key={idx} className="flex gap-2.5 items-start">
                     <CheckCircle className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
                     <span>{out}</span>
@@ -114,7 +91,7 @@ export default function PerencanaanDetailPage() {
                   Konsultasikan konsep arsitektur atau parameter teknis rencana infrastruktur Anda dengan tim ahli sipil kami.
                 </p>
                 <Link
-                  href="https://wa.me/6281200000000"
+                  href={`https://wa.me/${CONTACT_INFO.phoneNumberClean}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full justify-center px-6 py-3.5 rounded-full text-xs font-bold bg-lime-500 text-slate-950 hover:bg-lime-400 flex items-center gap-1.5 transition-all shadow-md"

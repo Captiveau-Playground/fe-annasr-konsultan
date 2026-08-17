@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { PENGAWASAN_SCOPES, PENGAWASAN_OUTPUTS, CONTACT_INFO } from "@/lib/constant";
 
 export default function PengawasanDetailPage() {
   return (
@@ -49,24 +50,7 @@ export default function PengawasanDetailPage() {
                 Lingkup Jasa Pengawasan Kami
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                {[
-                  {
-                    title: "Pengawasan Gedung Bertingkat",
-                    desc: "Pengawasan pengecoran beton, penulangan kolom/balok, finishing dinding, penataan MEP (Mekanikal Elektrikal Plambing)."
-                  },
-                  {
-                    title: "Pengawasan Konstruksi Jalan & Jembatan",
-                    desc: "Pengendalian elevasi topografi tanah dasar, pengawasan tebal beton K-350/K-400, dan kualitas erection balok girder jembatan."
-                  },
-                  {
-                    title: "Pengawasan Bangunan Air & Irigasi",
-                    desc: "Monitoring galian saluran drainase, pemasangan batu kali pengarah air, bendungan bagi air, dan pintu air irigasi."
-                  },
-                  {
-                    title: "Pemeriksaan Kualitas Material Lapangan",
-                    desc: "Verifikasi sertifikat uji lab pabrikan besi tulangan, slump test beton segar di lapangan, dan uji lab silinder beton."
-                  }
-                ].map((item, idx) => (
+                {PENGAWASAN_SCOPES.map((item, idx) => (
                   <div key={idx} className="bg-slate-50 border border-slate-100 rounded-2xl p-6">
                     <h4 className="font-bold text-slate-900 mb-2">{item.title}</h4>
                     <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
@@ -79,14 +63,7 @@ export default function PengawasanDetailPage() {
                 Laporan & Dokumentasi Pengawasan
               </h3>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-600 leading-relaxed text-sm">
-                {[
-                  "Laporan Harian (Cuaca, Tenaga Kerja, Material, Alat)",
-                  "Laporan Mingguan & Bulanan (Progres Kurva S Fisik Lapangan)",
-                  "Dokumentasi Foto Progres Pekerjaan (0%, 50%, 100%)",
-                  "Laporan Uji Mutu Bahan (Uji Kuat Tekan Beton, Paving, dll)",
-                  "Rekomendasi Pembayaran Termin Kontraktor (Mutual Check 0% - 100%)",
-                  "Draft As Built Drawing (Gambar Rekaman Akhir Hasil Konstruksi)"
-                ].map((out, idx) => (
+                {PENGAWASAN_OUTPUTS.map((out, idx) => (
                   <li key={idx} className="flex gap-2.5 items-start">
                     <CheckCircle className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
                     <span>{out}</span>
@@ -114,7 +91,7 @@ export default function PengawasanDetailPage() {
                   Pastikan mutu kontraktor Anda terjaga sesuai standar teknis rencana awal. Hubungi tim surveyor pengawas kami.
                 </p>
                 <Link
-                  href="https://wa.me/6281200000000"
+                  href={`https://wa.me/${CONTACT_INFO.phoneNumberClean}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full justify-center px-6 py-3.5 rounded-full text-xs font-bold bg-lime-500 text-slate-950 hover:bg-lime-400 flex items-center gap-1.5 transition-all shadow-md"

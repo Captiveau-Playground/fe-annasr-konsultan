@@ -1,65 +1,7 @@
 import { ArrowRight, CheckCircle, Compass, Eye, FileText, Hammer } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-const SERVICES = [
-  {
-    slug: "perencanaan",
-    title: "Jasa Perencanaan",
-    icon: <Compass className="w-6 h-6" />,
-    desc: "Perencanaan teknis dan penyusunan desain yang matang, terukur, dan sesuai standar teknis yang berlaku.",
-    longDesc: "Desain arsitektur dan perhitungan struktur teknik sipil yang aman, akurat, dan estetis. Kami menyusun cetak biru proyek dengan estimasi RAB yang realistis.",
-    scopes: [
-      "Perencanaan Bangunan Gedung (Rumah, Ruko, Kantor, Sekolah)",
-      "Perencanaan Jalan (Rabat Beton, Aspal Hotmix, Paving Block)",
-      "Perencanaan Jembatan & Dinding Penahan Tanah (DPT)",
-      "Perencanaan Jaringan Irigasi & Saluran Pembuang Air"
-    ],
-    image: "/images/perencanaan.jpg"
-  },
-  {
-    slug: "pengawasan",
-    title: "Jasa Pengawasan",
-    icon: <Eye className="w-6 h-6" />,
-    desc: "Pengendalian mutu, biaya, dan waktu pelaksanaan pekerjaan melalui pengawasan lapangan yang disiplin.",
-    longDesc: "Menjaga kepentingan pemilik proyek di lapangan agar kontraktor melaksanakan konstruksi sesuai gambar rencana, RKS, volume yang benar, dan waktu yang disepakati.",
-    scopes: [
-      "Pengawasan Struktur & Finishing Bangunan Gedung Bertingkat",
-      "Pengawasan Peningkatan Jalan Raya & Jembatan Penghubung",
-      "Pengawasan Pekerjaan Infrastruktur & Sanitasi Lingkungan",
-      "Penyusunan Laporan Progres Mingguan, Bulanan & As Built Drawing"
-    ],
-    image: "/images/pengawasan.jpg"
-  },
-  {
-    slug: "perizinan",
-    title: "Jasa Perizinan",
-    icon: <FileText className="w-6 h-6" />,
-    desc: "Pendampingan penuh pengurusan dokumen perizinan bangunan agar proyek Anda legal dan siap difungsikan.",
-    longDesc: "Membantu melengkapi prasyarat perizinan bangunan gedung sesuai Sistem Informasi Bangunan Gedung (SIMBG). Mengkaji kelayakan teknis struktur dan proteksi kebakaran.",
-    scopes: [
-      "Persetujuan Bangunan Gedung (PBG - pengganti IMB)",
-      "Sertifikat Laik Fungsi (SLF) Bangunan Gedung Baru & Eksisting",
-      "Kajian Teknis Kelayakan Struktur Bangunan Gedung",
-      "Rekomendasi Teknis Damkar & Instalasi Proteksi Petir"
-    ],
-    image: "/images/perizinan.jpg"
-  },
-  {
-    slug: "konstruksi",
-    title: "Jasa Konstruksi",
-    icon: <Hammer className="w-6 h-6" />,
-    desc: "Pelaksanaan pekerjaan konstruksi bangunan dan infrastruktur dengan metode kerja yang aman dan efisien.",
-    longDesc: "Pelaksana pembangunan gedung, renovasi rumah tinggal, ruko, gedung kantor, hingga jalan beton dengan jaminan mutu material berkualitas dan pengerjaan yang rapi.",
-    scopes: [
-      "Pembangunan Baru & Renovasi Total Rumah Tinggal Mewah",
-      "Pelaksanaan Konstruksi Ruko & Gedung Fasilitas Umum",
-      "Pekerjaan Sipil Jalan Beton, Paving, dan Saluran Drainase",
-      "Pekerjaan Struktur Baja, Beton Bertulang, & Atap Baja Ringan"
-    ],
-    image: "/images/konstruksi.jpg"
-  }
-];
+import { SERVICES } from "@/lib/constant";
 
 export default function LayananPage() {
   return (

@@ -1,29 +1,8 @@
 import JobForm from "@/components/JobForm";
 import { Clock, MapPin } from "lucide-react";
+import { CAREER_JOBS } from "@/lib/constant";
 
-const JOBS = [
-  {
-    title: "Civil Estimator & Planner",
-    type: "Full-Time",
-    location: "Jombang (Office)",
-    exp: "Minimal 2 Tahun",
-    desc: "Menyusun perhitungan Rencana Anggaran Biaya (RAB), analisa harga satuan pekerjaan sipil, gambar Detail Engineering Design (DED), serta laporan spesifikasi teknik."
-  },
-  {
-    title: "Drafter AutoCAD / SketchUp",
-    type: "Full-Time / Contract",
-    location: "Jombang (Office)",
-    exp: "Minimal 1 Tahun / Fresh Graduate welcome",
-    desc: "Membuat gambar perencanaan gedung, shop drawing jalan/jembatan, gambar kerja 2D detail struktur, serta pemodelan 3D arsitektur bangunan."
-  },
-  {
-    title: "Site Supervisor / Pengawas Lapangan",
-    type: "Project-Based",
-    location: "Jombang & Sekitarnya (On-Site)",
-    exp: "Minimal 2 Tahun",
-    desc: "Melakukan monitoring harian progres fisik lapangan, pengecekan ketebalan jalan/mutu beton segar, verifikasi volume terpasang kontraktor, serta menyusun laporan harian."
-  }
-];
+const JOBS = CAREER_JOBS;
 
 export default function KarirPage() {
 

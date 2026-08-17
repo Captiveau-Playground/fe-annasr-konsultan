@@ -9,75 +9,12 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-// Client List Data
-const CLIENTS = [
-  { label: "PJ", name: "Pemkab Jombang" },
-  { label: "DP", name: "Dinas PUPR Jombang" },
-  { label: "DB", name: "Desa Bedahlawak" },
-  { label: "DC", name: "Desa Candi Mulyo" },
-  { label: "KT", name: "Kecamatan Tembelang" },
-  { label: "KP", name: "Kecamatan Ploso" },
-  { label: "KM", name: "Kecamatan Megaluh" },
-  { label: "YA", name: "Yayasan Al Hikmah" },
-  { label: "SN", name: "SMK Nusantara" },
-  { label: "MA", name: "MI Al Falah" },
-  { label: "PD", name: "Ponpes Darul Ulum" },
-  { label: "CM", name: "CV. Mitra Karya" },
-  { label: "CB", name: "CV. Bumi Persada" },
-  { label: "PS", name: "PT. Sarana Bangun" },
-  { label: "PT", name: "PT. Tirta Mandiri" },
-  { label: "KS", name: "Koperasi Sejahtera" },
-  { label: "RA", name: "RSU Amanah" },
-  { label: "BM", name: "BUMDes Makmur" },
-  { label: "PJ", name: "PDAM Jombang" },
-  { label: "PT", name: "Perumda Tirta" },
-];
-
-// Project Locations
-const LOCATIONS = [
-  "Jombang", "Mojokerto", "Kediri", "Nganjuk", "Surabaya", "Lamongan",
-  "Malang", "Semarang", "Bandung", "Balikpapan", "Makassar", "Denpasar"
-];
-
-// Work Processes
-const PROCESSES = [
-  {
-    step: "01",
-    title: "Konsultasi",
-    desc: "Diskusi awal untuk memahami kebutuhan, lingkup, serta anggaran proyek Anda."
-  },
-  {
-    step: "02",
-    title: "Survey Lapangan",
-    desc: "Pengukuran, pengambilan data topografi, dan pemeriksaan kondisi eksisting lokasi."
-  },
-  {
-    step: "03",
-    title: "Perencanaan",
-    desc: "Penyusunan desain teknis, perhitungan struktur, dan rencana anggaran biaya."
-  },
-  {
-    step: "04",
-    title: "Penyusunan Dokumen",
-    desc: "Gambar kerja, RKS, RAB, serta dokumen perizinan disiapkan secara lengkap."
-  },
-  {
-    step: "05",
-    title: "Pelaksanaan",
-    desc: "Pekerjaan konstruksi dijalankan sesuai metode kerja dan jadwal yang disepakati."
-  },
-  {
-    step: "06",
-    title: "Pengawasan",
-    desc: "Pengendalian mutu bahan, volume, dan progres pekerjaan di lapangan setiap tahap."
-  },
-  {
-    step: "07",
-    title: "Serah Terima",
-    desc: "Pemeriksaan akhir, penyerahan dokumen as built, dan serah terima pekerjaan."
-  }
-];
+import {
+  HOME_CLIENTS,
+  HOME_LOCATIONS,
+  HOME_PROCESSES,
+  HOME_FEATURED_PROJECTS
+} from "@/lib/constant";
 
 export default function Home() {
 
@@ -91,21 +28,16 @@ export default function Home() {
             src="/images/hero-bg.jpg"
             alt="Construction Cranes Site background"
             fill
-            className="object-cover opacity-30 select-none scale-105 animate-pulse-slow"
+            className="object-cover opacity-100 select-none scale-105 animate-pulse-slow"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-950/80 via-slate-950/90 to-slate-950 z-10" />
+          <div className="absolute inset-0 bg-blue-950/80 z-10" />
           {/* Blueprint Grid Lines Overlay */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:4rem_4rem] z-10" />
         </div>
 
         {/* Hero Content */}
         <div className="relative z-20 max-w-5xl mx-auto px-6 text-center flex flex-col items-center mt-12 md:mt-0">
-          <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-400/20 rounded-full px-4 py-1.5 text-blue-400 text-xs font-semibold tracking-wider uppercase mb-8 backdrop-blur-md">
-            <Compass className="w-3.5 h-3.5 animate-spin-slow" />
-            Kepercayaan & Profesionalisme Teknik
-          </div>
-
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-tight tracking-tight max-w-4xl mb-8">
             CV. An Nasr <span className="text-lime-400">Konsultan</span>
           </h1>
@@ -129,12 +61,6 @@ export default function Home() {
               Lihat Layanan
             </Link>
           </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center gap-2 text-slate-500 animate-bounce">
-          <span className="text-xs uppercase tracking-widest font-semibold">Scroll</span>
-          <ChevronDown className="w-5 h-5" />
         </div>
       </section>
 
@@ -419,44 +345,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Pembangunan Gedung Serbaguna",
-                location: "Kecamatan Jombang, Jombang",
-                tag: "Gedung",
-                imgBg: "bg-gradient-to-r from-blue-700 to-indigo-800"
-              },
-              {
-                title: "Peningkatan Jalan Beton Desa",
-                location: "Kecamatan Tembelang, Jombang",
-                tag: "Jalan",
-                imgBg: "bg-gradient-to-r from-emerald-600 to-teal-700"
-              },
-              {
-                title: "Pembangunan Jembatan Penghubung Desa",
-                location: "Kecamatan Ploso, Jombang",
-                tag: "Jembatan",
-                imgBg: "bg-gradient-to-r from-blue-800 to-sky-900"
-              },
-              {
-                title: "Rehabilitasi Saluran Irigasi Primer",
-                location: "Kecamatan Megaluh, Jombang",
-                tag: "Irigasi",
-                imgBg: "bg-gradient-to-r from-cyan-600 to-blue-700"
-              },
-              {
-                title: "Renovasi Rumah Tinggal Dua Lantai",
-                location: "Candi Mulyo, Jombang",
-                tag: "Renovasi",
-                imgBg: "bg-gradient-to-r from-slate-700 to-slate-800"
-              },
-              {
-                title: "Pengawasan Bangunan Penahan Air",
-                location: "Kabupaten Jombang",
-                tag: "Pengawasan",
-                imgBg: "bg-gradient-to-r from-purple-700 to-indigo-800"
-              }
-            ].map((proj, idx) => (
+            {HOME_FEATURED_PROJECTS.map((proj, idx) => (
               <div
                 key={idx}
                 className="bg-slate-50 border border-slate-100 rounded-3xl p-8 flex flex-col justify-between h-72 hover:shadow-xl hover:border-slate-200 transition-all duration-300 group"
@@ -494,7 +383,7 @@ export default function Home() {
 
           {/* Grid Client Badges */}
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-            {CLIENTS.map((client, idx) => (
+            {HOME_CLIENTS.map((client, idx) => (
               <div
                 key={idx}
                 className="bg-white border border-slate-100 rounded-2xl p-5 flex flex-col items-center justify-center gap-3 hover:shadow-md transition-shadow"
@@ -525,7 +414,7 @@ export default function Home() {
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-5xl mx-auto">
-            {LOCATIONS.map((city) => (
+            {HOME_LOCATIONS.map((city) => (
               <div
                 key={city}
                 className="bg-slate-50 border border-slate-100 rounded-2xl py-6 px-4 flex flex-col items-center justify-center gap-2 hover:bg-blue-600 hover:text-white hover:shadow-lg transition-all duration-300 group"
@@ -553,7 +442,7 @@ export default function Home() {
             Alur kerja yang sama untuk setiap proyek, sehingga progres mudah dipantau dari awal hingga serah terima.
           </p>
 
-          <ProcessStepper processes={PROCESSES} />
+          <ProcessStepper processes={HOME_PROCESSES} />
         </div>
       </section>
 
