@@ -201,67 +201,76 @@ export const PORTFOLIO_PROJECTS = [
     location: "Kecamatan Jombang, Jombang",
     category: "Gedung",
     status: "Selesai",
-    year: "2025"
+    year: "2025",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
   },
   {
     title: "Peningkatan Jalan Beton Desa",
     location: "Kecamatan Tembelang, Jombang",
     category: "Jalan",
     status: "Selesai",
-    year: "2025"
+    year: "2025",
+    image: "https://images.unsplash.com/photo-1594913785162-e6785b423cb1?auto=format&fit=crop&w=800&q=80"
   },
   {
     title: "Pembangunan Jembatan Penghubung Desa",
     location: "Kecamatan Ploso, Jombang",
     category: "Jembatan",
     status: "Selesai",
-    year: "2024"
+    year: "2024",
+    image: "https://images.unsplash.com/photo-1545624446-0c9f11651811?auto=format&fit=crop&w=800&q=80"
   },
   {
     title: "Rehabilitasi Saluran Irigasi Primer",
     location: "Kecamatan Megaluh, Jombang",
     category: "Irigasi",
     status: "Selesai",
-    year: "2024"
+    year: "2024",
+    image: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=800&q=80"
   },
   {
     title: "Renovasi Rumah Tinggal Dua Lantai",
     location: "Candi Mulyo, Jombang",
     category: "Renovasi",
     status: "Selesai",
-    year: "2025"
+    year: "2025",
+    image: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=800&q=80"
   },
   {
     title: "Pengawasan Bangunan Penahan Air",
     location: "Kabupaten Jombang",
     category: "Irigasi",
     status: "Selesai",
-    year: "2023"
+    year: "2023",
+    image: "https://images.unsplash.com/photo-1584947936173-0fbf90dbcc84?auto=format&fit=crop&w=800&q=80"
   },
   {
     title: "Perencanaan Kantor Instansi Pemerintah",
     location: "Kecamatan Jombang, Jombang",
     category: "Gedung",
     status: "Selesai",
-    year: "2024"
+    year: "2024",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"
   },
   {
     title: "Pembangunan Ruko Komersial 3 Unit",
     location: "Mojoagung, Jombang",
     category: "Gedung",
     status: "Selesai",
-    year: "2025"
+    year: "2025",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
   },
   {
     title: "Pelebaran Jalan Aspal Hotmix",
     location: "Diwek, Jombang",
     category: "Jalan",
     status: "Selesai",
-    year: "2023"
+    year: "2023",
+    image: "https://images.unsplash.com/photo-1515162305285-0293e4767cc2?auto=format&fit=crop&w=800&q=80"
   }
 ];
 
-export const PORTFOLIO_CATEGORIES = ["Semua", "Gedung", "Jalan", "Jembatan", "Irigasi", "Renovasi"];
+export const PORTFOLIO_CATEGORIES = ["Semua", "Bangunan", "Jalan", "Jembatan", "Irigasi", "Gedung", "Renovasi"];
 
 // Tentang page: Core Values
 export const TENTANG_VALUES = [
