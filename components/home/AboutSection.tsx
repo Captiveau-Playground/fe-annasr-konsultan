@@ -3,68 +3,67 @@ import Image from "next/image";
 
 export default function AboutSection() {
   return (
-    <section className="py-24 md:py-32 bg-white font-sans">
+    <section className="py-16 md:py-24 bg-background font-sans">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-          {/* Left side: Content */}
-          <div className="lg:col-span-7 flex flex-col text-left">
-            <span className="text-blue-600 font-bold tracking-widest text-xs uppercase mb-3">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+          <div className="text-center lg:text-left">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
               Tentang Kami
-            </span>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-6">
+            </p>
+            <h2 className="mt-3 text-2xl leading-tight text-foreground sm:text-3xl font-bold">
               Tentang CV. AN NASR KONSULTAN
             </h2>
-            <div className="h-1 w-20 bg-blue-600 rounded mb-8" />
-            <p className="text-slate-600 text-base leading-relaxed mb-6">
+            <p className="mt-5 text-base leading-relaxed text-muted-foreground">
               CV. AN NASR KONSULTAN adalah penyedia jasa konsultansi teknik sipil dan arsitektur yang berkedudukan di Kabupaten Jombang, Jawa Timur. Kami menangani pekerjaan perencanaan, pengawasan, pengurusan perizinan bangunan, serta pelaksanaan konstruksi untuk instansi pemerintah, lembaga, maupun perorangan.
             </p>
-            <p className="text-slate-600 text-base leading-relaxed mb-10">
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground">
               Tujuan kami sederhana: memastikan setiap rencana pembangunan berjalan tepat mutu, tepat biaya, dan tepat waktu. Dengan dukungan tenaga ahli di bidang struktur, jalan, jembatan, dan sumber daya air, kami menghadirkan solusi pembangunan yang profesional dan sesuai standar teknis yang berlaku.
             </p>
 
-            {/* Visi & Misi Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Visi Card */}
-              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:border-blue-500/20">
-                <div className="w-12 h-12 rounded-xl bg-blue-600/10 text-blue-600 flex items-center justify-center mb-4">
-                  <Compass className="w-6 h-6" />
-                </div>
-                <h3 className="font-bold text-lg text-slate-900 mb-2">Visi</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-2xl border border-border bg-card p-5 text-left">
+                <span className="flex size-10 items-center justify-center rounded-xl bg-primary/8 text-primary">
+                  <Compass className="size-5" />
+                </span>
+                <span className="mt-3 block font-[family-name:var(--font-heading)] text-base font-semibold text-foreground">
+                  Visi
+                </span>
+                <span className="mt-1.5 block text-sm leading-relaxed text-muted-foreground">
                   Menjadi mitra konsultan teknik dan konstruksi yang terpercaya di Jawa Timur melalui kualitas pekerjaan dan integritas layanan.
-                </p>
+                </span>
               </div>
 
-              {/* Misi Card */}
-              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:border-blue-500/20">
-                <div className="w-12 h-12 rounded-xl bg-blue-600/10 text-blue-600 flex items-center justify-center mb-4">
-                  <Flag className="w-6 h-6" />
-                </div>
-                <h3 className="font-bold text-lg text-slate-900 mb-2">Misi</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">
+              <div className="rounded-2xl border border-border bg-card p-5 text-left">
+                <span className="flex size-10 items-center justify-center rounded-xl bg-primary/8 text-primary">
+                  <Flag className="size-5" />
+                </span>
+                <span className="mt-3 block font-[family-name:var(--font-heading)] text-base font-semibold text-foreground">
+                  Misi
+                </span>
+                <span className="mt-1.5 block text-sm leading-relaxed text-muted-foreground">
                   Menghadirkan perencanaan yang akurat, pengawasan yang disiplin, serta pelaksanaan konstruksi yang tepat mutu, biaya, dan waktu.
-                </p>
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Right side: Team Photo */}
-          <div className="lg:col-span-5 flex flex-col items-center">
-            <div className="relative w-full aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white bg-slate-200">
-              <Image
-                src="/images/team.jpg"
-                alt="Tim CV. AN NASR KONSULTAN — Jombang, Jawa Timur"
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 500px"
-                className="object-cover"
-              />
-            </div>
-            <span className="text-slate-500 text-xs font-semibold mt-4 text-center">
+          <div>
+            <Image
+              alt="Seluruh pegawai CV. AN NASR KONSULTAN berfoto bersama di depan kantor"
+              loading="lazy"
+              width={1400}
+              height={1000}
+              className="w-full rounded-[2rem] object-cover shadow-[var(--shadow-lift)]"
+              src="/assets/tim-perusahaan-CPnbyUCn.jpg"
+              unoptimized
+            />
+            <p className="mt-4 text-center text-sm text-muted-foreground">
               Tim CV. AN NASR KONSULTAN — Jombang, Jawa Timur
-            </span>
+            </p>
           </div>
         </div>
       </div>
     </section>
   );
 }
+
