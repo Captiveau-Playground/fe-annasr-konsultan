@@ -31,3 +31,19 @@ export interface ServiceCardData {
   href: string;
   tags: string[];
 }
+
+export interface ServiceDetailData {
+  id: number | string;
+  title: string;
+  slug: string;
+  shortDescription: string;
+  aboutTitle: string;
+  aboutText: string[];
+  scopeTitle: string;
+  scopes: string[];
+  benefits: string[];
+  heroImage: string;
+  heroImageAlt: string;
+  gallery: { url: string; alt: string }[];
+}
+
