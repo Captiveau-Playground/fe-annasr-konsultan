@@ -43,9 +43,9 @@ export default async function HeroSection({ data: propData }: HeroSectionProps) 
           className="object-cover opacity-100 select-none scale-105 animate-pulse-slow"
           priority
         />
-        <div className="absolute inset-0 bg-blue-950/80 z-10" />
+        <div className="absolute inset-0 bg-[#4f6baa]/85 z-10" />
         {/* Blueprint Grid Lines Overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b15_1px,transparent_1px),linear-gradient(to_bottom,#1e293b15_1px,transparent_1px)] bg-[size:4rem_4rem] z-10" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:4rem_4rem] z-10" />
       </div>
 
       {/* Hero Content */}

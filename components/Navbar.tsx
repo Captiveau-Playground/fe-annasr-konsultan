@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
+import { Compass, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Compass, Menu, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 const NAV_ITEMS = [
   { name: "Beranda", href: "/" },
@@ -86,38 +86,20 @@ export default function Navbar() {
 
         {/* Desktop Nav Links */}
         <nav className="hidden lg:flex items-center gap-8">
-          {NAV_ITEMS.map((item) => {
-            const isActive =
-              pathname === item.href ||
-              (item.href !== "/" && pathname.startsWith(item.href));
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "text-sm font-semibold tracking-wide transition-colors relative py-2",
-                  isTransparent
-                    ? isActive
-                      ? "text-lime-400 font-bold"
-                      : "text-white/80 hover:text-white"
-                    : isActive
-                      ? "text-blue-600 font-bold"
-                      : "text-slate-600 hover:text-slate-900"
-                )}
-              >
-                {item.name}
-                {isActive && (
-                  <span
-                    className={cn(
-                      "absolute bottom-0 left-0 right-0 h-0.5 rounded-full",
-                      isTransparent ? "bg-lime-400" : "bg-blue-600"
-                    )}
-                  />
-                )}
-              </Link>
-            );
-          })}
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "text-sm font-semibold tracking-wide transition-colors py-2",
+                isTransparent
+                  ? "text-white/80 hover:text-white"
+                  : "text-slate-600 hover:text-slate-900"
+              )}
+            >
+              {item.name}
+            </Link>
+          ))}
         </nav>
 
         {/* CTA Button */}
@@ -159,25 +141,16 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 top-[73px] bg-white z-40 flex flex-col p-6 animate-fade-in">
           <nav className="flex flex-col gap-5">
-            {NAV_ITEMS.map((item) => {
-              const isActive =
-                pathname === item.href ||
-                (item.href !== "/" && pathname.startsWith(item.href));
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={cn(
-                    "text-lg font-bold py-2 border-b border-slate-100",
-                    isActive ? "text-blue-600" : "text-slate-800"
-                  )}
-                >
-                  {item.name}
-                </Link>
-              );
-            })}
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-lg font-semibold py-2 border-b border-slate-100 text-slate-800 hover:text-blue-600 transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
           </nav>
           <div className="mt-8">
             <Link
