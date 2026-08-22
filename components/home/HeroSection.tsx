@@ -36,7 +36,7 @@ export default async function HeroSection({ data: propData }: HeroSectionProps) 
       <div className="absolute inset-0 z-0">
         <Image
           src={bgImage}
-          alt="Construction Site background"
+          alt="Construction Site background bg-cover"
           fill
           sizes="100vw"
           unoptimized
