@@ -7,83 +7,50 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { fetchServicesSectionData } from "@/lib/api/services";
+import { ServiceCardData } from "@/types/service";
 
-const SERVICES = [
-  {
-    title: "Jasa Perencanaan",
-    description:
-      "Perencanaan teknis dan penyusunan desain yang matang, terukur, dan sesuai standar teknis yang berlaku.",
-    image: "/images/perencanaan.jpg",
-    alt: "Tim teknik CV. AN NASR KONSULTAN menyusun gambar rencana bangunan di kantor",
-    icon: Building2,
-    href: "/layanan/perencanaan",
-    tags: [
-      "Perencanaan Bangunan Gedung",
-      "Perencanaan Jalan",
-      "Perencanaan Jembatan",
-    ],
-  },
-  {
-    title: "Jasa Pengawasan",
-    description:
-      "Pengendalian mutu, biaya, dan waktu pelaksanaan pekerjaan melalui pengawasan lapangan yang disiplin.",
-    image: "/images/pengawasan.jpg",
-    alt: "Pengawas lapangan memeriksa progres pekerjaan konstruksi dengan alat ukur",
-    icon: ClipboardCheck,
-    href: "/layanan/pengawasan",
-    tags: [
-      "Pengawasan Bangunan Gedung",
-      "Pengawasan Jalan",
-      "Pengawasan Jembatan",
-    ],
-  },
-  {
-    title: "Jasa Perizinan",
-    description:
-      "Pendampingan penuh pengurusan dokumen perizinan bangunan agar proyek Anda legal dan siap difungsikan.",
-    image: "/images/perizinan.jpg",
-    alt: "Pendampingan pengurusan dokumen perizinan bangunan PBG dan SLF",
-    icon: FileCheck2,
-    href: "/layanan/perizinan",
-    tags: [
-      "Persetujuan Bangunan Gedung (PBG)",
-      "Sertifikat Laik Fungsi (SLF)",
-    ],
-  },
-  {
-    title: "Jasa Konstruksi",
-    description:
-      "Pelaksanaan pekerjaan konstruksi bangunan dan infrastruktur dengan metode kerja yang aman dan efisien.",
-    image: "/images/konstruksi.jpg",
-    alt: "Pekerja konstruksi membangun struktur bangunan dua lantai",
-    icon: HardHat,
-    href: "/layanan/konstruksi",
-    tags: ["Pembangunan Rumah", "Renovasi Rumah", "Gedung"],
-  },
-];
+function getServiceIcon(slug: string, title: string, index: number) {
+  const s = slug.toLowerCase();
+  const t = title.toLowerCase();
+  if (s.includes("perencanaan") || t.includes("perencanaan")) return Building2;
+  if (s.includes("pengawasan") || s.includes("pelayanan") || t.includes("pengawasan")) return ClipboardCheck;
+  if (s.includes("perizinan") || t.includes("perizinan")) return FileCheck2;
+  if (s.includes("konstruksi") || t.includes("konstruksi")) return HardHat;
 
-export default function ServicesSection() {
+  const icons = [Building2, ClipboardCheck, FileCheck2, HardHat];
+  return icons[index % icons.length];
+}
+
+export default async function ServicesSection() {
+  let services: ServiceCardData[] = [];
+  try {
+    services = await fetchServicesSectionData();
+  } catch (error) {
+    console.error("Error loading ServicesSection data:", error);
+  }
+
   return (
-    <section className="bg-surface px-6 py-20 lg:px-8 lg:py-24">
+    <section className="bg-slate-50/60 px-6 py-20 lg:px-8 lg:py-24">
       <div className="mx-auto max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#0066FF]">
             Layanan Kami
           </p>
-          <h2 className="mt-3 text-3xl leading-tight sm:text-4xl lg:text-[2.75rem] text-foreground">
+          <h2 className="mt-3 text-3xl font-extrabold leading-tight text-slate-900 sm:text-4xl lg:text-[2.75rem]">
             Solusi lengkap dari perencanaan hingga pelaksanaan
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+          <p className="mt-4 text-base leading-relaxed text-slate-500">
             Empat lini layanan utama yang saling terhubung, sehingga setiap tahap
             proyek Anda tetap terkendali dalam satu standar mutu.
           </p>
         </div>
         <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
-          {SERVICES.map((service) => {
-            const Icon = service.icon;
+          {services.map((service, idx) => {
+            const Icon = getServiceIcon(service.slug, service.title, idx);
             return (
-              <div key={service.href} className="h-full">
-                <article className="flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-border bg-card text-center shadow-[var(--shadow-soft)]">
+              <div key={service.id || service.href} className="h-full">
+                <article className="flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-slate-100/80 bg-white text-center shadow-md">
                   <div className="relative">
                     <Image
                       alt={service.alt}
@@ -93,20 +60,20 @@ export default function ServicesSection() {
                       className="aspect-[16/9] w-full object-cover"
                       src={service.image}
                     />
-                    <span className="absolute bottom-3 left-1/2 flex size-10 -translate-x-1/2 translate-y-1/2 items-center justify-center rounded-xl bg-card text-primary shadow-[var(--shadow-soft)]">
+                    <span className="absolute bottom-0 left-1/2 flex size-10 -translate-x-1/2 translate-y-1/2 items-center justify-center rounded-xl border border-slate-100 bg-white text-[#0066FF] shadow-md">
                       <Icon className="size-5" aria-hidden="true" />
                     </span>
                   </div>
                   <div className="flex flex-1 flex-col items-center p-6 pt-9">
-                    <h3 className="text-lg text-foreground">{service.title}</h3>
-                    <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
+                    <h3 className="text-lg font-bold text-slate-900">{service.title}</h3>
+                    <p className="mt-2.5 text-sm leading-relaxed text-slate-500">
                       {service.description}
                     </p>
                     <ul className="mt-4 flex flex-wrap justify-center gap-2">
-                      {service.tags.map((tag) => (
+                      {service.tags.map((tag: string) => (
                         <li
                           key={tag}
-                          className="rounded-full bg-surface px-3 py-1 text-xs text-muted-foreground"
+                          className="rounded-full bg-slate-100 px-3.5 py-1.5 text-xs font-medium text-slate-600"
                         >
                           {tag}
                         </li>
@@ -115,10 +82,10 @@ export default function ServicesSection() {
                     <div className="mt-auto pt-6">
                       <Link
                         href={service.href}
-                        className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-11 rounded-full px-6 text-sm bg-accent text-accent-foreground transition-none hover:bg-accent"
+                        className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#70E000] px-6 text-sm font-bold text-slate-950 shadow transition-all hover:brightness-105"
                       >
                         Lihat Detail
-                        <ArrowRight className="size-4" aria-hidden="true" />
+                        <ArrowRight className="size-4 text-slate-950" aria-hidden="true" />
                       </Link>
                     </div>
                   </div>
@@ -131,4 +98,7 @@ export default function ServicesSection() {
     </section>
   );
 }
+
+
+
 
