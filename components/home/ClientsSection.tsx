@@ -1,36 +1,43 @@
 import { HOME_CLIENTS } from "@/lib/constant";
 
 export default function ClientsSection() {
-  return (
-    <section className="py-24 bg-slate-50 font-sans border-t border-b border-slate-100">
-      <div className="max-w-7xl mx-auto px-6 md:px-8 text-center">
-        <span className="text-blue-600 font-bold tracking-widest text-xs uppercase mb-3 inline-block">
-          Klien Kami
-        </span>
-        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight mb-4">
-          Dipercaya instansi, lembaga, dan mitra usaha
-        </h2>
-        <p className="text-slate-500 text-sm max-w-xl mx-auto mb-16">
-          Sebagian pemberi tugas yang pernah bekerja sama dengan CV. AN NASR KONSULTAN.
-        </p>
+  const marqueeItems = [...HOME_CLIENTS, ...HOME_CLIENTS];
 
-        {/* Grid Client Badges */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
-          {HOME_CLIENTS.map((client, idx) => (
-            <div
+  return (
+    <section className="bg-slate-50/60 px-6 py-16 lg:px-8 lg:py-20">
+      <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#0066FF]">
+            Klien Kami
+          </p>
+          <h2 className="mt-3 text-3xl font-extrabold leading-tight text-slate-900 sm:text-4xl lg:text-[2.75rem]">
+            Dipercaya instansi, lembaga, dan mitra usaha
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-slate-500">
+            Sebagian pemberi tugas yang pernah bekerja sama dengan CV. AN NASR
+            KONSULTAN.
+          </p>
+        </div>
+      </div>
+      <div className="marquee-mask mt-10 overflow-hidden">
+        <ul className="marquee-track flex w-max items-center gap-3">
+          {marqueeItems.map((client, idx) => (
+            <li
               key={idx}
-              className="bg-white border border-slate-100 rounded-2xl p-5 flex flex-col items-center justify-center gap-3 hover:shadow-md transition-shadow"
+              className="flex shrink-0 items-center gap-2.5 rounded-full border border-slate-200/80 bg-white px-4 py-2 shadow-sm"
             >
-              <div className="w-12 h-12 rounded-full bg-blue-600/10 text-blue-600 font-black text-sm flex items-center justify-center">
+              <span className="flex size-7 items-center justify-center rounded-full bg-blue-50 text-[10px] font-bold text-[#0066FF]">
                 {client.label}
-              </div>
-              <span className="text-slate-800 text-xs font-bold text-center">
+              </span>
+              <span className="whitespace-nowrap text-xs font-semibold text-slate-700">
                 {client.name}
               </span>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
 }
+
+
