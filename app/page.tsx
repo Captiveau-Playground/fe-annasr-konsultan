@@ -2,7 +2,7 @@ import HeroSection from "@/components/home/HeroSection";
 import FounderSection from "@/components/home/FounderSection";
 import AboutSection from "@/components/home/AboutSection";
 import ServicesSection from "@/components/home/ServicesSection";
-import PortfolioSection from "@/components/home/PortfolioSection";
+import PortfolioGrid from "@/components/PortfolioGrid";
 import ClientsSection from "@/components/home/ClientsSection";
 import LocationsSection from "@/components/home/LocationsSection";
 import ProcessSection from "@/components/home/ProcessSection";
@@ -16,7 +16,7 @@ export default function Home() {
       <FounderSection />
       <AboutSection />
       <ServicesSection />
-      <PortfolioSection />
+      <PortfolioGrid />
       <ClientsSection />
       <LocationsSection />
       <ProcessSection />
