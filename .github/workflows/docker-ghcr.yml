@@ -81,9 +81,8 @@ jobs:
 
             REPO_LOWER=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
 
-            # Jika file compose belum ada, buat file docker-compose.yml
-            if [ ! -f "docker-compose.yml" ]; then
-              cat > docker-compose.yml << 'EOF'
+            # Buat/perbarui file docker-compose.yml di VPS
+            cat > docker-compose.yml << 'EOF'
             version: "3.8"
 
             services:
@@ -161,7 +160,6 @@ jobs:
               shared_proxy:
                 driver: bridge
             EOF
-            fi
 
             cat > .env << EOF
             FRONTEND_REPOSITORY=$REPO_LOWER
