@@ -1,15 +1,23 @@
 import React from "react";
 import { Compass, Eye, FileText, Hammer, Shield, Award, Users, CheckCircle } from "lucide-react";
 
-// Central Contact Info
 export const CONTACT_INFO = {
   phone: "+62 812-0000-0000",
   phoneNumberClean: "6281200000000",
+  phoneNumberFormatted: "+62 812-0000-0000",
   email: "annasrkonsultan@email.com",
-  address: "Perumahan Candi Regency No. A10, Desa Candi Mulyo, Kecamatan Jombang, Kabupaten Jombang",
-  addressDetail: "Perumahan Candi Regency No. A10, Desa Candi Mulyo, Kecamatan Jombang, Kabupaten Jombang, Jawa Timur",
+  domicileAddress:
+    "Jl. Raya Tembelang RT.001 RW.003, Desa Bedahlawak, Kecamatan Tembelang, Kabupaten Jombang",
+  officeAddress:
+    "Perumahan Candi Regency No. A10, Desa Candi Mulyo, Kecamatan Jombang, Kabupaten Jombang",
+  address:
+    "Perumahan Candi Regency No. A10, Desa Candi Mulyo, Kecamatan Jombang, Kabupaten Jombang",
+  addressDetail:
+    "Perumahan Candi Regency No. A10, Desa Candi Mulyo, Kecamatan Jombang, Kabupaten Jombang, Jawa Timur",
+  operationalHours: "Senin – Sabtu, 08.00 – 17.00 WIB",
   gmapsUrl: "https://maps.google.com",
 };
+
 
 // WhatsApp Widget Redirect Options
 export const WHATSAPP_OPTIONS = [

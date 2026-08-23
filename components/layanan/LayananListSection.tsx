@@ -13,9 +13,13 @@ import { ServiceCardData } from "@/types/service";
 
 interface LayananListSectionProps {
   services?: ServiceCardData[];
+  sectionTitle?: string;
+  sectionTagline?: string;
+  sectionDescription?: string;
 }
 
 const DEFAULT_DETAILED_SERVICES = [
+
   {
     id: "perencanaan",
     title: "Jasa Perencanaan",
@@ -111,6 +115,9 @@ function getServiceIcon(slug: string) {
 
 export default async function LayananListSection({
   services: propServices,
+  sectionTitle = "Layanan Kami",
+  sectionTagline = "Solusi lengkap dari perencanaan hingga pelaksanaan",
+  sectionDescription = "Empat lini layanan utama yang saling terhubung, sehingga setiap tahap proyek Anda tetap terkendali dalam satu standar mutu.",
 }: LayananListSectionProps) {
   let apiServices = propServices;
   if (!apiServices || apiServices.length === 0) {
@@ -121,22 +128,34 @@ export default async function LayananListSection({
     }
   }
 
-  // Merge API data with detailed default content if matching by slug
-  const items = DEFAULT_DETAILED_SERVICES.map((defItem) => {
-    const matched = apiServices?.find((s) => s.slug.includes(defItem.slug));
-    if (matched) {
-      return {
-        ...defItem,
-        title: matched.title || defItem.title,
-        description: matched.description || defItem.description,
-        image: matched.image || defItem.image,
-        alt: matched.alt || defItem.alt,
-        href: matched.href || defItem.href,
-        scopes: matched.tags && matched.tags.length > 0 ? matched.tags : defItem.scopes,
-      };
-    }
-    return defItem;
-  });
+  // Dynamically map API services or use fallback
+  const items =
+    apiServices && apiServices.length > 0
+      ? apiServices.map((apiItem) => {
+          const slugKey = apiItem.slug.toLowerCase().replace("jasa-", "");
+          const defMatch = DEFAULT_DETAILED_SERVICES.find(
+            (def) => slugKey.includes(def.slug) || def.slug.includes(slugKey)
+          );
+
+          return {
+            id: String(apiItem.id || apiItem.slug),
+            title: apiItem.title,
+            slug: apiItem.slug,
+            description: apiItem.description,
+            image: apiItem.image || defMatch?.image || "/images/perencanaan.jpg",
+            alt: apiItem.alt || apiItem.title,
+            icon: getServiceIcon(apiItem.slug),
+            href: apiItem.href || `/layanan/${slugKey}`,
+            buttonText: `Lihat Detail ${apiItem.title}`,
+            scopes:
+              apiItem.tags && apiItem.tags.length > 0
+                ? apiItem.tags
+                : defMatch?.scopes || [],
+          };
+
+        })
+      : DEFAULT_DETAILED_SERVICES;
+
 
   return (
     <section className="bg-slate-50/60 px-6 py-20 lg:px-8 lg:py-24 font-sans">
@@ -144,16 +163,16 @@ export default async function LayananListSection({
         {/* Section Header */}
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#0066FF]">
-            Layanan Kami
+            {sectionTitle}
           </p>
           <h2 className="mt-3 text-3xl font-extrabold leading-tight text-slate-900 sm:text-4xl lg:text-[2.75rem]">
-            Solusi lengkap dari perencanaan hingga pelaksanaan
+            {sectionTagline}
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-500">
-            Empat lini layanan utama yang saling terhubung, sehingga setiap tahap
-            proyek Anda tetap terkendali dalam satu standar mutu.
+            {sectionDescription}
           </p>
         </div>
+
 
         {/* Detailed Articles List */}
         <div className="mt-14 space-y-16">

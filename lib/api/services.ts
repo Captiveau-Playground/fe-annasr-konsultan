@@ -172,8 +172,24 @@ export async function fetchServiceDetailBySlug(
 
     const matched = dataList.find((item) => {
       const attrs = (item.attributes || item) as StrapiServiceItem;
-      const itemSlug = (attrs.slug || "").toLowerCase().replace("jasa-", "");
-      return itemSlug === cleanSlug || itemSlug.includes(cleanSlug);
+      const rawSlug = (attrs.slug || "").toLowerCase();
+      const itemCleanSlug = rawSlug.replace("jasa-", "");
+
+      if (rawSlug === slug.toLowerCase()) return true;
+      if (itemCleanSlug === cleanSlug) return true;
+      if (
+        cleanSlug === "pengawasan" &&
+        (itemCleanSlug === "pelayanan" || rawSlug.includes("pelayanan"))
+      )
+        return true;
+      if (
+        cleanSlug === "pelayanan" &&
+        (itemCleanSlug === "pengawasan" || rawSlug.includes("pengawasan"))
+      )
+        return true;
+      return (
+        itemCleanSlug.includes(cleanSlug) || cleanSlug.includes(itemCleanSlug)
+      );
     });
 
     if (!matched) {
@@ -187,6 +203,7 @@ export async function fetchServiceDetailBySlug(
     const heroImageAlt =
       (attrs.hero_image as any)?.alternativeText ||
       (attrs.hero_image as any)?.caption ||
+      attrs.title ||
       defaultDetail.heroImageAlt;
 
     const aboutTextRaw = attrs.about_text;
@@ -213,9 +230,29 @@ export async function fetchServiceDetailBySlug(
           .filter(Boolean)
       : defaultDetail.benefits;
 
+    const galleryRaw = attrs.gallery;
+    const gallery = Array.isArray(galleryRaw)
+      ? galleryRaw
+          .map((imgItem) => ({
+            url: getStrapiMediaUrl(imgItem) || "",
+            alt:
+              (imgItem as any)?.alternativeText ||
+              (imgItem as any)?.caption ||
+              attrs.title ||
+              "Dokumentasi Galeri Proyek",
+          }))
+          .filter((item) => Boolean(item.url))
+      : defaultDetail.gallery;
+
+    // Resolve title if generic "Layanan Kami" / "Layanan"
+    let title = attrs.title || defaultDetail.title;
+    if (title === "Layanan Kami" || title === "Layanan") {
+      title = defaultDetail.title;
+    }
+
     return {
       id: attrs.id || matched.id || defaultDetail.id,
-      title: attrs.title || defaultDetail.title,
+      title,
       slug: attrs.slug || cleanSlug,
       shortDescription:
         attrs.short_description || defaultDetail.shortDescription,
@@ -226,13 +263,14 @@ export async function fetchServiceDetailBySlug(
       benefits,
       heroImage: heroImageUrl,
       heroImageAlt,
-      gallery: [],
+      gallery,
     };
   } catch (error) {
     console.error(`Error fetching service detail for ${slug}:`, error);
     return defaultDetail;
   }
 }
+
 
 /**
  * Default fallback service items when API is unavailable
