@@ -5,17 +5,13 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Enable pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
-
 # Copy dependency files
-COPY package.json pnpm-lock.yaml* .npmrc* ./
-RUN pnpm i --frozen-lockfile
+COPY package.json package-lock.json* ./
+RUN if [ -f package-lock.json ]; then npm ci; else npm i; fi
 
 # Stage 2: Builder
 FROM base AS builder
 WORKDIR /app
-RUN corepack enable && corepack prepare pnpm@latest --activate
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -28,7 +24,7 @@ ARG NEXT_PUBLIC_STRAPI_API_TOKEN
 ENV NEXT_PUBLIC_STRAPI_API_URL=$NEXT_PUBLIC_STRAPI_API_URL
 ENV NEXT_PUBLIC_STRAPI_API_TOKEN=$NEXT_PUBLIC_STRAPI_API_TOKEN
 
-RUN pnpm run build
+RUN npm run build
 
 # Stage 3: Runner
 FROM base AS runner
