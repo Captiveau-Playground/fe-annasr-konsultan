@@ -1,5 +1,5 @@
 import { StrapiResponse } from "@/types/hero";
-import { STRAPI_BASE_URL, getStrapiMediaUrl } from "./hero";
+import { getStrapiBaseUrl, getStrapiMediaUrl } from "./hero";
 import { PortfolioPageItem, PortfolioHeroData } from "@/types/portfolio-page";
 import { Project } from "@/components/PortfolioGrid";
 
@@ -86,7 +86,8 @@ export function normalizePortfolioHeroData(rawItem?: PortfolioPageItem): Portfol
  * Server-Side Fetcher for Portfolio Hero Section data from GET /api/portfolio-pages
  */
 export async function fetchPortfolioHeroData(): Promise<PortfolioHeroData> {
-  const endpoint = `${STRAPI_BASE_URL}/api/portfolio-pages`;
+  const baseUrl = getStrapiBaseUrl();
+  const endpoint = `${baseUrl}/api/portfolio-pages`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -131,7 +132,8 @@ export async function fetchPortfolioHeroData(): Promise<PortfolioHeroData> {
  * Server-Side Fetcher for Portfolio Categories from GET /api/portofolio-category-settings
  */
 export async function fetchPortfolioCategories(): Promise<string[]> {
-  const endpoint = `${STRAPI_BASE_URL}/api/portofolio-category-settings`;
+  const baseUrl = getStrapiBaseUrl();
+  const endpoint = `${baseUrl}/api/portofolio-category-settings`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -213,7 +215,8 @@ export function normalizePortfolioProjectItem(rawItem: any, index: number): Proj
  * Server-Side Fetcher for Portfolio Projects list from GET /api/portofolio-detail-settings?populate=*
  */
 export async function fetchPortfolioProjects(): Promise<Project[]> {
-  const endpoint = `${STRAPI_BASE_URL}/api/portofolio-detail-settings?populate=*`;
+  const baseUrl = getStrapiBaseUrl();
+  const endpoint = `${baseUrl}/api/portofolio-detail-settings?populate=*`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",

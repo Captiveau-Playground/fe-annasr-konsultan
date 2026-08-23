@@ -1,4 +1,4 @@
-import { STRAPI_BASE_URL } from "./hero";
+import { getStrapiBaseUrl } from "./hero";
 import { ClientsSectionData, ClientSectionHeaderData, ClientItemData } from "@/types/client";
 import { HOME_CLIENTS } from "@/lib/constant";
 
@@ -8,8 +8,9 @@ import { HOME_CLIENTS } from "@/lib/constant";
  * Fetches client list from GET /api/client-settings?populate=*
  */
 export async function fetchClientsSectionData(): Promise<ClientsSectionData> {
-  const headerEndpoint = `${STRAPI_BASE_URL}/api/client-pages`;
-  const clientsEndpoint = `${STRAPI_BASE_URL}/api/client-settings?populate=*`;
+  const baseUrl = getStrapiBaseUrl();
+  const headerEndpoint = `${baseUrl}/api/client-pages`;
+  const clientsEndpoint = `${baseUrl}/api/client-settings?populate=*`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",

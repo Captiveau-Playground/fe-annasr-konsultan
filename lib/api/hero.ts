@@ -1,7 +1,18 @@
 import { HeroSectionData, StrapiHeroItem, StrapiResponse } from "@/types/hero";
 
-export const STRAPI_BASE_URL =
-  process.env.STRAPI_API_URL || process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
+export function getStrapiBaseUrl(): string {
+  const url = process.env.STRAPI_API_URL || process.env.NEXT_PUBLIC_STRAPI_API_URL;
+  if (url && url.trim() !== "") {
+    return url;
+  }
+  // Default fallbacks when env var is not set or empty
+  if (typeof window === "undefined") {
+    return process.env.STRAPI_API_URL || "https://cms-annasr.captiveau.id";
+  }
+  return "https://cms-annasr.captiveau.id";
+}
+
+export const STRAPI_BASE_URL = getStrapiBaseUrl();
 
 /**
  * Builds the Strapi Query String for home-pages endpoint
@@ -33,7 +44,8 @@ export function getStrapiMediaUrl(media?: any): string | undefined {
     return url;
   }
 
-  return `${STRAPI_BASE_URL}${url}`;
+  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL || getStrapiBaseUrl();
+  return `${baseUrl}${url}`;
 }
 
 /**
@@ -80,11 +92,11 @@ export function normalizeHeroData(rawItem?: StrapiHeroItem): HeroSectionData {
 
 /**
  * Server-Side Fetcher for Hero Section data
- * Endpoint: http://localhost:1337/api/home-pages?populate=hero_bg_image
  */
 export async function fetchHeroSectionData(): Promise<HeroSectionData> {
   const queryString = getHeroQueryString("hero_bg_image");
-  const endpoint = `${STRAPI_BASE_URL}/api/home-pages?${queryString}`;
+  const baseUrl = getStrapiBaseUrl();
+  const endpoint = `${baseUrl}/api/home-pages?${queryString}`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -95,24 +107,30 @@ export async function fetchHeroSectionData(): Promise<HeroSectionData> {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const res = await fetch(endpoint, {
-    headers,
-    cache: "no-store", // SSR: Fetch fresh data on each server request
-  });
+  try {
+    const res = await fetch(endpoint, {
+      headers,
+      cache: "no-store", // SSR: Fetch fresh data on each server request
+    });
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch Hero Section data (${res.status}): ${res.statusText}`);
+    if (!res.ok) {
+      console.warn(`Failed to fetch Hero Section data (${res.status}): ${res.statusText}`);
+      return normalizeHeroData(undefined);
+    }
+
+    const json: StrapiResponse<StrapiHeroItem[] | StrapiHeroItem> = await res.json();
+
+    let firstItem: StrapiHeroItem | undefined;
+
+    if (Array.isArray(json.data)) {
+      firstItem = json.data[0];
+    } else if (json.data) {
+      firstItem = json.data;
+    }
+
+    return normalizeHeroData(firstItem);
+  } catch (error) {
+    console.error("Error fetching HeroSection data on server:", error);
+    return normalizeHeroData(undefined);
   }
-
-  const json: StrapiResponse<StrapiHeroItem[] | StrapiHeroItem> = await res.json();
-
-  let firstItem: StrapiHeroItem | undefined;
-
-  if (Array.isArray(json.data)) {
-    firstItem = json.data[0];
-  } else if (json.data) {
-    firstItem = json.data;
-  }
-
-  return normalizeHeroData(firstItem);
 }

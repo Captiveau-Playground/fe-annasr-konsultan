@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { MapPin, Layers } from "lucide-react";
 import Image from "next/image";
-import { STRAPI_BASE_URL, getStrapiMediaUrl } from "@/lib/api/hero";
+import { getStrapiBaseUrl, getStrapiMediaUrl } from "@/lib/api/hero";
 
 export interface Project {
   title: string;
@@ -173,7 +173,7 @@ export default function PortfolioGrid({
     if (propProjects && propProjects.length > 0) {
       setProjects(propProjects);
     } else {
-      const endpoint = `${STRAPI_BASE_URL}/api/portofolio-detail-settings?populate=*`;
+      const endpoint = `${getStrapiBaseUrl()}/api/portofolio-detail-settings?populate=*`;
       fetch(endpoint)
         .then((res) => (res.ok ? res.json() : null))
         .then((json) => {
@@ -194,7 +194,7 @@ export default function PortfolioGrid({
     if (propCategories && propCategories.length > 0) {
       setCategories(propCategories);
     } else {
-      const endpoint = `${STRAPI_BASE_URL}/api/portofolio-category-settings`;
+      const endpoint = `${getStrapiBaseUrl()}/api/portofolio-category-settings`;
       fetch(endpoint)
         .then((res) => (res.ok ? res.json() : null))
         .then((json) => {

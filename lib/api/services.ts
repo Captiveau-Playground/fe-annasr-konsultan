@@ -1,6 +1,6 @@
 import { ServiceCardData, ServiceDetailData, StrapiServiceItem } from "@/types/service";
 import { StrapiResponse } from "@/types/hero";
-import { getStrapiMediaUrl, STRAPI_BASE_URL } from "./hero";
+import { getStrapiMediaUrl, getStrapiBaseUrl } from "./hero";
 
 /**
  * Default fallback detailed services when API is unavailable
@@ -147,7 +147,8 @@ export async function fetchServiceDetailBySlug(
   const defaultDetail =
     DEFAULT_SERVICE_DETAILS[cleanSlug] || DEFAULT_SERVICE_DETAILS.perencanaan;
 
-  const endpoint = `${STRAPI_BASE_URL}/api/service-settings?populate=*`;
+  const baseUrl = getStrapiBaseUrl();
+  const endpoint = `${baseUrl}/api/service-settings?populate=*`;
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
   };
@@ -400,7 +401,8 @@ export function normalizeServiceItem(
  * Endpoint: GET /api/service-settings?populate=*
  */
 export async function fetchServicesSectionData(): Promise<ServiceCardData[]> {
-  const endpoint = `${STRAPI_BASE_URL}/api/service-settings?populate=*`;
+  const baseUrl = getStrapiBaseUrl();
+  const endpoint = `${baseUrl}/api/service-settings?populate=*`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",

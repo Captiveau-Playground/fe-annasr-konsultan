@@ -1,6 +1,6 @@
 import { AboutSectionData, StrapiAboutItem } from "@/types/about";
 import { StrapiResponse } from "@/types/hero";
-import { getStrapiMediaUrl, STRAPI_BASE_URL } from "./hero";
+import { getStrapiMediaUrl, getStrapiBaseUrl } from "./hero";
 
 /**
  * Builds the Strapi Query String for company-settings endpoint
@@ -53,11 +53,11 @@ export function normalizeAboutData(rawItem?: StrapiAboutItem): AboutSectionData 
 
 /**
  * Server-Side Fetcher for About Section / Company Settings data
- * Endpoint: GET company-settings?populate=*
  */
 export async function fetchAboutSectionData(): Promise<AboutSectionData> {
   const queryString = getAboutQueryString("*");
-  const endpoint = `${STRAPI_BASE_URL}/api/company-settings?${queryString}`;
+  const baseUrl = getStrapiBaseUrl();
+  const endpoint = `${baseUrl}/api/company-settings?${queryString}`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -68,24 +68,30 @@ export async function fetchAboutSectionData(): Promise<AboutSectionData> {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const res = await fetch(endpoint, {
-    headers,
-    cache: "no-store", // SSR: Fetch fresh data on each server request
-  });
+  try {
+    const res = await fetch(endpoint, {
+      headers,
+      cache: "no-store", // SSR: Fetch fresh data on each server request
+    });
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch About Section data (${res.status}): ${res.statusText}`);
+    if (!res.ok) {
+      console.warn(`Failed to fetch About Section data (${res.status}): ${res.statusText}`);
+      return normalizeAboutData(undefined);
+    }
+
+    const json: StrapiResponse<StrapiAboutItem[] | StrapiAboutItem> = await res.json();
+
+    let firstItem: StrapiAboutItem | undefined;
+
+    if (Array.isArray(json.data)) {
+      firstItem = json.data[0];
+    } else if (json.data) {
+      firstItem = json.data;
+    }
+
+    return normalizeAboutData(firstItem);
+  } catch (error) {
+    console.error("Error fetching AboutSection data on server:", error);
+    return normalizeAboutData(undefined);
   }
-
-  const json: StrapiResponse<StrapiAboutItem[] | StrapiAboutItem> = await res.json();
-
-  let firstItem: StrapiAboutItem | undefined;
-
-  if (Array.isArray(json.data)) {
-    firstItem = json.data[0];
-  } else if (json.data) {
-    firstItem = json.data;
-  }
-
-  return normalizeAboutData(firstItem);
 }

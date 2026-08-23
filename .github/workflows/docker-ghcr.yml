@@ -140,8 +140,10 @@ jobs:
                 container_name: annasr-frontend
                 restart: always
                 environment:
-                  NEXT_PUBLIC_STRAPI_API_URL: ${NEXT_PUBLIC_STRAPI_API_URL:-http://localhost:1337}
-                  NEXT_PUBLIC_STRAPI_API_TOKEN: ${NEXT_PUBLIC_STRAPI_API_TOKEN}
+                  STRAPI_API_URL: ${STRAPI_API_URL:-http://annasr-cms:1337}
+                  NEXT_PUBLIC_STRAPI_API_URL: ${NEXT_PUBLIC_STRAPI_API_URL:-https://cms-annasr.captiveau.id}
+                  STRAPI_API_TOKEN: ${STRAPI_API_TOKEN}
+                  NEXT_PUBLIC_STRAPI_API_TOKEN: ${NEXT_PUBLIC_STRAPI_API_TOKEN:-${STRAPI_API_TOKEN}}
                 ports:
                   - "3006:3006"
                 networks:
@@ -173,7 +175,9 @@ jobs:
             JWT_SECRET=${{ secrets.JWT_SECRET }}
             TRANSFER_TOKEN_SALT=${{ secrets.TRANSFER_TOKEN_SALT }}
             ENCRYPTION_KEY=${{ secrets.ENCRYPTION_KEY }}
+            STRAPI_API_URL=${{ secrets.STRAPI_API_URL }}
             NEXT_PUBLIC_STRAPI_API_URL=${{ secrets.NEXT_PUBLIC_STRAPI_API_URL }}
+            STRAPI_API_TOKEN=${{ secrets.STRAPI_API_TOKEN }}
             NEXT_PUBLIC_STRAPI_API_TOKEN=${{ secrets.NEXT_PUBLIC_STRAPI_API_TOKEN }}
             EOF
 

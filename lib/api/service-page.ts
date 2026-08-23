@@ -1,5 +1,5 @@
 import { StrapiResponse } from "@/types/hero";
-import { STRAPI_BASE_URL } from "./hero";
+import { getStrapiBaseUrl } from "./hero";
 import { ServicePageItem, LayananHeroData } from "@/types/service-page";
 
 /**
@@ -28,7 +28,8 @@ export function normalizeLayananHeroData(rawItem?: ServicePageItem): LayananHero
  * Server-Side Fetcher for Layanan Hero Section data from GET /api/service-pages
  */
 export async function fetchLayananHeroData(): Promise<LayananHeroData> {
-  const endpoint = `${STRAPI_BASE_URL}/api/service-pages`;
+  const baseUrl = getStrapiBaseUrl();
+  const endpoint = `${baseUrl}/api/service-pages`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -39,24 +40,30 @@ export async function fetchLayananHeroData(): Promise<LayananHeroData> {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const res = await fetch(endpoint, {
-    headers,
-    cache: "no-store", // SSR: Fetch fresh data on each server request
-  });
+  try {
+    const res = await fetch(endpoint, {
+      headers,
+      cache: "no-store", // SSR: Fetch fresh data on each server request
+    });
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch Service Pages data (${res.status}): ${res.statusText}`);
+    if (!res.ok) {
+      console.warn(`Failed to fetch Service Pages data (${res.status}): ${res.statusText}`);
+      return normalizeLayananHeroData(undefined);
+    }
+
+    const json: StrapiResponse<ServicePageItem[] | ServicePageItem> = await res.json();
+
+    let firstItem: ServicePageItem | undefined;
+
+    if (Array.isArray(json.data)) {
+      firstItem = json.data[0];
+    } else if (json.data) {
+      firstItem = json.data;
+    }
+
+    return normalizeLayananHeroData(firstItem);
+  } catch (error) {
+    console.error("Error fetching Service Pages data on server:", error);
+    return normalizeLayananHeroData(undefined);
   }
-
-  const json: StrapiResponse<ServicePageItem[] | ServicePageItem> = await res.json();
-
-  let firstItem: ServicePageItem | undefined;
-
-  if (Array.isArray(json.data)) {
-    firstItem = json.data[0];
-  } else if (json.data) {
-    firstItem = json.data;
-  }
-
-  return normalizeLayananHeroData(firstItem);
 }
