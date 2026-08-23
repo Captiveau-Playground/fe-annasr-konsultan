@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { MapPin, Layers } from "lucide-react";
 import Image from "next/image";
+import { STRAPI_BASE_URL, getStrapiMediaUrl } from "@/lib/api/hero";
 
 export interface Project {
   title: string;
@@ -20,66 +21,44 @@ interface PortfolioGridProps {
   categories?: string[];
 }
 
-export const DEFAULT_CATEGORIES = [
-  "Semua",
-  "Bangunan",
-  "Jalan",
-  "Jembatan",
-  "Irigasi",
-  "Gedung",
-  "Renovasi",
-];
+function normalizeItem(rawItem: any, index: number): Project {
+  if (!rawItem) return { title: "", location: "", category: "" };
 
-export const DEFAULT_PROJECTS: Project[] = [
-  {
-    title: "Pembangunan Gedung Serbaguna",
-    location: "Kecamatan Jombang, Jombang",
-    category: "Gedung",
-    image: "/assets/proyek-gedung-DKD8sHd2.jpg",
-    fallbackImage: "/images/perencanaan.jpg",
-    height: "h-[26rem]",
-  },
-  {
-    title: "Peningkatan Jalan Beton Desa",
-    location: "Kecamatan Tembelang, Jombang",
-    category: "Jalan",
-    image: "/assets/proyek-jalan-xGjvwBYW.jpg",
-    fallbackImage: "/images/pengawasan.jpg",
-    height: "h-64",
-  },
-  {
-    title: "Pembangunan Jembatan Penghubung Desa",
-    location: "Kecamatan Ploso, Jombang",
-    category: "Jembatan",
-    image: "/assets/proyek-jembatan-DmEaBVlD.jpg",
-    fallbackImage: "/images/hero-bg.jpg",
-    height: "h-[26rem]",
-  },
-  {
-    title: "Rehabilitasi Saluran Irigasi Primer",
-    location: "Kecamatan Megaluh, Jombang",
-    category: "Irigasi",
-    image: "/assets/proyek-irigasi-Bmt-FDLU.jpg",
-    fallbackImage: "/images/konstruksi.jpg",
-    height: "h-64",
-  },
-  {
-    title: "Renovasi Rumah Tinggal Dua Lantai",
-    location: "Candi Mulyo, Jombang",
-    category: "Renovasi",
-    image: "/assets/proyek-renovasi-DNXca7xG.jpg",
-    fallbackImage: "/images/perizinan.jpg",
-    height: "h-64",
-  },
-  {
-    title: "Pengawasan Bangunan Penahan Air",
-    location: "Kabupaten Jombang",
-    category: "Bangunan",
-    image: "/assets/proyek-bendungan-CTIXBTEp.jpg",
-    fallbackImage: "/images/team.jpg",
-    height: "h-64",
-  },
-];
+  const attrs = rawItem.attributes || rawItem;
+
+  const categoryName =
+    attrs.portofolio_category_settings?.[0]?.name ||
+    attrs.portofolio_category_settings?.[0]?.attributes?.name ||
+    attrs.category ||
+    "Bangunan";
+
+  let imgUrl: string | undefined;
+  if (attrs.image) {
+    imgUrl = getStrapiMediaUrl(attrs.image);
+  }
+
+  const fallbacks = [
+    "/images/perencanaan.jpg",
+    "/images/pengawasan.jpg",
+    "/images/hero-bg.jpg",
+    "/images/konstruksi.jpg",
+    "/images/perizinan.jpg",
+    "/images/team.jpg",
+  ];
+  const fallbackImage = fallbacks[index % fallbacks.length];
+
+  const height =
+    categoryName === "Gedung" || categoryName === "Jembatan" ? "h-[26rem]" : "h-64";
+
+  return {
+    title: attrs.title || "Proyek Konstruksi",
+    location: attrs.address || attrs.location || "Kabupaten Jombang",
+    category: categoryName,
+    image: imgUrl || fallbackImage,
+    fallbackImage: fallbackImage,
+    height: height,
+  };
+}
 
 function ProjectCardImage({
   src,
@@ -119,13 +98,48 @@ export default function PortfolioGrid({
   projects: propProjects,
   categories: propCategories,
 }: PortfolioGridProps) {
-  const projects =
-    propProjects && propProjects.length > 0 ? propProjects : DEFAULT_PROJECTS;
-
-  const categories =
-    propCategories && propCategories.length > 0 ? propCategories : DEFAULT_CATEGORIES;
-
+  const [projects, setProjects] = useState<Project[]>(propProjects || []);
+  const [categories, setCategories] = useState<string[]>(propCategories || []);
   const [activeCategory, setActiveCategory] = useState("Semua");
+
+  useEffect(() => {
+    if (propProjects && propProjects.length > 0) {
+      setProjects(propProjects);
+    } else {
+      const endpoint = `${STRAPI_BASE_URL}/api/portofolio-detail-settings?populate=*`;
+      fetch(endpoint)
+        .then((res) => (res.ok ? res.json() : null))
+        .then((json) => {
+          if (json && json.data && Array.isArray(json.data)) {
+            const normalized = json.data.map((item: any, idx: number) =>
+              normalizeItem(item, idx)
+            );
+            setProjects(normalized);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [propProjects]);
+
+  useEffect(() => {
+    if (propCategories && propCategories.length > 0) {
+      setCategories(propCategories);
+    } else {
+      const endpoint = `${STRAPI_BASE_URL}/api/portofolio-category-settings`;
+      fetch(endpoint)
+        .then((res) => (res.ok ? res.json() : null))
+        .then((json) => {
+          if (json && json.data && Array.isArray(json.data)) {
+            const names: string[] = json.data
+              .map((item: any) => (item.attributes ? item.attributes.name : item.name))
+              .filter(Boolean);
+            const withoutSemua = names.filter((n) => n.toLowerCase() !== "semua");
+            setCategories(["Semua", ...withoutSemua]);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [propCategories]);
 
   const filteredProjects = projects.filter((proj) => {
     if (activeCategory === "Semua") return true;
@@ -140,7 +154,7 @@ export default function PortfolioGrid({
   });
 
   return (
-    <section className="px-6 py-20 lg:px-8 lg:py-24">
+    <section className="px-6 py-20 lg:px-8 lg:py-24 font-sans">
       <div className="mx-auto max-w-5xl">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
@@ -155,25 +169,27 @@ export default function PortfolioGrid({
         </div>
 
         {/* Categories Filter Tabs */}
-        <div className="mt-10 flex flex-wrap justify-center gap-2.5">
-          {categories.map((cat) => {
-            const isActive = activeCategory === cat;
-            return (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setActiveCategory(cat)}
-                className={`rounded-full border px-5 py-2 text-sm font-medium transition-all cursor-pointer ${
-                  isActive
-                    ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                    : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary"
-                }`}
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </div>
+        {categories.length > 0 && (
+          <div className="mt-10 flex flex-wrap justify-center gap-2.5">
+            {categories.map((cat) => {
+              const isActive = activeCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setActiveCategory(cat)}
+                  className={`rounded-full border px-5 py-2 text-sm font-medium transition-all cursor-pointer ${
+                    isActive
+                      ? "border-primary bg-primary text-primary-foreground shadow-sm"
+                      : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary"
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
         {/* Projects Grid */}
         {filteredProjects.length > 0 ? (
