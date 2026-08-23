@@ -5,6 +5,7 @@ import { Compass, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { CONTACT_INFO } from "@/lib/constant";
 
 const NAV_ITEMS = [
   { name: "Beranda", href: "/" },
@@ -21,7 +22,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const isHome = pathname === "/";
+  const phone = CONTACT_INFO.phoneNumberClean || "6281200000000";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,136 +33,151 @@ export default function Navbar() {
       }
     };
 
-    // Initialize
     handleScroll();
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Determine if header should have transparent style (on Home page at top of screen)
-  const isTransparent = isHome && !isScrolled;
 
   return (
     <header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans",
-        isTransparent
-          ? "bg-transparent py-6"
-          : "bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100 py-4"
+        isScrolled
+          ? "bg-[#eef2f6]/95 dark:bg-slate-900/95 backdrop-blur-md shadow-sm border-b border-slate-200/80 py-3.5"
+          : "bg-transparent py-5"
       )}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-8 flex items-center justify-between">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 lg:px-8">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div
-            className={cn(
-              "w-10 h-10 rounded-full flex items-center justify-center transition-colors",
-              isTransparent
-                ? "bg-white/10 text-white"
-                : "bg-blue-600/10 text-blue-600"
-            )}
-          >
-            <Compass className="w-6 h-6" />
-          </div>
-          <div>
-            <div
+        <Link href="/" className="flex items-center gap-3">
+          <span className="flex size-10 items-center justify-center rounded-full bg-[#0066FF] text-white shrink-0 shadow-sm">
+            <Compass className="size-5" aria-hidden="true" />
+          </span>
+          <span className="leading-tight">
+            <span
               className={cn(
-                "font-bold text-lg leading-tight transition-colors",
-                isTransparent ? "text-white" : "text-slate-900"
+                "block text-sm font-bold transition-colors font-sans",
+                isScrolled ? "text-slate-900 dark:text-white" : "text-white"
               )}
             >
               CV. An Nasr Konsultan
-            </div>
-            <div
+            </span>
+            <span
               className={cn(
-                "text-xs font-medium tracking-wide transition-colors",
-                isTransparent ? "text-slate-300" : "text-slate-500"
+                "block text-[11px] tracking-wide transition-colors",
+                isScrolled ? "text-slate-500 dark:text-slate-400" : "text-white/70"
               )}
             >
-              Konsultan Teknik & Konstruksi
-            </div>
-          </div>
+              Konsultan Teknik &amp; Konstruksi
+            </span>
+          </span>
         </Link>
 
-        {/* Desktop Nav Links */}
-        <nav className="hidden lg:flex items-center gap-8">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "text-sm font-semibold tracking-wide transition-colors py-2",
-                isTransparent
-                  ? "text-white/80 hover:text-white"
-                  : "text-slate-600 hover:text-slate-900"
-              )}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
+        {/* Desktop Nav Items */}
+        <ul className="hidden items-center gap-1.5 lg:flex">
+          {NAV_ITEMS.map((item) => {
+            const isActive =
+              pathname === item.href ||
+              (item.href !== "/" && pathname.startsWith(item.href));
+
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  data-status={isActive ? "active" : undefined}
+                  aria-current={isActive ? "page" : undefined}
+                  className={cn(
+                    "rounded-full px-4 py-1.5 text-sm font-medium transition-all inline-block",
+                    isActive
+                      ? isScrolled
+                        ? "border-2 border-[#0066FF] bg-blue-500/10 text-[#0066FF] font-semibold"
+                        : "border-2 border-white/60 bg-white/10 text-white font-semibold"
+                      : isScrolled
+                      ? "text-slate-600 hover:text-[#0066FF] dark:text-slate-300"
+                      : "text-white/80 hover:text-white"
+                  )}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
 
         {/* CTA Button */}
         <div className="hidden lg:block">
-          <Link
-            href="https://wa.me/6281200000000"
+          <a
+            href={`https://wa.me/${phone}`}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noreferrer"
             className={cn(
-              "px-6 py-3 rounded-full text-sm font-bold shadow-md transition-all duration-300 hover:scale-105 inline-flex items-center",
-              isTransparent
-                ? "bg-lime-500 text-slate-950 hover:bg-lime-400"
-                : "bg-blue-600 text-white hover:bg-blue-700"
+              "inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold cursor-pointer transition-all h-11 rounded-full px-6 text-sm shadow-md",
+              isScrolled
+                ? "bg-[#0066FF] text-white hover:bg-blue-700"
+                : "bg-[#78E100] text-slate-950 hover:brightness-105"
             )}
           >
             Konsultasi Sekarang
-          </Link>
+          </a>
         </div>
 
-        {/* Mobile menu button */}
+        {/* Mobile Menu Button */}
         <button
+          type="button"
+          aria-label={mobileMenuOpen ? "Tutup menu" : "Buka menu"}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className={cn(
-            "lg:hidden p-2 rounded-md transition-colors",
-            isTransparent
-              ? "text-white hover:bg-white/10"
-              : "text-slate-700 hover:bg-slate-100"
+            "flex size-10 items-center justify-center rounded-xl border lg:hidden cursor-pointer transition-colors",
+            isScrolled
+              ? "border-slate-200 bg-white text-slate-900"
+              : "border-white/20 bg-white/10 text-white"
           )}
         >
           {mobileMenuOpen ? (
-            <X className="w-6 h-6" />
+            <X className="size-5" aria-hidden="true" />
           ) : (
-            <Menu className="w-6 h-6" />
+            <Menu className="size-5" aria-hidden="true" />
           )}
         </button>
-      </div>
+      </nav>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 top-[73px] bg-white z-40 flex flex-col p-6 animate-fade-in">
-          <nav className="flex flex-col gap-5">
-            {NAV_ITEMS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-lg font-semibold py-2 border-b border-slate-100 text-slate-800 hover:text-blue-600 transition-colors"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
-          <div className="mt-8">
-            <Link
-              href="https://wa.me/6281200000000"
+        <div className="lg:hidden fixed inset-x-0 top-[70px] bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 z-40 flex flex-col p-6 shadow-xl animate-in slide-in-from-top-2 duration-200">
+          <ul className="flex flex-col gap-2">
+            {NAV_ITEMS.map((item) => {
+              const isActive =
+                pathname === item.href ||
+                (item.href !== "/" && pathname.startsWith(item.href));
+
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      "block rounded-xl px-4 py-2.5 text-base font-medium transition-colors",
+                      isActive
+                        ? "bg-[#0066FF]/10 text-[#0066FF] font-bold border border-[#0066FF]/20"
+                        : "text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+          <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800">
+            <a
+              href={`https://wa.me/${phone}`}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noreferrer"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full justify-center px-6 py-4 rounded-full text-base font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-md flex items-center"
+              className="flex w-full items-center justify-center gap-2 font-bold bg-[#78E100] text-slate-950 shadow hover:brightness-105 h-12 rounded-full px-6 text-base"
             >
               Konsultasi Sekarang
-            </Link>
+            </a>
           </div>
         </div>
       )}
