@@ -1,121 +1,228 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MapPin, Layers } from "lucide-react";
 import Image from "next/image";
 
-interface Project {
+export interface Project {
   title: string;
   location: string;
   category: string;
-  status: string;
-  year: string;
+  status?: string;
+  year?: string;
   image?: string;
+  fallbackImage?: string;
+  height?: string;
 }
 
 interface PortfolioGridProps {
-  projects: Project[];
-  categories: string[];
+  projects?: Project[];
+  categories?: string[];
 }
 
-export default function PortfolioGrid({ projects, categories }: PortfolioGridProps) {
+export const DEFAULT_CATEGORIES = [
+  "Semua",
+  "Bangunan",
+  "Jalan",
+  "Jembatan",
+  "Irigasi",
+  "Gedung",
+  "Renovasi",
+];
+
+export const DEFAULT_PROJECTS: Project[] = [
+  {
+    title: "Pembangunan Gedung Serbaguna",
+    location: "Kecamatan Jombang, Jombang",
+    category: "Gedung",
+    image: "/assets/proyek-gedung-DKD8sHd2.jpg",
+    fallbackImage: "/images/perencanaan.jpg",
+    height: "h-[26rem]",
+  },
+  {
+    title: "Peningkatan Jalan Beton Desa",
+    location: "Kecamatan Tembelang, Jombang",
+    category: "Jalan",
+    image: "/assets/proyek-jalan-xGjvwBYW.jpg",
+    fallbackImage: "/images/pengawasan.jpg",
+    height: "h-64",
+  },
+  {
+    title: "Pembangunan Jembatan Penghubung Desa",
+    location: "Kecamatan Ploso, Jombang",
+    category: "Jembatan",
+    image: "/assets/proyek-jembatan-DmEaBVlD.jpg",
+    fallbackImage: "/images/hero-bg.jpg",
+    height: "h-[26rem]",
+  },
+  {
+    title: "Rehabilitasi Saluran Irigasi Primer",
+    location: "Kecamatan Megaluh, Jombang",
+    category: "Irigasi",
+    image: "/assets/proyek-irigasi-Bmt-FDLU.jpg",
+    fallbackImage: "/images/konstruksi.jpg",
+    height: "h-64",
+  },
+  {
+    title: "Renovasi Rumah Tinggal Dua Lantai",
+    location: "Candi Mulyo, Jombang",
+    category: "Renovasi",
+    image: "/assets/proyek-renovasi-DNXca7xG.jpg",
+    fallbackImage: "/images/perizinan.jpg",
+    height: "h-64",
+  },
+  {
+    title: "Pengawasan Bangunan Penahan Air",
+    location: "Kabupaten Jombang",
+    category: "Bangunan",
+    image: "/assets/proyek-bendungan-CTIXBTEp.jpg",
+    fallbackImage: "/images/team.jpg",
+    height: "h-64",
+  },
+];
+
+function ProjectCardImage({
+  src,
+  fallbackSrc,
+  alt,
+  className,
+}: {
+  src: string;
+  fallbackSrc: string;
+  alt: string;
+  className: string;
+}) {
+  const [imgSrc, setImgSrc] = useState(src);
+
+  useEffect(() => {
+    setImgSrc(src);
+  }, [src]);
+
+  return (
+    <Image
+      alt={alt}
+      src={imgSrc}
+      width={800}
+      height={600}
+      loading="lazy"
+      className={className}
+      onError={() => {
+        if (imgSrc !== fallbackSrc) {
+          setImgSrc(fallbackSrc);
+        }
+      }}
+    />
+  );
+}
+
+export default function PortfolioGrid({
+  projects: propProjects,
+  categories: propCategories,
+}: PortfolioGridProps) {
+  const projects =
+    propProjects && propProjects.length > 0 ? propProjects : DEFAULT_PROJECTS;
+
+  const categories =
+    propCategories && propCategories.length > 0 ? propCategories : DEFAULT_CATEGORIES;
+
   const [activeCategory, setActiveCategory] = useState("Semua");
 
   const filteredProjects = projects.filter((proj) => {
     if (activeCategory === "Semua") return true;
     if (activeCategory === "Bangunan") {
-      // "Bangunan" maps to both "Gedung" and "Renovasi" categories
-      return proj.category === "Gedung" || proj.category === "Renovasi" || proj.category === "Bangunan";
+      return (
+        proj.category === "Bangunan" ||
+        proj.category === "Gedung" ||
+        proj.category === "Renovasi"
+      );
     }
     return proj.category === activeCategory;
   });
 
   return (
-    <div>
-      {/* Categories Filter Tabs */}
-      <div className="flex flex-wrap justify-center gap-3 mb-16">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            className={`px-6 py-3.5 rounded-full text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
-              activeCategory === cat
-                ? "bg-blue-600 text-white shadow-md"
-                : "bg-slate-50 border border-slate-200 text-slate-600 hover:bg-slate-100"
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
+    <section className="px-6 py-20 lg:px-8 lg:py-24">
+      <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
+            Portfolio
+          </p>
+          <h2 className="mt-3 text-3xl font-extrabold leading-tight text-foreground sm:text-4xl lg:text-[2.75rem]">
+            Dokumentasi pekerjaan yang telah kami tangani
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+            Bangunan gedung, jalan, jembatan, hingga jaringan irigasi — dikerjakan dengan standar teknis yang sama.
+          </p>
+        </div>
 
-      {/* Projects Masonry/Asymmetric Grid */}
-      {filteredProjects.length > 0 ? (
-        <div className="columns-1 md:columns-2 lg:columns-3 gap-8 w-full">
-          {filteredProjects.map((proj, idx) => {
-            // Assign varying heights to create a premium asymmetric masonry grid look
-            let heightClass = "h-[280px]"; // Default landscape card height
-            if (proj.category === "Gedung") {
-              heightClass = "h-[450px] md:h-[500px]"; // Tall vertical card
-            } else if (proj.category === "Jembatan") {
-              heightClass = "h-[360px] md:h-[400px]"; // Medium card
-            } else if (proj.category === "Jalan") {
-              heightClass = "h-[320px] md:h-[350px]"; // Medium-short card
-            }
-
+        {/* Categories Filter Tabs */}
+        <div className="mt-10 flex flex-wrap justify-center gap-2.5">
+          {categories.map((cat) => {
+            const isActive = activeCategory === cat;
             return (
-              <div
-                key={idx}
-                className={`break-inside-avoid mb-8 relative w-full ${heightClass} rounded-[2rem] overflow-hidden group shadow-md hover:shadow-2xl hover:scale-[1.01] active:scale-[0.99] transition-all duration-500 border border-slate-100/50 bg-slate-100 flex flex-col justify-end`}
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setActiveCategory(cat)}
+                className={`rounded-full border px-5 py-2 text-sm font-medium transition-all cursor-pointer ${
+                  isActive
+                    ? "border-primary bg-primary text-primary-foreground shadow-sm"
+                    : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-primary"
+                }`}
               >
-                {/* Background Image */}
-                {proj.image && (
-                  <Image
-                    src={proj.image}
-                    alt={proj.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    priority={idx < 3}
-                  />
-                )}
-
-                {/* Dark Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/45 to-transparent z-10" />
-
-                {/* Card Context */}
-                <div className="relative z-20 p-6 md:p-8 text-left flex flex-col gap-2 mt-auto">
-                  {/* Category Tag (Solid Lime Green badge) */}
-                  <span className="w-fit bg-lime-400 text-slate-950 text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-wider mb-1 shadow-sm">
-                    {proj.category}
-                  </span>
-
-                  {/* Project Title */}
-                  <h3 className="font-extrabold text-base md:text-xl text-white leading-snug tracking-tight mb-1">
-                    {proj.title}
-                  </h3>
-
-                  {/* Location & Year details */}
-                  <div className="flex items-center justify-between text-slate-350 text-xs font-semibold mt-1">
-                    <div className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                      <span className="text-slate-300">{proj.location}</span>
-                    </div>
-                    {proj.year && (
-                      <span className="text-slate-400 font-bold shrink-0">{proj.year}</span>
-                    )}
-                  </div>
-                </div>
-              </div>
+                {cat}
+              </button>
             );
           })}
         </div>
-      ) : (
-        <div className="py-20 text-center flex flex-col items-center justify-center text-slate-400">
-          <Layers className="w-12 h-12 mb-4 text-slate-300" />
-          <p className="text-base font-medium">Belum ada proyek untuk kategori ini.</p>
-        </div>
-      )}
-    </div>
+
+        {/* Projects Grid */}
+        {filteredProjects.length > 0 ? (
+          <div className="mt-12 columns-1 gap-5 sm:columns-2 lg:columns-3 [&>*]:mb-5">
+            {filteredProjects.map((proj, idx) => {
+              const heightClass =
+                proj.height ||
+                (proj.category === "Gedung" || proj.category === "Jembatan"
+                  ? "h-[26rem]"
+                  : "h-64");
+              const initialSrc =
+                proj.image || proj.fallbackImage || "/images/perencanaan.jpg";
+              const fallbackSrc =
+                proj.fallbackImage || "/images/perencanaan.jpg";
+
+              return (
+                <div key={idx} className="break-inside-avoid">
+                  <article className="group relative overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-[var(--shadow-soft)]">
+                    <ProjectCardImage
+                      alt={`${proj.title} — ${proj.location}`}
+                      src={initialSrc}
+                      fallbackSrc={fallbackSrc}
+                      className={`w-full object-cover transition-transform duration-700 group-hover:scale-105 ${heightClass}`}
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/25 to-transparent opacity-90" />
+                    <div className="absolute inset-x-0 bottom-0 p-6">
+                      <span className="inline-flex rounded-full bg-accent px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-accent-foreground">
+                        {proj.category}
+                      </span>
+                      <h3 className="mt-3 text-lg font-bold leading-snug text-primary-foreground">
+                        {proj.title}
+                      </h3>
+                      <p className="mt-1.5 flex items-center gap-1.5 text-xs text-primary-foreground/80">
+                        <MapPin className="size-3.5" aria-hidden="true" />
+                        {proj.location}
+                      </p>
+                    </div>
+                  </article>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="py-20 text-center flex flex-col items-center justify-center text-muted-foreground">
+            <Layers className="w-12 h-12 mb-4 text-muted-foreground/60" />
+            <p className="text-base font-medium">Belum ada proyek untuk kategori ini.</p>
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
