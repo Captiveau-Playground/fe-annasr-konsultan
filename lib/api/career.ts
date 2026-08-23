@@ -1,4 +1,4 @@
-import { STRAPI_BASE_URL } from "./hero";
+import { getStrapiBaseUrl } from "./hero";
 import { CareerData, CareerPageData, CareerItemData } from "@/types/career";
 
 export const FALLBACK_CAREER_JOBS: CareerItemData[] = [
@@ -38,8 +38,9 @@ export const FALLBACK_CAREER_JOBS: CareerItemData[] = [
  * Fetches job listings from GET /api/career-settings?populate=*
  */
 export async function fetchCareerData(): Promise<CareerData> {
-  const pageEndpoint = `${STRAPI_BASE_URL}/api/career-pages?populate=*`;
-  const jobsEndpoint = `${STRAPI_BASE_URL}/api/career-settings?populate=*`;
+  const baseUrl = getStrapiBaseUrl();
+  const pageEndpoint = `${baseUrl}/api/career-pages?populate=*`;
+  const jobsEndpoint = `${baseUrl}/api/career-settings?populate=*`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",

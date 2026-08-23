@@ -1,6 +1,6 @@
 import { FounderSectionData, StrapiFounderItem } from "@/types/founder";
 import { StrapiResponse } from "@/types/hero";
-import { getStrapiMediaUrl, STRAPI_BASE_URL } from "./hero";
+import { getStrapiMediaUrl, getStrapiBaseUrl } from "./hero";
 
 /**
  * Builds the Strapi Query String for founder-settings endpoint
@@ -44,11 +44,11 @@ export function normalizeFounderData(rawItem?: StrapiFounderItem): FounderSectio
 
 /**
  * Server-Side Fetcher for Founder Section data
- * Endpoint: GET founder-settings?populate=*
  */
 export async function fetchFounderSectionData(): Promise<FounderSectionData> {
   const queryString = getFounderQueryString("*");
-  const endpoint = `${STRAPI_BASE_URL}/api/founder-settings?${queryString}`;
+  const baseUrl = getStrapiBaseUrl();
+  const endpoint = `${baseUrl}/api/founder-settings?${queryString}`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -59,24 +59,30 @@ export async function fetchFounderSectionData(): Promise<FounderSectionData> {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const res = await fetch(endpoint, {
-    headers,
-    cache: "no-store", // SSR: Fetch fresh data on each server request
-  });
+  try {
+    const res = await fetch(endpoint, {
+      headers,
+      cache: "no-store", // SSR: Fetch fresh data on each server request
+    });
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch Founder Section data (${res.status}): ${res.statusText}`);
+    if (!res.ok) {
+      console.warn(`Failed to fetch Founder Section data (${res.status}): ${res.statusText}`);
+      return normalizeFounderData(undefined);
+    }
+
+    const json: StrapiResponse<StrapiFounderItem[] | StrapiFounderItem> = await res.json();
+
+    let firstItem: StrapiFounderItem | undefined;
+
+    if (Array.isArray(json.data)) {
+      firstItem = json.data[0];
+    } else if (json.data) {
+      firstItem = json.data;
+    }
+
+    return normalizeFounderData(firstItem);
+  } catch (error) {
+    console.error("Error fetching FounderSection data on server:", error);
+    return normalizeFounderData(undefined);
   }
-
-  const json: StrapiResponse<StrapiFounderItem[] | StrapiFounderItem> = await res.json();
-
-  let firstItem: StrapiFounderItem | undefined;
-
-  if (Array.isArray(json.data)) {
-    firstItem = json.data[0];
-  } else if (json.data) {
-    firstItem = json.data;
-  }
-
-  return normalizeFounderData(firstItem);
 }

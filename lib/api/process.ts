@@ -1,4 +1,4 @@
-import { STRAPI_BASE_URL } from "./hero";
+import { getStrapiBaseUrl } from "./hero";
 import { ProcessSectionData, ProcessHeaderData, ProcessItemData } from "@/types/process";
 import { HOME_PROCESSES } from "@/lib/constant";
 
@@ -8,8 +8,9 @@ import { HOME_PROCESSES } from "@/lib/constant";
  * Fetches steps from GET /api/working-process-detail-settings
  */
 export async function fetchProcessSectionData(): Promise<ProcessSectionData> {
-  const headerEndpoint = `${STRAPI_BASE_URL}/api/working-process-settings`;
-  const itemsEndpoint = `${STRAPI_BASE_URL}/api/working-process-detail-settings`;
+  const baseUrl = getStrapiBaseUrl();
+  const headerEndpoint = `${baseUrl}/api/working-process-settings`;
+  const itemsEndpoint = `${baseUrl}/api/working-process-detail-settings`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",

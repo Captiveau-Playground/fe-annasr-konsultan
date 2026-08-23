@@ -54,7 +54,8 @@ Portainer memerlukan token otentikasi agar bisa melakukan `pull` image private d
 | `JWT_SECRET` | Salin dari `.env` Strapi CMS (`JWT_SECRET`) |
 | `TRANSFER_TOKEN_SALT`| Salin dari `.env` Strapi CMS (`TRANSFER_TOKEN_SALT`) |
 | `ENCRYPTION_KEY` | Salin dari `.env` Strapi CMS (`ENCRYPTION_KEY`) |
-| `NEXT_PUBLIC_STRAPI_API_URL` | URL publik Strapi, misal: `http://<IP_VPS_ANDA>:1337` |
+| `STRAPI_API_URL` | URL internal Docker/CMS untuk SSR Next.js (misal: `http://annasr-cms:1337` atau `https://cms-annasr.captiveau.id`) |
+| `NEXT_PUBLIC_STRAPI_API_URL` | URL publik Strapi untuk Client Browser, misal: `https://cms-annasr.captiveau.id` |
 | `NEXT_PUBLIC_STRAPI_API_TOKEN`| Token API Strapi untuk Next.js |
 
 6. Klik **Deploy the stack**.

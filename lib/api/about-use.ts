@@ -1,5 +1,5 @@
 import { StrapiResponse } from "@/types/hero";
-import { STRAPI_BASE_URL } from "./hero";
+import { getStrapiBaseUrl } from "./hero";
 import { AboutUseItem, TentangHeroData } from "@/types/about-use";
 
 /**
@@ -21,7 +21,8 @@ export function normalizeTentangHeroData(rawItem?: AboutUseItem): TentangHeroDat
  * Server-Side Fetcher for Tentang Hero Section data from GET /api/about-uses
  */
 export async function fetchTentangHeroData(): Promise<TentangHeroData> {
-  const endpoint = `${STRAPI_BASE_URL}/api/about-uses`;
+  const baseUrl = getStrapiBaseUrl();
+  const endpoint = `${baseUrl}/api/about-uses`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -32,24 +33,30 @@ export async function fetchTentangHeroData(): Promise<TentangHeroData> {
     headers["Authorization"] = `Bearer ${token}`;
   }
 
-  const res = await fetch(endpoint, {
-    headers,
-    cache: "no-store", // SSR: Fetch fresh data on each server request
-  });
+  try {
+    const res = await fetch(endpoint, {
+      headers,
+      cache: "no-store", // SSR: Fetch fresh data on each server request
+    });
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch About Uses data (${res.status}): ${res.statusText}`);
+    if (!res.ok) {
+      console.warn(`Failed to fetch About Uses data (${res.status}): ${res.statusText}`);
+      return normalizeTentangHeroData(undefined);
+    }
+
+    const json: StrapiResponse<AboutUseItem[] | AboutUseItem> = await res.json();
+
+    let firstItem: AboutUseItem | undefined;
+
+    if (Array.isArray(json.data)) {
+      firstItem = json.data[0];
+    } else if (json.data) {
+      firstItem = json.data;
+    }
+
+    return normalizeTentangHeroData(firstItem);
+  } catch (error) {
+    console.error("Error fetching About Uses data on server:", error);
+    return normalizeTentangHeroData(undefined);
   }
-
-  const json: StrapiResponse<AboutUseItem[] | AboutUseItem> = await res.json();
-
-  let firstItem: AboutUseItem | undefined;
-
-  if (Array.isArray(json.data)) {
-    firstItem = json.data[0];
-  } else if (json.data) {
-    firstItem = json.data;
-  }
-
-  return normalizeTentangHeroData(firstItem);
 }
