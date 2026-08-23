@@ -21,6 +21,67 @@ interface PortfolioGridProps {
   categories?: string[];
 }
 
+const FALLBACK_CATEGORIES = [
+  "Semua",
+  "Bangunan",
+  "Jalan",
+  "Jembatan",
+  "Irigasi",
+  "Gedung",
+  "Renovasi",
+];
+
+const FALLBACK_PROJECTS: Project[] = [
+  {
+    title: "Pembangunan Gedung Serbaguna",
+    location: "Kecamatan Jombang, Jombang",
+    category: "Gedung",
+    image: "/assets/proyek-gedung-DKD8sHd2.jpg",
+    fallbackImage: "/images/perencanaan.jpg",
+    height: "h-[26rem]",
+  },
+  {
+    title: "Peningkatan Jalan Beton Desa",
+    location: "Kecamatan Tembelang, Jombang",
+    category: "Jalan",
+    image: "/assets/proyek-jalan-xGjvwBYW.jpg",
+    fallbackImage: "/images/pengawasan.jpg",
+    height: "h-64",
+  },
+  {
+    title: "Pembangunan Jembatan Penghubung Desa",
+    location: "Kecamatan Ploso, Jombang",
+    category: "Jembatan",
+    image: "/assets/proyek-jembatan-DmEaBVlD.jpg",
+    fallbackImage: "/images/hero-bg.jpg",
+    height: "h-[26rem]",
+  },
+  {
+    title: "Rehabilitasi Saluran Irigasi Primer",
+    location: "Kecamatan Megaluh, Jombang",
+    category: "Irigasi",
+    image: "/assets/proyek-irigasi-Bmt-FDLU.jpg",
+    fallbackImage: "/images/konstruksi.jpg",
+    height: "h-64",
+  },
+  {
+    title: "Renovasi Rumah Tinggal Dua Lantai",
+    location: "Candi Mulyo, Jombang",
+    category: "Renovasi",
+    image: "/assets/proyek-renovasi-DNXca7xG.jpg",
+    fallbackImage: "/images/perizinan.jpg",
+    height: "h-64",
+  },
+  {
+    title: "Pengawasan Bangunan Penahan Air",
+    location: "Kabupaten Jombang",
+    category: "Bangunan",
+    image: "/assets/proyek-bendungan-CTIXBTEp.jpg",
+    fallbackImage: "/images/team.jpg",
+    height: "h-64",
+  },
+];
+
 function normalizeItem(rawItem: any, index: number): Project {
   if (!rawItem) return { title: "", location: "", category: "" };
 
@@ -98,8 +159,14 @@ export default function PortfolioGrid({
   projects: propProjects,
   categories: propCategories,
 }: PortfolioGridProps) {
-  const [projects, setProjects] = useState<Project[]>(propProjects || []);
-  const [categories, setCategories] = useState<string[]>(propCategories || []);
+  const [projects, setProjects] = useState<Project[]>(
+    propProjects && propProjects.length > 0 ? propProjects : FALLBACK_PROJECTS
+  );
+
+  const [categories, setCategories] = useState<string[]>(
+    propCategories && propCategories.length > 0 ? propCategories : FALLBACK_CATEGORIES
+  );
+
   const [activeCategory, setActiveCategory] = useState("Semua");
 
   useEffect(() => {
@@ -110,14 +177,16 @@ export default function PortfolioGrid({
       fetch(endpoint)
         .then((res) => (res.ok ? res.json() : null))
         .then((json) => {
-          if (json && json.data && Array.isArray(json.data)) {
+          if (json && json.data && Array.isArray(json.data) && json.data.length > 0) {
             const normalized = json.data.map((item: any, idx: number) =>
               normalizeItem(item, idx)
             );
             setProjects(normalized);
+          } else {
+            setProjects(FALLBACK_PROJECTS);
           }
         })
-        .catch(() => {});
+        .catch(() => setProjects(FALLBACK_PROJECTS));
     }
   }, [propProjects]);
 
@@ -129,15 +198,17 @@ export default function PortfolioGrid({
       fetch(endpoint)
         .then((res) => (res.ok ? res.json() : null))
         .then((json) => {
-          if (json && json.data && Array.isArray(json.data)) {
+          if (json && json.data && Array.isArray(json.data) && json.data.length > 0) {
             const names: string[] = json.data
               .map((item: any) => (item.attributes ? item.attributes.name : item.name))
               .filter(Boolean);
             const withoutSemua = names.filter((n) => n.toLowerCase() !== "semua");
             setCategories(["Semua", ...withoutSemua]);
+          } else {
+            setCategories(FALLBACK_CATEGORIES);
           }
         })
-        .catch(() => {});
+        .catch(() => setCategories(FALLBACK_CATEGORIES));
     }
   }, [propCategories]);
 
