@@ -1,14 +1,26 @@
+import { fetchLayananHeroData } from "@/lib/api/service-page";
+import { LayananHeroData } from "@/types/service-page";
+
 interface LayananHeroSectionProps {
-  badge?: string;
-  title?: string;
-  description?: string;
+  data?: LayananHeroData;
 }
 
-export default function LayananHeroSection({
-  badge = "Layanan",
-  title = "Layanan teknik yang lengkap dan terintegrasi",
-  description = "Dari studi awal hingga serah terima pekerjaan, seluruh kebutuhan teknis proyek Anda dapat kami tangani dalam satu koordinasi.",
-}: LayananHeroSectionProps) {
+export default async function LayananHeroSection({ data: propData }: LayananHeroSectionProps) {
+  let data = propData;
+  if (!data) {
+    try {
+      data = await fetchLayananHeroData();
+    } catch (err) {
+      console.error("Error fetching LayananHeroSection data on server:", err);
+    }
+  }
+
+  const badge = data?.badge || "Layanan";
+  const title = data?.title || "Layanan teknik yang lengkap dan terintegrasi";
+  const description =
+    data?.description ||
+    "Dari studi awal hingga serah terima pekerjaan, seluruh kebutuhan teknis proyek Anda dapat kami tangani dalam satu koordinasi.";
+
   return (
     <section className="relative overflow-hidden bg-[linear-gradient(135deg,#133d9c_0%,#005ded_100%)] px-5 pb-20 pt-36 lg:px-8 lg:pb-28 lg:pt-44 font-sans">
       {/* Blueprint Grid Overlay */}
@@ -30,3 +42,4 @@ export default function LayananHeroSection({
     </section>
   );
 }
+
