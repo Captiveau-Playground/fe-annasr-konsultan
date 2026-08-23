@@ -102,7 +102,8 @@ export async function fetchHeroSectionData(): Promise<HeroSectionData> {
     "Content-Type": "application/json",
   };
 
-  const token = process.env.STRAPI_API_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+  const rawToken = process.env.STRAPI_API_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN || "";
+  const token = rawToken.trim();
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
