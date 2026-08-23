@@ -27,12 +27,13 @@ export function getHeroQueryString(populate = "hero_bg_image"): string {
 }
 
 /**
- * Normalizes image URL from Strapi media response
+ * Normalizes image URL from Strapi media response.
+ * Rewrites internal docker hosts (e.g. annasr-cms, localhost:1337) to public domain.
  */
 export function getStrapiMediaUrl(media?: any): string | undefined {
   if (!media) return undefined;
 
-  const url =
+  let url: string | undefined =
     media?.url ||
     media?.data?.attributes?.url ||
     media?.data?.[0]?.attributes?.url ||
@@ -40,12 +41,29 @@ export function getStrapiMediaUrl(media?: any): string | undefined {
 
   if (!url) return undefined;
 
+  const publicBaseUrl = (
+    process.env.NEXT_PUBLIC_STRAPI_API_URL || "https://cms-annasr.captiveau.id"
+  ).replace(/\/$/, "");
+
   if (url.startsWith("http://") || url.startsWith("https://")) {
+    // If Strapi returned an internal docker hostname or localhost
+    if (
+      url.includes("annasr-cms") ||
+      url.includes("localhost:1337") ||
+      url.includes("127.0.0.1:1337")
+    ) {
+      try {
+        const parsed = new URL(url);
+        return `${publicBaseUrl}${parsed.pathname}${parsed.search}`;
+      } catch (e) {
+        return url;
+      }
+    }
     return url;
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_STRAPI_API_URL || getStrapiBaseUrl();
-  return `${baseUrl}${url}`;
+  const cleanPath = url.startsWith("/") ? url : `/${url}`;
+  return `${publicBaseUrl}${cleanPath}`;
 }
 
 /**
