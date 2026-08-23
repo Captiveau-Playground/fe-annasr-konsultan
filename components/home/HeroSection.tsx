@@ -31,44 +31,49 @@ export default async function HeroSection({ data: propData }: HeroSectionProps) 
   const bgImage = data?.backgroundImageUrl || "/images/hero-bg.jpg";
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-slate-950 font-sans overflow-hidden">
-      {/* Background Image with Dark Blue Overlay */}
+    <section className="cta-gradient relative min-h-screen flex items-center justify-center overflow-hidden px-5 pb-20 pt-36 lg:px-8 lg:pb-28 lg:pt-44 font-sans">
+      {/* Background Image with Overlay & Blueprint Grid */}
       <div className="absolute inset-0 z-0">
         <Image
           src={bgImage}
-          alt="Construction Site background bg-cover"
+          alt="Background hero CV. An Nasr Konsultan"
           fill
           sizes="100vw"
           unoptimized
-          className="object-cover opacity-100 select-none scale-105 animate-pulse-slow"
+          className="object-cover opacity-30 select-none scale-105"
           priority
         />
-        <div className="absolute inset-0 bg-[#4f6baa]/85 z-10" />
-        {/* Blueprint Grid Lines Overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff15_1px,transparent_1px),linear-gradient(to_bottom,#ffffff15_1px,transparent_1px)] bg-[size:4rem_4rem] z-10" />
+        <div
+          className="blueprint-grid absolute inset-0 opacity-25"
+          aria-hidden="true"
+        />
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-20 max-w-5xl mx-auto px-6 text-center flex flex-col items-center mt-12 md:mt-0">
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-tight tracking-tight max-w-4xl mb-8">
-          {title} <span className="text-lime-400">{titleHighlight}</span>
+      <div className="relative z-20 max-w-4xl mx-auto text-center flex flex-col items-center">
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent mb-4">
+          Konsultan Teknik &amp; Konstruksi
+        </p>
+
+        <h1 className="text-4xl font-extrabold leading-tight text-primary-foreground sm:text-6xl lg:text-7xl tracking-tight mb-6">
+          {title} <span className="text-accent">{titleHighlight}</span>
         </h1>
 
-        <p className="text-slate-300 text-base md:text-xl leading-relaxed max-w-3xl mb-12">
+        <p className="mx-auto max-w-2xl text-base md:text-lg leading-relaxed text-primary-foreground/80 mb-10">
           {description}
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-5">
+        <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
           <Link
             href={primaryCtaUrl}
-            className="px-8 py-4 rounded-full text-base font-bold bg-lime-500 text-slate-950 hover:bg-lime-400 hover:scale-105 shadow-[0_4px_20px_rgba(139,227,0,0.3)] transition-all duration-300 flex items-center justify-center gap-2 group"
+            className="inline-flex h-13 items-center justify-center gap-2 rounded-full bg-accent px-8 text-base font-bold text-accent-foreground shadow-[var(--shadow-lift)] transition-all hover:brightness-105"
           >
             {primaryCtaText}
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="size-4 text-accent-foreground" aria-hidden="true" />
           </Link>
           <Link
             href={secondaryCtaUrl}
-            className="px-8 py-4 rounded-full text-base font-semibold border-2 border-white/20 text-white hover:bg-white/10 hover:border-white/40 transition-colors flex items-center justify-center"
+            className="inline-flex h-13 items-center justify-center gap-2 rounded-full border border-primary-foreground/30 bg-primary-foreground/10 px-8 text-base font-semibold text-primary-foreground backdrop-blur-xs transition-all hover:bg-primary-foreground/20"
           >
             {secondaryCtaText}
           </Link>
