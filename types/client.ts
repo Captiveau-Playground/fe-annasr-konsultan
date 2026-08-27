@@ -1,7 +1,10 @@
+import { HeroSeoData, StrapiSeoItem } from "./hero";
+
 export interface ClientSectionHeaderData {
   title?: string;
   tagline?: string;
   description?: string;
+  seo?: HeroSeoData;
 }
 
 export interface ClientItemData {

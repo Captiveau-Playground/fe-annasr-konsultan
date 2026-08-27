@@ -1,4 +1,4 @@
-import { StrapiImage } from "./hero";
+import { HeroSeoData, StrapiImage, StrapiSeoItem } from "./hero";
 
 export interface StrapiServiceItem {
   id: number | string;
@@ -14,6 +14,7 @@ export interface StrapiServiceItem {
   scope_list_text?: string | null;
   hero_image?: StrapiImage;
   gallery?: StrapiImage[];
+  seo?: StrapiSeoItem[] | StrapiSeoItem;
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string;
@@ -45,5 +46,7 @@ export interface ServiceDetailData {
   heroImage: string;
   heroImageAlt: string;
   gallery: { url: string; alt: string }[];
+  seo?: HeroSeoData;
 }
+
 

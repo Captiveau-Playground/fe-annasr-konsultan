@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import ServiceDetailComponent from "@/components/layanan/ServiceDetailComponent";
 import { fetchServiceDetailBySlug } from "@/lib/api/services";
 
+import { constructMetadata, LOCAL_BUSINESS_JSON_LD } from "@/lib/seo";
+
 export const dynamic = "force-dynamic";
 
 interface ServiceDetailPageProps {
@@ -15,10 +17,12 @@ export async function generateMetadata({
 }: ServiceDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
   const data = await fetchServiceDetailBySlug(slug);
-  return {
-    title: `${data.title} — CV. AN NASR KONSULTAN`,
-    description: data.shortDescription,
-  };
+  return constructMetadata({
+    seo: data?.seo,
+    fallbackTitle: `${data.title} — CV. AN NASR KONSULTAN`,
+    fallbackDescription: data.shortDescription,
+    path: `/layanan/${slug}`,
+  });
 }
 
 export default async function ServiceDetailPage({
@@ -27,5 +31,13 @@ export default async function ServiceDetailPage({
   const { slug } = await params;
   const data = await fetchServiceDetailBySlug(slug);
 
-  return <ServiceDetailComponent data={data} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_JSON_LD) }}
+      />
+      <ServiceDetailComponent data={data} />
+    </>
+  );
 }

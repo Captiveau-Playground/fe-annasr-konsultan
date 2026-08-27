@@ -35,6 +35,17 @@ export function normalizeAboutData(rawItem?: StrapiAboutItem): AboutSectionData 
     (imageMedia as any)?.caption ||
     "Tim CV. AN NASR KONSULTAN — Jombang, Jawa Timur";
 
+  const rawSeo = attrs.seo;
+  const seoItem = Array.isArray(rawSeo) ? rawSeo[0] : rawSeo;
+  const seo = seoItem
+    ? {
+        metaTitle: seoItem.metaTile || seoItem.metaTitle || seoItem.title,
+        metaDescription: seoItem.metaDescription || seoItem.description,
+        keywords: seoItem.keywords,
+        metaImageUrl: getStrapiMediaUrl(seoItem.metaImage),
+      }
+    : undefined;
+
   return {
     title: attrs.title,
     tagline: attrs.tagline,
@@ -48,6 +59,7 @@ export function normalizeAboutData(rawItem?: StrapiAboutItem): AboutSectionData 
     imageUrl,
     imageAlt,
     imageCaption,
+    seo,
   };
 }
 

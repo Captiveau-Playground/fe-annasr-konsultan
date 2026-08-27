@@ -1,3 +1,5 @@
+import { HeroSeoData, StrapiSeoItem } from "./hero";
+
 export interface ServicePageItem {
   id: number | string;
   documentId?: string;
@@ -7,6 +9,7 @@ export interface ServicePageItem {
   title?: string;
   tagline?: string;
   description?: string;
+  seo?: StrapiSeoItem[] | StrapiSeoItem;
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string;
@@ -21,4 +24,6 @@ export interface LayananHeroData {
   sectionTitle?: string;
   sectionTagline?: string;
   sectionDescription?: string;
+  seo?: HeroSeoData;
 }
+

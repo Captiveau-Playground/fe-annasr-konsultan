@@ -251,6 +251,17 @@ export async function fetchServiceDetailBySlug(
       title = defaultDetail.title;
     }
 
+    const rawSeo = attrs.seo;
+    const seoItem = Array.isArray(rawSeo) ? rawSeo[0] : rawSeo;
+    const seo = seoItem
+      ? {
+          metaTitle: seoItem.metaTile || seoItem.metaTitle || seoItem.title,
+          metaDescription: seoItem.metaDescription || seoItem.description,
+          keywords: seoItem.keywords,
+          metaImageUrl: getStrapiMediaUrl(seoItem.metaImage),
+        }
+      : undefined;
+
     return {
       id: attrs.id || matched.id || defaultDetail.id,
       title,
@@ -265,6 +276,7 @@ export async function fetchServiceDetailBySlug(
       heroImage: heroImageUrl,
       heroImageAlt,
       gallery,
+      seo,
     };
   } catch (error) {
     console.error(`Error fetching service detail for ${slug}:`, error);

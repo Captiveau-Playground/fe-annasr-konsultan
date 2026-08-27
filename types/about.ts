@@ -1,4 +1,4 @@
-import { StrapiImage } from "./hero";
+import { HeroSeoData, StrapiImage, StrapiSeoItem } from "./hero";
 
 export interface AboutSectionData {
   title?: string;
@@ -13,6 +13,7 @@ export interface AboutSectionData {
   imageUrl?: string;
   imageAlt?: string;
   imageCaption?: string;
+  seo?: HeroSeoData;
 }
 
 export interface StrapiAboutItem {
@@ -31,6 +32,7 @@ export interface StrapiAboutItem {
     alternativeText?: string;
     caption?: string;
   };
+  seo?: StrapiSeoItem[] | StrapiSeoItem;
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string;
@@ -38,3 +40,4 @@ export interface StrapiAboutItem {
   attributes?: Record<string, any>;
   [key: string]: unknown;
 }
+
