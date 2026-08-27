@@ -7,13 +7,20 @@ import { fetchTentangHeroData } from "@/lib/api/about-use";
 import { fetchFounderSectionData } from "@/lib/api/founder";
 import { fetchAboutSectionData } from "@/lib/api/about";
 
-export const metadata: Metadata = {
-  title: "Tentang Kami — CV. AN NASR KONSULTAN",
-  description:
-    "Mitra teknik yang tumbuh bersama pembangunan daerah. Kami hadir untuk memastikan setiap rencana pembangunan berjalan dengan perhitungan yang matang dan pelaksanaan yang bertanggung jawab.",
-};
+import { constructMetadata, LOCAL_BUSINESS_JSON_LD } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const heroData = await fetchTentangHeroData().catch(() => undefined);
+  return constructMetadata({
+    seo: heroData?.seo,
+    fallbackTitle: "Tentang Kami — CV. AN NASR KONSULTAN",
+    fallbackDescription:
+      "Mitra teknik yang tumbuh bersama pembangunan daerah. Kami hadir untuk memastikan setiap rencana pembangunan berjalan dengan perhitungan yang matang dan pelaksanaan yang bertanggung jawab.",
+    path: "/tentang",
+  });
+}
 
 export default async function TentangPage() {
   const [heroData, founderData, aboutData] = await Promise.all([
@@ -23,14 +30,21 @@ export default async function TentangPage() {
   ]);
 
   return (
-    <div className="flex flex-col min-h-screen bg-background font-sans">
-      <TentangHeroSection data={heroData} />
-      <FounderSection data={founderData} />
-      <AboutSection data={aboutData} />
-      <CtaSection />
-    </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_JSON_LD) }}
+      />
+      <div className="flex flex-col min-h-screen bg-background font-sans">
+        <TentangHeroSection data={heroData} />
+        <FounderSection data={founderData} />
+        <AboutSection data={aboutData} />
+        <CtaSection />
+      </div>
+    </>
   );
 }
+
 
 
 

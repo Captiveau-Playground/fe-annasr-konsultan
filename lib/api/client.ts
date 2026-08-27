@@ -1,4 +1,4 @@
-import { getStrapiBaseUrl } from "./hero";
+import { getStrapiBaseUrl, getStrapiMediaUrl } from "./hero";
 import { ClientsSectionData, ClientSectionHeaderData, ClientItemData } from "@/types/client";
 import { HOME_CLIENTS } from "@/lib/constant";
 
@@ -9,7 +9,7 @@ import { HOME_CLIENTS } from "@/lib/constant";
  */
 export async function fetchClientsSectionData(): Promise<ClientsSectionData> {
   const baseUrl = getStrapiBaseUrl();
-  const headerEndpoint = `${baseUrl}/api/client-pages`;
+  const headerEndpoint = `${baseUrl}/api/client-pages?populate=seo`;
   const clientsEndpoint = `${baseUrl}/api/client-settings?populate=*`;
 
   const headers: Record<string, string> = {
@@ -39,6 +39,17 @@ export async function fetchClientsSectionData(): Promise<ClientsSectionData> {
       const rawHeader = Array.isArray(headerJson.data) ? headerJson.data[0] : headerJson.data;
       if (rawHeader) {
         const attrs = rawHeader.attributes || rawHeader;
+        const rawSeo = attrs.seo;
+        const seoItem = Array.isArray(rawSeo) ? rawSeo[0] : rawSeo;
+        const seo = seoItem
+          ? {
+              metaTitle: seoItem.metaTile || seoItem.metaTitle || seoItem.title,
+              metaDescription: seoItem.metaDescription || seoItem.description,
+              keywords: seoItem.keywords,
+              metaImageUrl: getStrapiMediaUrl(seoItem.metaImage),
+            }
+          : undefined;
+
         header = {
           title:
             attrs.client_section_title || attrs.title || "Klien Kami",
@@ -50,6 +61,7 @@ export async function fetchClientsSectionData(): Promise<ClientsSectionData> {
             attrs.client_section_description ||
             attrs.description ||
             "Sebagian pemberi tugas yang pernah bekerja sama dengan CV. AN NASR KONSULTAN.",
+          seo,
         };
       }
     } catch (e) {

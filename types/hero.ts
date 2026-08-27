@@ -2,6 +2,7 @@ export interface HeroSeoData {
   metaTitle?: string;
   metaDescription?: string;
   keywords?: string;
+  metaImageUrl?: string;
 }
 
 export interface HeroSectionData {
@@ -39,6 +40,7 @@ export interface StrapiSeoItem {
   keywords?: string;
   title?: string;
   description?: string;
+  metaImage?: StrapiImage;
   [key: string]: unknown;
 }
 

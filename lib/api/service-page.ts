@@ -1,5 +1,5 @@
 import { StrapiResponse } from "@/types/hero";
-import { getStrapiBaseUrl } from "./hero";
+import { getStrapiBaseUrl, getStrapiMediaUrl } from "./hero";
 import { ServicePageItem, LayananHeroData } from "@/types/service-page";
 
 /**
@@ -9,6 +9,17 @@ export function normalizeLayananHeroData(rawItem?: ServicePageItem): LayananHero
   if (!rawItem) return {};
 
   const attrs = (rawItem.attributes || rawItem) as ServicePageItem;
+
+  const rawSeo = attrs.seo;
+  const seoItem = Array.isArray(rawSeo) ? rawSeo[0] : rawSeo;
+  const seo = seoItem
+    ? {
+        metaTitle: seoItem.metaTile || seoItem.metaTitle || seoItem.title,
+        metaDescription: seoItem.metaDescription || seoItem.description,
+        keywords: seoItem.keywords,
+        metaImageUrl: getStrapiMediaUrl(seoItem.metaImage),
+      }
+    : undefined;
 
   return {
     badge: attrs.hero_title || "Layanan",
@@ -21,15 +32,16 @@ export function normalizeLayananHeroData(rawItem?: ServicePageItem): LayananHero
     sectionDescription:
       attrs.description ||
       "Empat lini layanan utama yang saling terhubung, sehingga setiap tahap proyek Anda tetap terkendali dalam satu standar mutu.",
+    seo,
   };
 }
 
 /**
- * Server-Side Fetcher for Layanan Hero Section data from GET /api/service-pages
+ * Server-Side Fetcher for Layanan Hero Section data from GET /api/service-pages?populate=seo
  */
 export async function fetchLayananHeroData(): Promise<LayananHeroData> {
   const baseUrl = getStrapiBaseUrl();
-  const endpoint = `${baseUrl}/api/service-pages`;
+  const endpoint = `${baseUrl}/api/service-pages?populate=seo`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",

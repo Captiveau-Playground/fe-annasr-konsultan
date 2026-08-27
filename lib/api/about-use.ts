@@ -1,5 +1,5 @@
 import { StrapiResponse } from "@/types/hero";
-import { getStrapiBaseUrl } from "./hero";
+import { getStrapiBaseUrl, getStrapiMediaUrl } from "./hero";
 import { AboutUseItem, TentangHeroData } from "@/types/about-use";
 
 /**
@@ -10,19 +10,31 @@ export function normalizeTentangHeroData(rawItem?: AboutUseItem): TentangHeroDat
 
   const attrs = (rawItem.attributes || rawItem) as AboutUseItem;
 
+  const rawSeo = attrs.seo;
+  const seoItem = Array.isArray(rawSeo) ? rawSeo[0] : rawSeo;
+  const seo = seoItem
+    ? {
+        metaTitle: seoItem.metaTile || seoItem.metaTitle || seoItem.title,
+        metaDescription: seoItem.metaDescription || seoItem.description,
+        keywords: seoItem.keywords,
+        metaImageUrl: getStrapiMediaUrl(seoItem.metaImage),
+      }
+    : undefined;
+
   return {
     badge: "Tentang Kami",
     title: attrs.hero_title || attrs.title,
     description: attrs.hero_description || attrs.description,
+    seo,
   };
 }
 
 /**
- * Server-Side Fetcher for Tentang Hero Section data from GET /api/about-uses
+ * Server-Side Fetcher for Tentang Hero Section data from GET /api/about-uses?populate=seo
  */
 export async function fetchTentangHeroData(): Promise<TentangHeroData> {
   const baseUrl = getStrapiBaseUrl();
-  const endpoint = `${baseUrl}/api/about-uses`;
+  const endpoint = `${baseUrl}/api/about-uses?populate=seo`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
@@ -60,3 +72,4 @@ export async function fetchTentangHeroData(): Promise<TentangHeroData> {
     return normalizeTentangHeroData(undefined);
   }
 }
+

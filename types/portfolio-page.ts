@@ -1,3 +1,5 @@
+import { HeroSeoData, StrapiSeoItem } from "./hero";
+
 export interface PortfolioPageItem {
   id: number;
   documentId?: string;
@@ -7,6 +9,7 @@ export interface PortfolioPageItem {
   hero_title?: string;
   hero_tagline?: string;
   hero_description?: string;
+  seo?: StrapiSeoItem[] | StrapiSeoItem;
   createdAt?: string;
   updatedAt?: string;
   publishedAt?: string;
@@ -18,4 +21,6 @@ export interface PortfolioHeroData {
   title?: string;
   tagline?: string;
   description?: string;
+  seo?: HeroSeoData;
 }
+

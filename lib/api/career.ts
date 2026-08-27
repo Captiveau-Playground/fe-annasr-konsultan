@@ -1,4 +1,4 @@
-import { getStrapiBaseUrl } from "./hero";
+import { getStrapiBaseUrl, getStrapiMediaUrl } from "./hero";
 import { CareerData, CareerPageData, CareerItemData } from "@/types/career";
 
 export const FALLBACK_CAREER_JOBS: CareerItemData[] = [
@@ -73,6 +73,17 @@ export async function fetchCareerData(): Promise<CareerData> {
       const rawPage = Array.isArray(pageJson.data) ? pageJson.data[0] : pageJson.data;
       if (rawPage) {
         const attrs = rawPage.attributes || rawPage;
+        const rawSeo = attrs.seo;
+        const seoItem = Array.isArray(rawSeo) ? rawSeo[0] : rawSeo;
+        const seo = seoItem
+          ? {
+              metaTitle: seoItem.metaTile || seoItem.metaTitle || seoItem.title,
+              metaDescription: seoItem.metaDescription || seoItem.description,
+              keywords: seoItem.keywords,
+              metaImageUrl: getStrapiMediaUrl(seoItem.metaImage),
+            }
+          : undefined;
+
         page = {
           hero_title: attrs.hero_title || attrs.title || "Karir",
           hero_tagline: attrs.hero_tagline || attrs.tagline || "Tumbuh bersama tim teknik kami",
@@ -86,6 +97,7 @@ export async function fetchCareerData(): Promise<CareerData> {
             attrs.cta_description ||
             "Sampaikan rencana pembangunan Anda, tim kami akan membantu menyusun solusi teknis yang tepat sasaran dan sesuai anggaran.",
           cta_button_text: attrs.cta_button_text || "Hubungi Kami",
+          seo,
         };
       }
     } catch (e) {

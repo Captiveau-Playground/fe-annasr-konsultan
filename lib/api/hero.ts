@@ -100,6 +100,7 @@ export function normalizeHeroData(rawItem?: StrapiHeroItem): HeroSectionData {
         metaTitle: seoItem.metaTile || seoItem.metaTitle || seoItem.title,
         metaDescription: seoItem.metaDescription || seoItem.description,
         keywords: seoItem.keywords,
+        metaImageUrl: getStrapiMediaUrl(seoItem.metaImage),
       }
     : undefined;
 

@@ -4,13 +4,20 @@ import CtaSection from "@/components/home/CtaSection";
 import { CONTACT_INFO } from "@/lib/constant";
 import { fetchCareerData } from "@/lib/api/career";
 
-export const metadata: Metadata = {
-  title: "Karir & Lowongan Kerja — CV. AN NASR KONSULTAN",
-  description:
-    "Tumbuh bersama tim teknik kami. Kami mencari orang-orang yang teliti, disiplin, dan senang belajar di dunia perencanaan dan konstruksi.",
-};
+import { constructMetadata, LOCAL_BUSINESS_JSON_LD } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const { page } = await fetchCareerData();
+  return constructMetadata({
+    seo: page?.seo,
+    fallbackTitle: "Karir & Lowongan Kerja — CV. AN NASR KONSULTAN",
+    fallbackDescription:
+      "Tumbuh bersama tim teknik kami. Kami mencari orang-orang yang teliti, disiplin, dan senang belajar di dunia perencanaan dan konstruksi.",
+    path: "/karir",
+  });
+}
 
 export default async function KarirPage() {
   const phone = CONTACT_INFO.phoneNumberClean || "6281200000000";
@@ -25,7 +32,12 @@ export default async function KarirPage() {
   const jobList = jobs || [];
 
   return (
-    <div className="flex flex-col min-h-screen bg-background font-sans">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_JSON_LD) }}
+      />
+      <div className="flex flex-col min-h-screen bg-background font-sans">
       {/* Hero Section */}
       <section className="cta-gradient relative overflow-hidden px-5 pb-20 pt-36 lg:px-8 lg:pb-28 lg:pt-44">
         <div
@@ -102,6 +114,7 @@ export default async function KarirPage() {
 
       {/* CTA Section */}
       <CtaSection />
-    </div>
+      </div>
+    </>
   );
 }

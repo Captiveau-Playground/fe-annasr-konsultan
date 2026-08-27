@@ -1,3 +1,5 @@
+import { HeroSeoData, StrapiSeoItem } from "./hero";
+
 export interface CareerPageData {
   hero_title?: string;
   hero_tagline?: string;
@@ -5,6 +7,7 @@ export interface CareerPageData {
   cta_tagline?: string;
   cta_description?: string;
   cta_button_text?: string;
+  seo?: HeroSeoData;
 }
 
 export interface CareerItemData {
