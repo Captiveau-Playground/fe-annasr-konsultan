@@ -1,0 +1,69 @@
+{
+  "kind": "collectionType",
+  "collectionName": "company_settings",
+  "info": {
+    "singularName": "company-setting",
+    "pluralName": "company-settings",
+    "displayName": "Company Setting"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Tentang Kami",
+      "required": true
+    },
+    "tagline": {
+      "type": "string",
+      "default": "Tentang CV. AN NASR KONSULTAN",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "default": "CV. AN NASR KONSULTAN adalah penyedia jasa konsultansi teknik sipil dan arsitektur yang berkedudukan di Kabupaten Jombang, Jawa Timur. Kami menangani pekerjaan perencanaan, pengawasan, pengurusan perizinan bangunan, serta pelaksanaan konstruksi untuk instansi pemerintah, lembaga, maupun perorangan.  Tujuan kami sederhana: memastikan setiap rencana pembangunan berjalan tepat mutu, tepat biaya, dan tepat waktu. Dengan dukungan tenaga ahli di bidang struktur, jalan, jembatan, dan sumber daya air, kami menghadirkan solusi pembangunan yang profesional dan sesuai standar teknis yang berlaku.",
+      "required": true
+    },
+    "vision": {
+      "type": "text",
+      "default": "Menjadi mitra konsultan teknik dan konstruksi yang terpercaya di Jawa Timur melalui kualitas pekerjaan dan integritas layanan.",
+      "required": true
+    },
+    "mission": {
+      "type": "text",
+      "default": "Menghadirkan perencanaan yang akurat, pengawasan yang disiplin, serta pelaksanaan konstruksi yang tepat mutu, biaya, dan waktu.",
+      "required": true
+    },
+    "office_address": {
+      "type": "text",
+      "default": "Perumahan Candi Regency No. A10, Desa Candi Mulyo, Kecamatan Jombang, Kabupaten Jombang",
+      "required": true
+    },
+    "domicile_address": {
+      "type": "text",
+      "default": "Perumahan Candi Regency No. A10, Desa Candi Mulyo, Kecamatan Jombang, Kabupaten Jombang",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "default": "+62 812-0000-0000",
+      "required": true
+    },
+    "email": {
+      "type": "string",
+      "default": "annasrkonsultan@email.com",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    }
+  }
+}
