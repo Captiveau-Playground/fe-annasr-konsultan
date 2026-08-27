@@ -1,3 +1,9 @@
+export interface HeroSeoData {
+  metaTitle?: string;
+  metaDescription?: string;
+  keywords?: string;
+}
+
 export interface HeroSectionData {
   title?: string;
   titleHighlight?: string;
@@ -7,6 +13,7 @@ export interface HeroSectionData {
   secondaryCtaText?: string;
   secondaryCtaUrl?: string;
   backgroundImageUrl?: string;
+  seo?: HeroSeoData;
 }
 
 export interface StrapiImage {
@@ -24,6 +31,17 @@ export interface StrapiImage {
   };
 }
 
+export interface StrapiSeoItem {
+  id?: number | string;
+  metaTile?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  keywords?: string;
+  title?: string;
+  description?: string;
+  [key: string]: unknown;
+}
+
 export interface StrapiHeroItem {
   id: number | string;
   documentId?: string;
@@ -33,6 +51,7 @@ export interface StrapiHeroItem {
   hero_contact_cta_text?: string;
   hero_service_cta_text?: string;
   hero_bg_image?: StrapiImage;
+  seo?: StrapiSeoItem[] | StrapiSeoItem;
   
   // Alternative / legacy field names
   title?: string;
@@ -53,3 +72,4 @@ export interface StrapiResponse<T> {
   data: T;
   meta?: unknown;
 }
+

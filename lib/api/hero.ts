@@ -16,9 +16,9 @@ export const STRAPI_BASE_URL = getStrapiBaseUrl();
 
 /**
  * Builds the Strapi Query String for home-pages endpoint
- * Default populate targeting only HeroSection relations: hero_bg_image
+ * Default populate targeting HeroSection relations: hero_bg_image,seo
  */
-export function getHeroQueryString(populate = "hero_bg_image"): string {
+export function getHeroQueryString(populate = "hero_bg_image,seo"): string {
   const params = new URLSearchParams();
   if (populate) {
     params.append("populate", populate);
@@ -93,6 +93,16 @@ export function normalizeHeroData(rawItem?: StrapiHeroItem): HeroSectionData {
     }
   }
 
+  const rawSeo = attrs.seo;
+  const seoItem = Array.isArray(rawSeo) ? rawSeo[0] : rawSeo;
+  const seo = seoItem
+    ? {
+        metaTitle: seoItem.metaTile || seoItem.metaTitle || seoItem.title,
+        metaDescription: seoItem.metaDescription || seoItem.description,
+        keywords: seoItem.keywords,
+      }
+    : undefined;
+
   return {
     title,
     titleHighlight,
@@ -105,6 +115,7 @@ export function normalizeHeroData(rawItem?: StrapiHeroItem): HeroSectionData {
       getStrapiMediaUrl(attrs.hero_bg_image) ||
       getStrapiMediaUrl(attrs.heroBackground) ||
       getStrapiMediaUrl(attrs.backgroundImage),
+    seo,
   };
 }
 
@@ -112,7 +123,7 @@ export function normalizeHeroData(rawItem?: StrapiHeroItem): HeroSectionData {
  * Server-Side Fetcher for Hero Section data
  */
 export async function fetchHeroSectionData(): Promise<HeroSectionData> {
-  const queryString = getHeroQueryString("hero_bg_image");
+  const queryString = getHeroQueryString("hero_bg_image,seo");
   const baseUrl = getStrapiBaseUrl();
   const endpoint = `${baseUrl}/api/home-pages?${queryString}`;
 
