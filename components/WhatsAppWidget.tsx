@@ -27,7 +27,7 @@ export default function WhatsAppWidget() {
             <button
               onClick={() => setIsOpen(false)}
               aria-label="Tutup widget WhatsApp"
-              className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors"
+              className="absolute top-3.5 right-3.5 p-2 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -45,7 +45,7 @@ export default function WhatsAppWidget() {
                 <h3 className="font-extrabold text-sm tracking-tight text-white leading-tight">
                   CV. An Nasr Konsultan
                 </h3>
-                <p className="text-[11px] text-emerald-100 mt-0.5 flex items-center gap-1.5 font-semibold">
+                <p className="text-[11px] text-white mt-0.5 flex items-center gap-1.5 font-semibold">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-350 animate-pulse"></span>
                   Admin Online (WhatsApp)
                 </p>
@@ -57,7 +57,7 @@ export default function WhatsAppWidget() {
           <div className="p-5 bg-slate-50 flex-1 max-h-[320px] overflow-y-auto">
             {/* Operator bubble */}
             <div className="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm border border-slate-100/80 mb-5 text-left">
-              <p className="text-[10px] text-slate-400 font-bold mb-1 uppercase tracking-wider">Customer Support</p>
+              <p className="text-[10px] text-slate-600 font-bold mb-1 uppercase tracking-wider">Customer Support</p>
               <p className="text-slate-700 text-xs leading-relaxed">
                 Halo! Terima kasih telah mengunjungi website kami. 
                 <br /><br />
@@ -79,11 +79,11 @@ export default function WhatsAppWidget() {
                     <h4 className="text-xs font-extrabold text-slate-800 group-hover:text-emerald-600 transition-colors">
                       {opt.title}
                     </h4>
-                    <p className="text-[10px] text-slate-450 font-medium mt-0.5 leading-snug">
+                    <p className="text-[11px] text-slate-600 font-medium mt-0.5 leading-snug">
                       {opt.desc}
                     </p>
                   </div>
-                  <div className="w-7 h-7 rounded-xl bg-slate-50 text-slate-450 group-hover:bg-emerald-50 group-hover:text-emerald-600 flex items-center justify-center transition-colors shrink-0">
+                  <div className="w-7 h-7 rounded-xl bg-slate-50 text-slate-500 group-hover:bg-emerald-50 group-hover:text-emerald-600 flex items-center justify-center transition-colors shrink-0">
                     <Send className="w-3.5 h-3.5" />
                   </div>
                 </Link>
@@ -97,7 +97,7 @@ export default function WhatsAppWidget() {
               href={`https://wa.me/${phoneNumber}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[11px] text-slate-400 hover:text-emerald-600 transition-colors font-bold"
+              className="text-[11px] text-slate-600 hover:text-emerald-600 transition-colors font-bold inline-block py-1"
             >
               Atau kirim pesan langsung tanpa topik
             </Link>

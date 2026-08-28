@@ -56,6 +56,7 @@ export default async function ServicesSection() {
                       alt={service.alt}
                       width={1200}
                       height={800}
+                      sizes="(max-width: 768px) 100vw, 500px"
                       loading="lazy"
                       className="aspect-[16/9] w-full object-cover"
                       src={service.image}

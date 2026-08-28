@@ -36,6 +36,7 @@ export default async function FounderSection({ data: propData }: FounderSectionP
               alt={photoAlt || `${name}, ${position} CV. AN NASR KONSULTAN`}
               width={1024}
               height={1200}
+              sizes="(max-width: 768px) 100vw, 400px"
               loading="lazy"
               unoptimized
               className="mx-auto w-full max-w-sm rounded-[2rem] object-cover shadow-[var(--shadow-lift)]"

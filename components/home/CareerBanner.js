@@ -1,6 +1,0 @@
-import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-import { ChevronRight } from "lucide-react";
-import Link from "next/link";
-export default function CareerBanner() {
-    return (_jsx("section", { className: "py-16 bg-white font-sans border-b border-slate-100", children: _jsx("div", { className: "max-w-5xl mx-auto px-6 text-center", children: _jsxs("div", { className: "bg-blue-50/60 border border-blue-100/50 rounded-[2.5rem] p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8 text-left", children: [_jsxs("div", { className: "max-w-xl", children: [_jsx("span", { className: "text-blue-600 font-bold tracking-widest text-[10px] uppercase mb-2 inline-block", children: "Karir & Rekrutmen" }), _jsx("h3", { className: "font-extrabold text-2xl md:text-3xl text-slate-900 leading-tight mb-4", children: "Bergabung Bersama Tim Kami" }), _jsx("p", { className: "text-slate-500 text-sm leading-relaxed", children: "Kami membuka kesempatan bagi tenaga teknik, drafter, dan pengawas lapangan untuk berkembang bersama CV. AN NASR KONSULTAN." })] }), _jsxs(Link, { href: "/karir", className: "px-8 py-4 rounded-full text-sm font-bold bg-blue-600 text-white hover:bg-blue-700 shadow-md shrink-0 inline-flex items-center gap-1.5 hover:scale-105 transition-all", children: ["Recruitment", _jsx(ChevronRight, { className: "w-4 h-4" })] })] }) }) }));
-}

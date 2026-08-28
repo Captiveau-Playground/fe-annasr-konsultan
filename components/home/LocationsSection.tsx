@@ -38,6 +38,7 @@ export default function LocationsSection() {
               alt="Ilustrasi peta Indonesia dengan sebaran lokasi proyek"
               width={1600}
               height={700}
+              sizes="(max-width: 768px) 100vw, 1000px"
               loading="lazy"
               className="w-full rounded-[1.25rem] object-cover"
               src="/images/peta-indonesia.jpg"

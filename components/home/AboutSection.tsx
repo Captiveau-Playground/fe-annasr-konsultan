@@ -95,6 +95,7 @@ export default async function AboutSection({ data: propData }: AboutSectionProps
               loading="lazy"
               width={1400}
               height={1000}
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="w-full rounded-[2rem] object-cover shadow-[var(--shadow-lift)]"
               src={imageUrl}
               unoptimized

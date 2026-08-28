@@ -144,6 +144,7 @@ function ProjectCardImage({
       src={imgSrc}
       width={800}
       height={600}
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
       loading="lazy"
       className={className}
       onError={() => {

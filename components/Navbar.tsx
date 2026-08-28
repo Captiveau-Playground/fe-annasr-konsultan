@@ -127,7 +127,7 @@ export default function Navbar() {
           aria-label={mobileMenuOpen ? "Tutup menu" : "Buka menu"}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className={cn(
-            "flex size-10 items-center justify-center rounded-xl border lg:hidden cursor-pointer transition-colors",
+            "flex size-11 items-center justify-center rounded-xl border lg:hidden cursor-pointer transition-colors",
             isScrolled
               ? "border-slate-200 bg-white text-slate-900"
               : "border-white/20 bg-white/10 text-white"
@@ -156,7 +156,7 @@ export default function Navbar() {
                     href={item.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={cn(
-                      "block rounded-xl px-4 py-2.5 text-base font-medium transition-colors",
+                      "block rounded-xl px-4 py-3 text-base font-medium transition-colors",
                       isActive
                         ? "bg-[#0066FF]/10 text-[#0066FF] font-bold border border-[#0066FF]/20"
                         : "text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
