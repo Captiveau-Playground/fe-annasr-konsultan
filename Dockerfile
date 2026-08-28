@@ -7,7 +7,7 @@ WORKDIR /app
 
 # Copy dependency files
 COPY package.json package-lock.json* ./
-RUN if [ -f package-lock.json ]; then npm ci; else npm i; fi
+RUN if [ -f package-lock.json ]; then npm ci --legacy-peer-deps; else npm i --legacy-peer-deps; fi
 
 # Stage 2: Builder
 FROM base AS builder
