@@ -44,7 +44,7 @@ export default async function FounderSection({ data: propData }: FounderSectionP
 
           {/* Right side: Information */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
-            <span className="text-[#3B82F6] font-bold text-xs md:text-[13px] tracking-[0.2em] uppercase mb-2">
+            <span className="text-[#1D4ED8] font-bold text-xs md:text-[13px] tracking-[0.2em] uppercase mb-2">
               FOUNDER
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#1E293B] leading-[1.2] tracking-tight mb-3">

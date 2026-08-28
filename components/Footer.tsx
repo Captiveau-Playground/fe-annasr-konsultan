@@ -16,7 +16,7 @@ export default function Footer() {
             </span>
             <span className="text-sm font-semibold">CV. An Nasr Konsultan</span>
           </div>
-          <p className="mt-5 text-sm leading-relaxed text-white/70">
+          <p className="mt-5 text-sm leading-relaxed text-white/85">
             Penyedia jasa konsultansi teknik sipil, perencanaan, pengawasan,
             perizinan, dan konstruksi di Kabupaten Jombang, Jawa Timur.
           </p>
@@ -38,7 +38,7 @@ export default function Footer() {
               <li key={item.name}>
                 <Link
                   href={item.href}
-                  className="text-sm text-white/70 transition-colors hover:text-[#70E000]"
+                  className="text-sm text-white/85 transition-colors hover:text-[#70E000]"
                 >
                   {item.name}
                 </Link>
@@ -60,7 +60,7 @@ export default function Footer() {
               <li key={item.name}>
                 <Link
                   href={item.href}
-                  className="text-sm text-white/70 transition-colors hover:text-[#70E000]"
+                  className="text-sm text-white/85 transition-colors hover:text-[#70E000]"
                 >
                   {item.name}
                 </Link>
@@ -72,7 +72,7 @@ export default function Footer() {
         {/* Col 4: Kontak */}
         <div>
           <h3 className="text-sm font-semibold text-white">Kontak</h3>
-          <ul className="mt-5 space-y-4 text-sm text-white/70">
+          <ul className="mt-5 space-y-4 text-sm text-white/85">
             <li className="flex gap-3">
               <MapPin className="mt-0.5 size-4 shrink-0 text-[#70E000]" aria-hidden="true" />
               <span>
@@ -98,7 +98,7 @@ export default function Footer() {
 
       {/* Bottom Copyright */}
       <div className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-5 py-6 text-center text-xs text-white/60 lg:px-8">
+        <div className="mx-auto max-w-7xl px-5 py-6 text-center text-xs text-white/80 lg:px-8">
           © 2026 CV. AN NASR KONSULTAN. Seluruh hak cipta dilindungi.
         </div>
       </div>

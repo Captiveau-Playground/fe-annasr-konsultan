@@ -31,7 +31,7 @@ export default function VisitorStats() {
             <TrendingUp className="size-4 shrink-0 text-[#70E000]" aria-hidden="true" />
             Sesi Pengunjung per Minggu
           </p>
-          <p className="mt-1 truncate text-xs text-white/55">
+          <p className="mt-1 truncate text-xs text-white/80">
             Total 2.560 sesi dalam 8 minggu terakhir
           </p>
         </div>
@@ -60,7 +60,7 @@ export default function VisitorStats() {
               className={`truncate text-[10px] transition-colors ${
                 activeWeek.week === item.week
                   ? "text-[#70E000] font-bold"
-                  : "text-white/50"
+                  : "text-white/75"
               }`}
             >
               {item.week}

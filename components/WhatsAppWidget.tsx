@@ -26,6 +26,7 @@ export default function WhatsAppWidget() {
           <div className="bg-gradient-to-r from-emerald-600 to-green-600 text-white p-5 relative">
             <button
               onClick={() => setIsOpen(false)}
+              aria-label="Tutup widget WhatsApp"
               className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors"
             >
               <X className="w-5 h-5" />
