@@ -249,6 +249,7 @@ export default function PortfolioGrid({
                   key={cat}
                   type="button"
                   onClick={() => setActiveCategory(cat)}
+                  aria-pressed={isActive}
                   className={`rounded-full border px-5 py-2 text-sm font-medium transition-all cursor-pointer ${
                     isActive
                       ? "border-primary bg-primary text-primary-foreground shadow-sm"

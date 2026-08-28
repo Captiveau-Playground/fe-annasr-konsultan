@@ -65,7 +65,7 @@ export default function Navbar() {
             <span
               className={cn(
                 "block text-[11px] tracking-wide transition-colors",
-                isScrolled ? "text-slate-500 dark:text-slate-400" : "text-white/70"
+                isScrolled ? "text-slate-600 dark:text-slate-400" : "text-white/70"
               )}
             >
               Konsultan Teknik &amp; Konstruksi

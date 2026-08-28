@@ -59,10 +59,11 @@ export default function JobForm({ jobs }: JobFormProps) {
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           {/* Name */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-slate-700 text-xs font-bold uppercase tracking-wider">
+            <label htmlFor="job-name" className="text-slate-700 text-xs font-bold uppercase tracking-wider">
               Nama Lengkap *
             </label>
             <input
+              id="job-name"
               type="text"
               required
               value={formData.name}
@@ -74,10 +75,11 @@ export default function JobForm({ jobs }: JobFormProps) {
 
           {/* Email */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-slate-700 text-xs font-bold uppercase tracking-wider">
+            <label htmlFor="job-email" className="text-slate-700 text-xs font-bold uppercase tracking-wider">
               Alamat Email *
             </label>
             <input
+              id="job-email"
               type="email"
               required
               value={formData.email}
@@ -89,10 +91,11 @@ export default function JobForm({ jobs }: JobFormProps) {
 
           {/* Phone */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-slate-700 text-xs font-bold uppercase tracking-wider">
+            <label htmlFor="job-phone" className="text-slate-700 text-xs font-bold uppercase tracking-wider">
               No. Telepon / WhatsApp *
             </label>
             <input
+              id="job-phone"
               type="tel"
               required
               value={formData.phone}
@@ -104,10 +107,11 @@ export default function JobForm({ jobs }: JobFormProps) {
 
           {/* Position */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-slate-700 text-xs font-bold uppercase tracking-wider">
+            <label htmlFor="job-position" className="text-slate-700 text-xs font-bold uppercase tracking-wider">
               Posisi Dilamar
             </label>
             <select
+              id="job-position"
               value={formData.position}
               onChange={(e) => setFormData({ ...formData, position: e.target.value })}
               className="bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
@@ -122,10 +126,11 @@ export default function JobForm({ jobs }: JobFormProps) {
 
           {/* Portfolio / CV Link */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-slate-700 text-xs font-bold uppercase tracking-wider">
+            <label htmlFor="job-portfolio" className="text-slate-700 text-xs font-bold uppercase tracking-wider">
               Link CV & Portfolio (Drive/Dropbox)
             </label>
             <input
+              id="job-portfolio"
               type="url"
               value={formData.portfolio}
               onChange={(e) => setFormData({ ...formData, portfolio: e.target.value })}
@@ -136,10 +141,11 @@ export default function JobForm({ jobs }: JobFormProps) {
 
           {/* Message */}
           <div className="flex flex-col gap-1.5">
-            <label className="text-slate-700 text-xs font-bold uppercase tracking-wider">
+            <label htmlFor="job-message" className="text-slate-700 text-xs font-bold uppercase tracking-wider">
               Pesan Singkat / Pengalaman Kerja
             </label>
             <textarea
+              id="job-message"
               rows={4}
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
