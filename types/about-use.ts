@@ -9,6 +9,8 @@ export interface AboutUseItem {
   hero_description?: string;
   card_title?: string;
   card_description?: string;
+  about_tagline_1?: string;
+  about_tagline_2?: string;
   bg_image?: StrapiImage;
   hero_bg_image?: StrapiImage;
   seo?: StrapiSeoItem[] | StrapiSeoItem;
@@ -23,6 +25,8 @@ export interface TentangHeroData {
   badge?: string;
   title?: string;
   description?: string;
+  aboutTagline1?: string;
+  aboutTagline2?: string;
   bgImage?: string;
   seo?: HeroSeoData;
 }

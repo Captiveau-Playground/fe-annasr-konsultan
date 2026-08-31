@@ -10,6 +10,7 @@ export interface AboutSectionData {
   domicileAddress?: string;
   phone?: string;
   email?: string;
+  bornDate?: string;
   imageUrl?: string;
   imageAlt?: string;
   imageCaption?: string;
@@ -26,6 +27,7 @@ export interface StrapiAboutItem {
   mission?: string;
   office_address?: string;
   domicile_address?: string;
+  born_date?: string;
   phone?: string;
   email?: string;
   image?: StrapiImage & {

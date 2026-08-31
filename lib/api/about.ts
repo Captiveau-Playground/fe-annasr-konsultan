@@ -54,6 +54,7 @@ export function normalizeAboutData(rawItem?: StrapiAboutItem): AboutSectionData 
     mission: attrs.mission,
     officeAddress: attrs.office_address,
     domicileAddress: attrs.domicile_address,
+    bornDate: attrs.born_date || (attrs as any).bornDate,
     phone: attrs.phone,
     email: attrs.email,
     imageUrl,
