@@ -1,19 +1,16 @@
-import type { Metadata } from "next";
-import HeroSection from "@/components/home/HeroSection";
+import ClientsSection from "@/components/home/ClientsSection";
+import CtaSection from "@/components/home/CtaSection";
 import FounderSection from "@/components/home/FounderSection";
-import AboutSection from "@/components/home/AboutSection";
+import HeroSection from "@/components/home/HeroSection";
+import LocationsSection from "@/components/home/LocationsSection";
 import ServicesSection from "@/components/home/ServicesSection";
 import PortfolioGrid from "@/components/PortfolioGrid";
-import ClientsSection from "@/components/home/ClientsSection";
-import LocationsSection from "@/components/home/LocationsSection";
-import ProcessSection from "@/components/home/ProcessSection";
-import CareerBanner from "@/components/home/CareerBanner";
-import CtaSection from "@/components/home/CtaSection";
 import { fetchHeroSectionData } from "@/lib/api/hero";
 import {
-  fetchPortfolioProjects,
   fetchPortfolioCategories,
+  fetchPortfolioProjects,
 } from "@/lib/api/portfolio-page";
+import type { Metadata } from "next";
 
 import { constructMetadata, LOCAL_BUSINESS_JSON_LD } from "@/lib/seo";
 
@@ -53,10 +50,8 @@ export default async function Home() {
           tagline={heroData?.portfolioTagline}
           ctaText={heroData?.portfolioCtaBtnText}
         />
-        <ClientsSection />
-        <LocationsSection />
-        <ProcessSection />
-        <CareerBanner />
+        <ClientsSection tagline={heroData?.clientTagline} />
+        <LocationsSection tagline={heroData?.locationTagline} />
         <CtaSection />
       </div>
     </>

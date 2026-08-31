@@ -130,6 +130,14 @@ export function normalizeHeroData(rawItem?: StrapiHeroItem): HeroSectionData {
       attrs.portfolio_cta_btn_text ||
       (attrs as any).portfolioCtaBtnText ||
       "Lihat semua proyek",
+    clientTagline:
+      attrs.client_tagline ||
+      (attrs as any).clientTagline ||
+      "Dipercaya instansi, lembaga,\ndan mitra usaha",
+    locationTagline:
+      attrs.location_tagline ||
+      (attrs as any).locationTagline ||
+      "Kota dan daerah yang pernah\nkami tangani",
   };
 }
 

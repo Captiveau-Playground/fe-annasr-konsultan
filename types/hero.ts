@@ -18,6 +18,8 @@ export interface HeroSectionData {
   serviceTagline?: string;
   portfolioTagline?: string;
   portfolioCtaBtnText?: string;
+  clientTagline?: string;
+  locationTagline?: string;
 }
 
 export interface StrapiImage {
@@ -58,6 +60,8 @@ export interface StrapiHeroItem {
   service_tagline?: string;
   portfolio_tagline?: string;
   portfolio_cta_btn_text?: string;
+  client_tagline?: string;
+  location_tagline?: string;
   hero_bg_image?: StrapiImage;
   seo?: StrapiSeoItem[] | StrapiSeoItem;
   
