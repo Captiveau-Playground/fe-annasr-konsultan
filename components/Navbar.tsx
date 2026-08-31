@@ -119,7 +119,12 @@ export default function Navbar() {
             href={`https://wa.me/${phone}`}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold cursor-pointer transition-all h-11 rounded-full px-6 text-sm shadow-md bg-[#FF8D28] text-white hover:bg-orange-600"
+            className={cn(
+              "inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold cursor-pointer transition-all h-11 rounded-full px-6 text-sm shadow-md text-white",
+              isScrolled
+                ? "bg-[#0066FF] hover:bg-blue-700"
+                : "bg-[#FF8D28] hover:bg-orange-600"
+            )}
           >
             Konsultasi Sekarang
           </a>

@@ -3,6 +3,7 @@ import { StrapiImage } from "./hero";
 export interface FounderAttachment {
   url: string;
   alt?: string;
+  caption?: string;
 }
 
 export interface FounderSectionData {

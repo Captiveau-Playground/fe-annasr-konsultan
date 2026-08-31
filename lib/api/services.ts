@@ -1,4 +1,10 @@
-import { ServiceCardData, ServiceDetailData, StrapiServiceItem } from "@/types/service";
+import {
+  ServiceCardData,
+  ServiceDetailData,
+  ServicePortfolioItem,
+  StrapiPortfolioItem,
+  StrapiServiceItem,
+} from "@/types/service";
 import { StrapiResponse } from "@/types/hero";
 import { getStrapiMediaUrl, getStrapiBaseUrl } from "./hero";
 
@@ -147,7 +153,7 @@ export async function fetchServiceDetailBySlug(
     DEFAULT_SERVICE_DETAILS[cleanSlug] || DEFAULT_SERVICE_DETAILS.perencanaan;
 
   const baseUrl = getStrapiBaseUrl();
-  const endpoint = `${baseUrl}/api/service-settings?populate[portofolio_settings][populate]=*`;
+  const endpoint = `${baseUrl}/api/service-settings?populate=*`;
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
   };
@@ -246,55 +252,54 @@ export async function fetchServiceDetailBySlug(
         }))
         : defaultDetail.requirements;
 
+    const fetchedPortfolios = await fetchPortfoliosByServiceSlug(
+      attrs.slug || slug
+    );
+
     const portfoliosRaw =
       attrs.portofolio_settings || attrs.portfolio_settings;
     const portfolios =
-      Array.isArray(portfoliosRaw) && portfoliosRaw.length > 0
-        ? portfoliosRaw.map((item: any, idx: number) => {
-          const catItem = Array.isArray(item.portofolio_category_settings)
-            ? item.portofolio_category_settings[0]
-            : item.portofolio_category_settings;
+      fetchedPortfolios.length > 0
+        ? fetchedPortfolios
+        : Array.isArray(portfoliosRaw) && portfoliosRaw.length > 0
+          ? portfoliosRaw.map((item: any, idx: number) => {
+            const catItem = Array.isArray(item.portofolio_category_settings)
+              ? item.portofolio_category_settings[0]
+              : item.portofolio_category_settings;
 
-          const categoryName =
-            catItem?.name ||
-            catItem?.attributes?.name ||
-            item.category ||
-            (item.title && item.title.toLowerCase().includes("jalan")
-              ? "JALAN"
-              : "BANGUNAN");
+            const categoryName =
+              catItem?.name ||
+              catItem?.attributes?.name ||
+              item.category ||
+              (item.title && item.title.toLowerCase().includes("jalan")
+                ? "JALAN"
+                : "BANGUNAN");
 
-          const rawImg = Array.isArray(item.image) ? item.image[0] : item.image;
-          const rawHeroImg = Array.isArray(item.hero_image)
-            ? item.hero_image[0]
-            : item.hero_image;
+            const rawImg = Array.isArray(item.image) ? item.image[0] : item.image;
+            const rawHeroImg = Array.isArray(item.hero_image)
+              ? item.hero_image[0]
+              : item.hero_image;
 
-          const imgUrl =
-            getStrapiMediaUrl(rawImg) || getStrapiMediaUrl(rawHeroImg);
+            const imgUrl =
+              getStrapiMediaUrl(rawImg) || getStrapiMediaUrl(rawHeroImg);
 
-          console.log("[DEBUG portfolio image]", {
-            title: item.title,
-            item_image: item.image,
-            rawImg,
-            imgUrl,
-          });
+            const fallbacks = [
+              "/assets/proyek-gedung-DKD8sHd2.jpg",
+              "/assets/proyek-jalan-xGjvwBYW.jpg",
+              "/assets/proyek-jembatan-DmEaBVlD.jpg",
+            ];
+            const fallbackImage = fallbacks[idx % fallbacks.length];
 
-          const fallbacks = [
-            "/assets/proyek-gedung-DKD8sHd2.jpg",
-            "/assets/proyek-jalan-xGjvwBYW.jpg",
-            "/assets/proyek-jembatan-DmEaBVlD.jpg",
-          ];
-          const fallbackImage = fallbacks[idx % fallbacks.length];
-
-          return {
-            id: item.id || idx + 1,
-            title: item.title || "Proyek Konstruksi",
-            location: item.address || item.location || "Kabupaten Jombang",
-            category: categoryName,
-            image: imgUrl || fallbackImage,
-            fallbackImage,
-          };
-        })
-        : defaultDetail.portfolios;
+            return {
+              id: item.id || idx + 1,
+              title: item.title || "Proyek Konstruksi",
+              location: item.address || item.location || "Kabupaten Jombang",
+              category: categoryName,
+              image: imgUrl || fallbackImage,
+              fallbackImage,
+            };
+          })
+          : defaultDetail.portfolios;
 
     let title = attrs.title || defaultDetail.title;
     if (title === "Layanan Kami" || title === "Layanan") {
@@ -511,6 +516,97 @@ export async function fetchServicesSectionData(): Promise<ServiceCardData[]> {
   } catch (error) {
     console.error("Error fetching Service Settings data:", error);
     return DEFAULT_SERVICES;
+  }
+}
+
+/**
+ * Server-Side Fetcher for Portfolio items filtered by service detail slug
+ * Endpoint: GET /api/portofolio-detail-settings?filters[service_settings][slug][$eq]={slug}&populate=*
+ */
+export async function fetchPortfoliosByServiceSlug(
+  slug: string
+): Promise<ServicePortfolioItem[]> {
+  const baseUrl = getStrapiBaseUrl();
+  const fullSlug = slug.startsWith("jasa-") ? slug : `jasa-${slug}`;
+  const cleanSlug = slug.replace("jasa-", "");
+
+  const endpoint = `${baseUrl}/api/portofolio-detail-settings?filters[service_settings][slug][$eq]=${encodeURIComponent(
+    fullSlug
+  )}&populate=*`;
+
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+  const token =
+    process.env.STRAPI_API_TOKEN || process.env.NEXT_PUBLIC_STRAPI_API_TOKEN;
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  try {
+    const res = await fetch(endpoint, {
+      headers,
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      return [];
+    }
+
+    const json: StrapiResponse<StrapiPortfolioItem[]> = await res.json();
+    let dataList = Array.isArray(json.data) ? json.data : [];
+
+    if (dataList.length === 0 && cleanSlug !== fullSlug) {
+      const altEndpoint = `${baseUrl}/api/portofolio-detail-settings?filters[service_settings][slug][$eq]=${encodeURIComponent(
+        cleanSlug
+      )}&populate=*`;
+      const altRes = await fetch(altEndpoint, { headers, cache: "no-store" });
+      if (altRes.ok) {
+        const altJson: StrapiResponse<StrapiPortfolioItem[]> = await altRes.json();
+        dataList = Array.isArray(altJson.data) ? altJson.data : [];
+      }
+    }
+
+    return dataList.map((item: any, idx: number) => {
+      const catItem = Array.isArray(item.portofolio_category_settings)
+        ? item.portofolio_category_settings[0]
+        : item.portofolio_category_settings;
+
+      const categoryName =
+        catItem?.name ||
+        catItem?.attributes?.name ||
+        item.category ||
+        (item.title && item.title.toLowerCase().includes("jalan")
+          ? "JALAN"
+          : "BANGUNAN");
+
+      const rawImg = Array.isArray(item.image) ? item.image[0] : item.image;
+      const rawHeroImg = Array.isArray(item.hero_image)
+        ? item.hero_image[0]
+        : item.hero_image;
+
+      const imgUrl =
+        getStrapiMediaUrl(rawImg) || getStrapiMediaUrl(rawHeroImg);
+
+      const fallbacks = [
+        "/assets/proyek-gedung-DKD8sHd2.jpg",
+        "/assets/proyek-jalan-xGjvwBYW.jpg",
+        "/assets/proyek-jembatan-DmEaBVlD.jpg",
+      ];
+      const fallbackImage = fallbacks[idx % fallbacks.length];
+
+      return {
+        id: item.id || idx + 1,
+        title: item.title || "Proyek Konstruksi",
+        location: item.address || item.location || "Kabupaten Jombang",
+        category: categoryName,
+        image: imgUrl || fallbackImage,
+        fallbackImage,
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching portfolios by service slug:", error);
+    return [];
   }
 }
 

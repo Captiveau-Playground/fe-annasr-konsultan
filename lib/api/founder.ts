@@ -23,17 +23,17 @@ export function normalizeFounderData(rawItem?: StrapiFounderItem): FounderSectio
 
   // Extract media object safely
   const photoMedia = attrs.photo;
-  const photoUrl = getStrapiMediaUrl(photoMedia);
-
-  // Extract alternativeText or caption from Strapi image if available
-  const photoAlt =
-    (photoMedia as any)?.alternativeText ||
-    (photoMedia as any)?.caption ||
-    attrs.name ||
-    "Founder Photo";
+  let photoUrl = getStrapiMediaUrl(photoMedia);
 
   // Normalize the multi-media attachments gallery
-  const attachments = (Array.isArray(attrs.attachments) ? attrs.attachments : [])
+  const rawAttachments = attrs.attachments || (attrs as any).attachment;
+  const attachmentList = Array.isArray(rawAttachments)
+    ? rawAttachments
+    : rawAttachments
+    ? [rawAttachments]
+    : [];
+
+  const attachments = attachmentList
     .map((media) => ({
       url: getStrapiMediaUrl(media) || "",
       alt:
@@ -41,8 +41,21 @@ export function normalizeFounderData(rawItem?: StrapiFounderItem): FounderSectio
         (media as any)?.caption ||
         (media as any)?.name ||
         undefined,
+      caption: (media as any)?.caption || undefined,
     }))
     .filter((attachment) => attachment.url !== "");
+
+  if (!photoUrl && attachments.length > 0) {
+    photoUrl = attachments[0].url;
+  }
+
+  // Extract alternativeText or caption from Strapi image if available
+  const photoAlt =
+    (photoMedia as any)?.alternativeText ||
+    (photoMedia as any)?.caption ||
+    attachments[0]?.alt ||
+    attrs.name ||
+    "Founder Photo";
 
   return {
     name: attrs.name || "Nasrulloh, ST",

@@ -72,10 +72,10 @@ export default async function HeroSection({ data: propData }: HeroSectionProps) 
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
           <Link
             href={primaryCtaUrl}
-            className="inline-flex h-13 items-center justify-center gap-2 rounded-full bg-accent px-8 text-base font-bold text-accent-foreground shadow-[var(--shadow-lift)] transition-all hover:brightness-105"
+            className="inline-flex h-13 items-center justify-center gap-2 rounded-full bg-[#FF8D28] px-8 text-base font-bold text-white shadow-[var(--shadow-lift)] transition-all hover:brightness-105"
           >
             {primaryCtaText}
-            <ArrowRight className="size-4 text-accent-foreground" aria-hidden="true" />
+            <ArrowRight className="size-4 text-white" aria-hidden="true" />
           </Link>
           <Link
             href={secondaryCtaUrl}

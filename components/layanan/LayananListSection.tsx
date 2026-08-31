@@ -167,7 +167,7 @@ export default async function LayananListSection({
           <h2 className="mt-3 text-3xl font-extrabold leading-tight text-slate-900 sm:text-4xl lg:text-[2.75rem]">
             {sectionTagline}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-slate-500">
+          <p className="mt-4 text-base leading-relaxed text-slate-500 break-words">
             {sectionDescription}
           </p>
         </div>
@@ -211,7 +211,7 @@ export default async function LayananListSection({
                     <h3 className="mt-5 text-2xl font-bold text-slate-900">
                       {item.title}
                     </h3>
-                    <p className="mt-3 leading-relaxed text-slate-500">
+                    <p className="mt-3 leading-relaxed text-slate-500 line-clamp-4">
                       {item.description}
                     </p>
 
