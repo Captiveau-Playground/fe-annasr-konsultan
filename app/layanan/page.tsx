@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import LayananHeroSection from "@/components/layanan/LayananHeroSection";
 import LayananListSection from "@/components/layanan/LayananListSection";
-import ProcessSection from "@/components/home/ProcessSection";
 import CtaSection from "@/components/home/CtaSection";
 import { fetchLayananHeroData } from "@/lib/api/service-page";
 import { fetchServicesSectionData } from "@/lib/api/services";
@@ -41,7 +40,6 @@ export default async function LayananPage() {
           sectionTagline={heroData?.sectionTagline}
           sectionDescription={heroData?.sectionDescription}
         />
-        <ProcessSection />
         <CtaSection />
       </div>
     </>

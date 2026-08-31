@@ -1,19 +1,18 @@
-import type { Metadata } from "next";
-import HeroSection from "@/components/home/HeroSection";
+import ClientsSection from "@/components/home/ClientsSection";
+import CtaSection from "@/components/home/CtaSection";
+import FaqSection from "@/components/home/FaqSection";
 import FounderSection from "@/components/home/FounderSection";
-import AboutSection from "@/components/home/AboutSection";
+import HeroSection from "@/components/home/HeroSection";
+import LocationsSection from "@/components/home/LocationsSection";
 import ServicesSection from "@/components/home/ServicesSection";
 import PortfolioGrid from "@/components/PortfolioGrid";
-import ClientsSection from "@/components/home/ClientsSection";
-import LocationsSection from "@/components/home/LocationsSection";
-import ProcessSection from "@/components/home/ProcessSection";
-import CareerBanner from "@/components/home/CareerBanner";
-import CtaSection from "@/components/home/CtaSection";
 import { fetchHeroSectionData } from "@/lib/api/hero";
+import { fetchFaqSettingsData } from "@/lib/api/faq";
 import {
-  fetchPortfolioProjects,
   fetchPortfolioCategories,
+  fetchPortfolioProjects,
 } from "@/lib/api/portfolio-page";
+import type { Metadata } from "next";
 
 import { constructMetadata, LOCAL_BUSINESS_JSON_LD } from "@/lib/seo";
 
@@ -31,10 +30,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const [heroData, projectsData, categoriesData] = await Promise.all([
+  const [heroData, projectsData, categoriesData, faqData] = await Promise.all([
     fetchHeroSectionData().catch(() => undefined),
     fetchPortfolioProjects().catch(() => undefined),
     fetchPortfolioCategories().catch(() => undefined),
+    fetchFaqSettingsData().catch(() => []),
   ]);
 
   return (
@@ -46,13 +46,21 @@ export default async function Home() {
       <div className="flex flex-col min-h-screen">
         <HeroSection data={heroData} />
         <FounderSection />
-        <AboutSection />
-        <ServicesSection />
-        <PortfolioGrid projects={projectsData} categories={categoriesData} />
-        <ClientsSection />
-        <LocationsSection />
-        <ProcessSection />
-        <CareerBanner />
+        <ServicesSection tagline={heroData?.serviceTagline} />
+        <PortfolioGrid
+          projects={projectsData}
+          categories={categoriesData}
+          tagline={heroData?.portfolioTagline}
+          ctaText={heroData?.portfolioCtaBtnText}
+        />
+        <ClientsSection tagline={heroData?.clientTagline} />
+        <LocationsSection tagline={heroData?.locationTagline} />
+        <FaqSection
+          tagline={heroData?.faqTagline}
+          description={heroData?.faqDescription}
+          ctaBtnText={heroData?.faqCtaBtnText}
+          faqs={faqData}
+        />
         <CtaSection />
       </div>
     </>

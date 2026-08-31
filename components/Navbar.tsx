@@ -5,22 +5,19 @@ import { Compass, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { CONTACT_INFO } from "@/lib/constant";
+import { CONTACT_INFO, NAV_ITEMS } from "@/lib/constant";
 
-const NAV_ITEMS = [
-  { name: "Beranda", href: "/" },
-  { name: "Tentang Kami", href: "/tentang" },
-  { name: "Layanan", href: "/layanan" },
-  { name: "Portfolio", href: "/portfolio" },
-  { name: "Klien Kami", href: "/klien" },
-  { name: "Karir", href: "/karir" },
-  { name: "Kontak", href: "/kontak" },
-];
+const LIGHT_HEADER_ROUTES = ["/kontak", "/karir"];
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const isLightPage =
+    LIGHT_HEADER_ROUTES.includes(pathname) ||
+    (pathname.startsWith("/layanan/") && pathname !== "/layanan");
+  const useDarkText = isScrolled || isLightPage;
 
   const phone = CONTACT_INFO.phoneNumberClean || "6281200000000";
 
@@ -44,7 +41,9 @@ export default function Navbar() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans",
         isScrolled
           ? "bg-[#eef2f6]/95 dark:bg-slate-900/95 backdrop-blur-md shadow-sm border-b border-slate-200/80 py-3.5"
-          : "bg-transparent py-5"
+          : isLightPage
+            ? "bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-100 py-4"
+            : "bg-transparent py-5"
       )}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 lg:px-8">
@@ -57,7 +56,7 @@ export default function Navbar() {
             <span
               className={cn(
                 "block text-sm font-bold transition-colors font-sans",
-                isScrolled ? "text-slate-900 dark:text-white" : "text-white"
+                useDarkText ? "text-slate-900 dark:text-white" : "text-white"
               )}
             >
               CV. An Nasr Konsultan
@@ -65,7 +64,7 @@ export default function Navbar() {
             <span
               className={cn(
                 "block text-[11px] tracking-wide transition-colors",
-                isScrolled ? "text-slate-600 dark:text-slate-400" : "text-white/70"
+                useDarkText ? "text-slate-600 dark:text-slate-400" : "text-white/70"
               )}
             >
               Konsultan Teknik &amp; Konstruksi
@@ -89,12 +88,12 @@ export default function Navbar() {
                   className={cn(
                     "rounded-full px-4 py-1.5 text-sm font-medium transition-all inline-block",
                     isActive
-                      ? isScrolled
+                      ? useDarkText
                         ? "border-2 border-[#0066FF] bg-blue-500/10 text-[#0066FF] font-semibold"
                         : "border-2 border-white/60 bg-white/10 text-white font-semibold"
-                      : isScrolled
-                      ? "text-slate-600 hover:text-[#0066FF] dark:text-slate-300"
-                      : "text-white/80 hover:text-white"
+                      : useDarkText
+                        ? "text-slate-700 hover:text-[#0066FF] dark:text-slate-300"
+                        : "text-white/80 hover:text-white"
                   )}
                 >
                   {item.name}
@@ -111,10 +110,10 @@ export default function Navbar() {
             target="_blank"
             rel="noreferrer"
             className={cn(
-              "inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold cursor-pointer transition-all h-11 rounded-full px-6 text-sm shadow-md",
+              "inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold cursor-pointer transition-all h-11 rounded-full px-6 text-sm shadow-md text-white",
               isScrolled
-                ? "bg-[#0066FF] text-white hover:bg-blue-700"
-                : "bg-[#78E100] text-slate-950 hover:brightness-105"
+                ? "bg-[#0066FF] hover:bg-blue-700"
+                : "bg-[#FF8D28] hover:bg-orange-600"
             )}
           >
             Konsultasi Sekarang
@@ -128,8 +127,8 @@ export default function Navbar() {
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className={cn(
             "flex size-11 items-center justify-center rounded-xl border lg:hidden cursor-pointer transition-colors",
-            isScrolled
-              ? "border-slate-200 bg-white text-slate-900"
+            useDarkText
+              ? "border-slate-200 bg-white text-slate-900 shadow-xs"
               : "border-white/20 bg-white/10 text-white"
           )}
         >

@@ -1,5 +1,4 @@
 import {
-  ArrowRight,
   Building2,
   ClipboardCheck,
   FileCheck2,
@@ -8,6 +7,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { fetchServicesSectionData } from "@/lib/api/services";
+import { fetchHeroSectionData } from "@/lib/api/hero";
 import { ServiceCardData } from "@/types/service";
 
 function getServiceIcon(slug: string, title: string, index: number) {
@@ -22,76 +22,92 @@ function getServiceIcon(slug: string, title: string, index: number) {
   return icons[index % icons.length];
 }
 
-export default async function ServicesSection() {
+interface ServicesSectionProps {
+  tagline?: string;
+}
+
+export default async function ServicesSection({ tagline }: ServicesSectionProps = {}) {
   let services: ServiceCardData[] = [];
+  let serviceTagline = tagline;
+
   try {
-    services = await fetchServicesSectionData();
+    const servicesPromise = fetchServicesSectionData();
+    const taglinePromise = !serviceTagline
+      ? fetchHeroSectionData().then((data) => data.serviceTagline)
+      : Promise.resolve(serviceTagline);
+
+    const [fetchedServices, fetchedTagline] = await Promise.all([
+      servicesPromise,
+      taglinePromise,
+    ]);
+
+    services = fetchedServices;
+    if (fetchedTagline) {
+      serviceTagline = fetchedTagline;
+    }
   } catch (error) {
     console.error("Error loading ServicesSection data:", error);
   }
 
+  const rawTagline =
+    serviceTagline || "Layanan An Nasr dalam \nMendukung Proyek Anda";
+  const taglineLines = rawTagline.replace(/\u2028/g, "\n").split("\n");
+
   return (
-    <section className="bg-slate-50/60 px-6 py-20 lg:px-8 lg:py-24">
-      <div className="mx-auto max-w-5xl">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#0066FF]">
-            Layanan Kami
-          </p>
-          <h2 className="mt-3 text-3xl font-extrabold leading-tight text-slate-900 sm:text-4xl lg:text-[2.75rem]">
-            Solusi lengkap dari perencanaan hingga pelaksanaan
+    <section className="bg-gradient-to-b from-[#EBF3FE] via-[#D8E8FD] to-[#92BDFA] px-6 py-16 sm:py-20 lg:px-8 lg:py-24">
+      <div className="mx-auto max-w-7xl">
+        <div className="max-w-3xl text-left">
+          <h2 className="text-[28px] sm:text-[36px] lg:text-[44px] font-normal tracking-normal text-slate-900 leading-[36px] sm:leading-[46px] lg:leading-[55px]">
+            {taglineLines.map((line, idx) => (
+              <span key={idx} className="block">
+                {line.trim()}
+              </span>
+            ))}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-slate-500">
-            Empat lini layanan utama yang saling terhubung, sehingga setiap tahap
-            proyek Anda tetap terkendali dalam satu standar mutu.
-          </p>
         </div>
-        <div className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
+        <div className="mt-10 lg:mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service, idx) => {
             const Icon = getServiceIcon(service.slug, service.title, idx);
             return (
-              <div key={service.id || service.href} className="h-full">
-                <article className="flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-slate-100/80 bg-white text-center shadow-md">
-                  <div className="relative">
+              <Link
+                key={service.id || service.href}
+                href={service.href}
+                className="group flex h-full flex-col"
+              >
+                <article className="flex h-full flex-col overflow-hidden rounded-[1.75rem] bg-white shadow-sm border border-white/60 transition-all duration-300 group-hover:-translate-y-1.5 group-hover:shadow-xl">
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
                     <Image
-                      alt={service.alt}
-                      width={1200}
-                      height={800}
-                      sizes="(max-width: 768px) 100vw, 500px"
-                      loading="lazy"
-                      className="aspect-[16/9] w-full object-cover"
+                      alt={service.alt || service.title}
+                      width={600}
+                      height={450}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       src={service.image}
                     />
-                    <span className="absolute bottom-0 left-1/2 flex size-10 -translate-x-1/2 translate-y-1/2 items-center justify-center rounded-xl border border-slate-100 bg-white text-[#0066FF] shadow-md">
-                      <Icon className="size-5" aria-hidden="true" />
+                    <span className="absolute bottom-0 left-1/2 flex size-11 -translate-x-1/2 translate-y-1/2 items-center justify-center rounded-2xl border border-slate-100 bg-white text-[#0066FF] shadow-md transition-transform duration-300 group-hover:scale-110">
+                      <Icon className="size-5 text-[#0066FF]" aria-hidden="true" />
                     </span>
                   </div>
-                  <div className="flex flex-1 flex-col items-center p-6 pt-9">
-                    <h3 className="text-lg font-bold text-slate-900">{service.title}</h3>
-                    <p className="mt-2.5 text-sm leading-relaxed text-slate-500">
+                  <div className="flex flex-1 flex-col items-center p-6 pt-9 text-center">
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 transition-colors group-hover:text-[#0066FF]">
+                      {service.title}
+                    </h3>
+                    <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-500 line-clamp-3">
                       {service.description}
                     </p>
-                    <ul className="mt-4 flex flex-wrap justify-center gap-2">
+                    <ul className="mt-auto pt-4 flex flex-wrap justify-center gap-1.5">
                       {service.tags.map((tag: string) => (
                         <li
                           key={tag}
-                          className="rounded-full bg-slate-100 px-3.5 py-1.5 text-xs font-medium text-slate-600"
+                          className="rounded-full bg-[#F1F5F9] px-3 py-1 text-[11px] font-medium text-slate-600 leading-normal"
                         >
                           {tag}
                         </li>
                       ))}
                     </ul>
-                    <div className="mt-auto pt-6">
-                      <Link
-                        href={service.href}
-                        className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#70E000] px-6 text-sm font-bold text-slate-950 shadow transition-all hover:brightness-105"
-                      >
-                        Lihat Detail
-                        <ArrowRight className="size-4 text-slate-950" aria-hidden="true" />
-                      </Link>
-                    </div>
                   </div>
                 </article>
-              </div>
+              </Link>
             );
           })}
         </div>
@@ -99,6 +115,7 @@ export default async function ServicesSection() {
     </section>
   );
 }
+
 
 
 

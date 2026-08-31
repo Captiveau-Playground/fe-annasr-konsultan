@@ -4,12 +4,15 @@ export interface AboutSectionData {
   title?: string;
   tagline?: string;
   description?: string;
+  biography?: string;
   vision?: string;
   mission?: string;
   officeAddress?: string;
   domicileAddress?: string;
   phone?: string;
   email?: string;
+  operationalHours?: string;
+  bornDate?: string;
   imageUrl?: string;
   imageAlt?: string;
   imageCaption?: string;
@@ -22,10 +25,13 @@ export interface StrapiAboutItem {
   title?: string;
   tagline?: string;
   description?: string;
+  biography?: string;
   vision?: string;
   mission?: string;
   office_address?: string;
   domicile_address?: string;
+  operational_hours?: string;
+  born_date?: string;
   phone?: string;
   email?: string;
   image?: StrapiImage & {

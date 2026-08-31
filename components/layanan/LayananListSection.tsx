@@ -1,7 +1,6 @@
 import {
   ArrowRight,
   Building2,
-  Check,
   ClipboardCheck,
   FileCheck2,
   HardHat,
@@ -19,18 +18,17 @@ interface LayananListSectionProps {
 }
 
 const DEFAULT_DETAILED_SERVICES = [
-
   {
-    id: "perencanaan",
+    id: "jasa-perencanaan",
     title: "Jasa Perencanaan",
-    slug: "perencanaan",
+    slug: "jasa-perencanaan",
     description:
       "Perencanaan teknis dan penyusunan desain yang matang, terukur, dan sesuai standar teknis yang berlaku.",
     image: "/images/perencanaan.jpg",
     alt: "Tim teknik CV. AN NASR KONSULTAN menyusun gambar rencana bangunan di kantor",
     icon: Building2,
-    href: "/layanan/perencanaan",
-    buttonText: "Lihat Detail Jasa Perencanaan",
+    href: "/layanan/jasa-perencanaan",
+    buttonText: "Lihat Detail",
     scopes: [
       "Perencanaan Bangunan Gedung",
       "Perencanaan Jalan",
@@ -42,16 +40,16 @@ const DEFAULT_DETAILED_SERVICES = [
     ],
   },
   {
-    id: "pengawasan",
+    id: "jasa-pengawasan",
     title: "Jasa Pengawasan",
-    slug: "pengawasan",
+    slug: "jasa-pengawasan",
     description:
       "Pengendalian mutu, biaya, dan waktu pelaksanaan pekerjaan melalui pengawasan lapangan yang disiplin.",
     image: "/images/pengawasan.jpg",
     alt: "Pengawas lapangan memeriksa progres pekerjaan konstruksi dengan alat ukur",
     icon: ClipboardCheck,
-    href: "/layanan/pengawasan",
-    buttonText: "Lihat Detail Jasa Pengawasan",
+    href: "/layanan/jasa-pengawasan",
+    buttonText: "Lihat Detail",
     scopes: [
       "Pengawasan Bangunan Gedung",
       "Pengawasan Jalan",
@@ -62,32 +60,32 @@ const DEFAULT_DETAILED_SERVICES = [
     ],
   },
   {
-    id: "perizinan",
+    id: "jasa-perizinan",
     title: "Jasa Perizinan",
-    slug: "perizinan",
+    slug: "jasa-perizinan",
     description:
       "Pendampingan penuh pengurusan dokumen perizinan bangunan agar proyek Anda legal dan siap difungsikan.",
     image: "/images/perizinan.jpg",
     alt: "Pendampingan pengurusan dokumen perizinan bangunan PBG dan SLF",
     icon: FileCheck2,
-    href: "/layanan/perizinan",
-    buttonText: "Lihat Detail Jasa Perizinan",
+    href: "/layanan/jasa-perizinan",
+    buttonText: "Lihat Detail",
     scopes: [
       "Persetujuan Bangunan Gedung (PBG)",
       "Sertifikat Laik Fungsi (SLF)",
     ],
   },
   {
-    id: "konstruksi",
+    id: "jasa-konstruksi",
     title: "Jasa Konstruksi",
-    slug: "konstruksi",
+    slug: "jasa-konstruksi",
     description:
       "Pelaksanaan pekerjaan konstruksi bangunan dan infrastruktur dengan metode kerja yang aman dan efisien.",
     image: "/images/konstruksi.jpg",
     alt: "Pekerja konstruksi membangun struktur bangunan dua lantai",
     icon: HardHat,
-    href: "/layanan/konstruksi",
-    buttonText: "Lihat Detail Jasa Konstruksi",
+    href: "/layanan/jasa-konstruksi",
+    buttonText: "Lihat Detail",
     scopes: [
       "Pembangunan Rumah",
       "Renovasi Rumah",
@@ -132,28 +130,29 @@ export default async function LayananListSection({
   const items =
     apiServices && apiServices.length > 0
       ? apiServices.map((apiItem) => {
-          const slugKey = apiItem.slug.toLowerCase().replace("jasa-", "");
-          const defMatch = DEFAULT_DETAILED_SERVICES.find(
-            (def) => slugKey.includes(def.slug) || def.slug.includes(slugKey)
-          );
+        const rawSlug = apiItem.slug || "";
+        const defMatch = DEFAULT_DETAILED_SERVICES.find(
+          (def) =>
+            rawSlug.toLowerCase().includes(def.slug.toLowerCase()) ||
+            def.slug.toLowerCase().includes(rawSlug.toLowerCase())
+        );
 
-          return {
-            id: String(apiItem.id || apiItem.slug),
-            title: apiItem.title,
-            slug: apiItem.slug,
-            description: apiItem.description,
-            image: apiItem.image || defMatch?.image || "/images/perencanaan.jpg",
-            alt: apiItem.alt || apiItem.title,
-            icon: getServiceIcon(apiItem.slug),
-            href: apiItem.href || `/layanan/${slugKey}`,
-            buttonText: `Lihat Detail ${apiItem.title}`,
-            scopes:
-              apiItem.tags && apiItem.tags.length > 0
-                ? apiItem.tags
-                : defMatch?.scopes || [],
-          };
-
-        })
+        return {
+          id: String(apiItem.id || apiItem.slug),
+          title: apiItem.title,
+          slug: apiItem.slug,
+          description: apiItem.description,
+          image: apiItem.image || defMatch?.image || "/images/perencanaan.jpg",
+          alt: apiItem.alt || apiItem.title,
+          icon: getServiceIcon(apiItem.slug),
+          href: apiItem.href || `/layanan/${apiItem.slug}`,
+          buttonText: `Lihat Detail ${apiItem.title}`,
+          scopes:
+            apiItem.tags && apiItem.tags.length > 0
+              ? apiItem.tags
+              : defMatch?.scopes || [],
+        };
+      })
       : DEFAULT_DETAILED_SERVICES;
 
 
@@ -168,7 +167,7 @@ export default async function LayananListSection({
           <h2 className="mt-3 text-3xl font-extrabold leading-tight text-slate-900 sm:text-4xl lg:text-[2.75rem]">
             {sectionTagline}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-slate-500">
+          <p className="mt-4 text-base leading-relaxed text-slate-500 break-words">
             {sectionDescription}
           </p>
         </div>
@@ -203,9 +202,8 @@ export default async function LayananListSection({
 
                   {/* Content Column */}
                   <div
-                    className={`text-center lg:text-left ${
-                      isEven ? "lg:order-2" : "lg:order-1"
-                    }`}
+                    className={`text-center lg:text-left ${isEven ? "lg:order-2" : "lg:order-1"
+                      }`}
                   >
                     <span className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-blue-600/10 text-[#0066FF] lg:mx-0">
                       <Icon className="size-6" aria-hidden="true" />
@@ -213,25 +211,9 @@ export default async function LayananListSection({
                     <h3 className="mt-5 text-2xl font-bold text-slate-900">
                       {item.title}
                     </h3>
-                    <p className="mt-3 leading-relaxed text-slate-500">
+                    <p className="mt-3 leading-relaxed text-slate-500 line-clamp-4">
                       {item.description}
                     </p>
-
-                    {/* Scopes List */}
-                    <ul className="mt-6 grid gap-2.5 text-left sm:grid-cols-2">
-                      {item.scopes.map((scope, sIdx) => (
-                        <li
-                          key={sIdx}
-                          className="flex items-start gap-2 text-sm font-medium text-slate-700"
-                        >
-                          <Check
-                            className="mt-0.5 size-4 shrink-0 text-[#0066FF]"
-                            aria-hidden="true"
-                          />
-                          <span>{scope}</span>
-                        </li>
-                      ))}
-                    </ul>
 
                     {/* Action Button */}
                     <div className="mt-8">

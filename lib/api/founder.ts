@@ -23,22 +23,50 @@ export function normalizeFounderData(rawItem?: StrapiFounderItem): FounderSectio
 
   // Extract media object safely
   const photoMedia = attrs.photo;
-  const photoUrl = getStrapiMediaUrl(photoMedia);
+  let photoUrl = getStrapiMediaUrl(photoMedia);
+
+  // Normalize the multi-media attachments gallery
+  const rawAttachments = attrs.attachments || (attrs as any).attachment;
+  const attachmentList = Array.isArray(rawAttachments)
+    ? rawAttachments
+    : rawAttachments
+    ? [rawAttachments]
+    : [];
+
+  const attachments = attachmentList
+    .map((media) => ({
+      url: getStrapiMediaUrl(media) || "",
+      alt:
+        (media as any)?.alternativeText ||
+        (media as any)?.caption ||
+        (media as any)?.name ||
+        undefined,
+      caption: (media as any)?.caption || undefined,
+    }))
+    .filter((attachment) => attachment.url !== "");
+
+  if (!photoUrl && attachments.length > 0) {
+    photoUrl = attachments[0].url;
+  }
 
   // Extract alternativeText or caption from Strapi image if available
   const photoAlt =
     (photoMedia as any)?.alternativeText ||
     (photoMedia as any)?.caption ||
+    attachments[0]?.alt ||
     attrs.name ||
     "Founder Photo";
 
   return {
-    name: attrs.name,
-    position: attrs.position,
+    name: attrs.name || "Nasrulloh, ST",
+    position: attrs.position || "Founder & Direktur",
     description: attrs.description,
+    biography: attrs.biography || (attrs as any).biography,
+    tagline: attrs.tagline || (attrs as any).tagline || "Mengenal Sosok di Balik An Nasr",
     quote: attrs.quote,
     photoUrl,
     photoAlt,
+    attachments,
   };
 }
 

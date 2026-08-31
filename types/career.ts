@@ -18,6 +18,8 @@ export interface CareerItemData {
   cta_button_text?: string;
 }
 
+export type CareerJobItem = CareerItemData;
+
 export interface CareerData {
   page?: CareerPageData;
   jobs?: CareerItemData[];

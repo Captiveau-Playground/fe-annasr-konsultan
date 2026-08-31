@@ -57,10 +57,10 @@ export default async function CtaSection({
             </p>
             <Link
               href={buttonUrl}
-              className="mt-8 inline-flex h-13 items-center justify-center gap-2 rounded-full bg-accent px-8 text-base font-bold text-accent-foreground shadow-md transition-all hover:brightness-105"
+              className="mt-8 inline-flex h-13 items-center justify-center gap-2 rounded-full bg-[#FF8D28] px-8 text-base font-bold text-white shadow-md transition-all hover:brightness-105"
             >
               {finalButtonText}
-              <ArrowRight className="size-4 text-accent-foreground" aria-hidden="true" />
+              <ArrowRight className="size-4 text-white-foreground" aria-hidden="true" />
             </Link>
           </div>
         </div>

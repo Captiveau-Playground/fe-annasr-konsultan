@@ -2,6 +2,7 @@
 
 import { Compass, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import { CONTACT_INFO, NAV_ITEMS } from "@/lib/constant";
 import VisitorStats from "./VisitorStats";
 
 export default function Footer() {
@@ -26,15 +27,7 @@ export default function Footer() {
         <div>
           <h3 className="text-sm font-semibold text-white">Menu</h3>
           <ul className="mt-5 space-y-3">
-            {[
-              { name: "Beranda", href: "/" },
-              { name: "Tentang Kami", href: "/tentang" },
-              { name: "Layanan", href: "/layanan" },
-              { name: "Portfolio", href: "/portfolio" },
-              { name: "Klien Kami", href: "/klien" },
-              { name: "Karir", href: "/karir" },
-              { name: "Kontak", href: "/kontak" },
-            ].map((item) => (
+            {NAV_ITEMS.map((item) => (
               <li key={item.name}>
                 <Link
                   href={item.href}
@@ -52,10 +45,10 @@ export default function Footer() {
           <h3 className="text-sm font-semibold text-white">Layanan</h3>
           <ul className="mt-5 space-y-3">
             {[
-              { name: "Jasa Perencanaan", href: "/layanan/perencanaan" },
-              { name: "Jasa Pengawasan", href: "/layanan/pengawasan" },
-              { name: "Jasa Perizinan", href: "/layanan/perizinan" },
-              { name: "Jasa Konstruksi", href: "/layanan/konstruksi" },
+              { name: "Jasa Perencanaan", href: "/layanan/jasa-perencanaan" },
+              { name: "Jasa Pengawasan", href: "/layanan/jasa-pengawasan" },
+              { name: "Jasa Perizinan", href: "/layanan/jasa-perizinan" },
+              { name: "Jasa Konstruksi", href: "/layanan/jasa-konstruksi" },
             ].map((item) => (
               <li key={item.name}>
                 <Link
@@ -75,17 +68,15 @@ export default function Footer() {
           <ul className="mt-5 space-y-4 text-sm text-white/85">
             <li className="flex gap-3">
               <MapPin className="mt-0.5 size-4 shrink-0 text-[#70E000]" aria-hidden="true" />
-              <span>
-                Perumahan Candi Regency No. A10, Desa Candi Mulyo, Kecamatan Jombang, Kabupaten Jombang
-              </span>
+              <span>{CONTACT_INFO.address}</span>
             </li>
             <li className="flex gap-3">
               <Phone className="mt-0.5 size-4 shrink-0 text-[#70E000]" aria-hidden="true" />
-              <span>+62 812-0000-0000</span>
+              <span>{CONTACT_INFO.phone}</span>
             </li>
             <li className="flex gap-3">
               <Mail className="mt-0.5 size-4 shrink-0 text-[#70E000]" aria-hidden="true" />
-              <span>annasrkonsultan@email.com</span>
+              <span>{CONTACT_INFO.email}</span>
             </li>
           </ul>
         </div>

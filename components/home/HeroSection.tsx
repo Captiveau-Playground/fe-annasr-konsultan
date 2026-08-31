@@ -19,11 +19,16 @@ export default async function HeroSection({ data: propData }: HeroSectionProps) 
   }
 
   // Fallbacks for initial state or missing Strapi fields
-  const title = data?.title || "CV. An Nasr";
-  const titleHighlight = data?.titleHighlight || "Konsultan";
-  const description =
-    data?.description ||
-    "Menyediakan layanan perencanaan, pengawasan, perizinan, dan konstruksi dengan mengutamakan kualitas, profesionalisme, serta ketepatan dalam setiap tahap pekerjaan.";
+  const title = data?.title || "Tepat Merencanakan, Tepat Mengawasi Tepat Membangun";
+  const titleHighlight = data?.titleHighlight || "";
+  const eyebrow =
+    data?.description || "CV. An Nasr Konsultan\nJombang – Jawa Timur – Indonesia";
+  // CMS stores the eyebrow as a single string; split it into the company line
+  // and the location line at the first line break or dash separator
+  const [firstEyebrowLine, ...restEyebrowLines] = eyebrow.split(/\n|\s[-–]\s/);
+  const eyebrowLines = restEyebrowLines.length
+    ? [firstEyebrowLine, restEyebrowLines.join(" – ")]
+    : [firstEyebrowLine];
   const primaryCtaText = data?.primaryCtaText || "Konsultasi Sekarang";
   const primaryCtaUrl = data?.primaryCtaUrl || "/kontak";
   const secondaryCtaText = data?.secondaryCtaText || "Lihat Layanan";
@@ -50,26 +55,27 @@ export default async function HeroSection({ data: propData }: HeroSectionProps) 
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-20 max-w-4xl mx-auto text-center flex flex-col items-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-accent mb-4">
-          Konsultan Teknik &amp; Konstruksi
+      <div className="relative z-20 max-w-6xl mx-auto text-center flex flex-col items-center px-2">
+        <p className="text-xs md:text-sm font-medium uppercase tracking-[0.28em] text-primary-foreground/80 mb-6">
+          {eyebrowLines.map((line, i) => (
+            <span key={line} className={i > 0 ? "mt-1.5 block" : "block"}>
+              {line}
+            </span>
+          ))}
         </p>
 
-        <h1 className="text-4xl font-extrabold leading-tight text-primary-foreground sm:text-6xl lg:text-7xl tracking-tight mb-6">
-          {title} <span className="text-accent">{titleHighlight}</span>
+        <h1 className="text-4xl sm:text-6xl lg:text-[64px] font-medium leading-[1.15] tracking-tight text-primary-foreground mb-10">
+          {title}
+          {titleHighlight ? <span className="text-accent"> {titleHighlight}</span> : null}
         </h1>
-
-        <p className="mx-auto max-w-2xl text-base md:text-lg leading-relaxed text-primary-foreground/80 mb-10">
-          {description}
-        </p>
 
         <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
           <Link
             href={primaryCtaUrl}
-            className="inline-flex h-13 items-center justify-center gap-2 rounded-full bg-accent px-8 text-base font-bold text-accent-foreground shadow-[var(--shadow-lift)] transition-all hover:brightness-105"
+            className="inline-flex h-13 items-center justify-center gap-2 rounded-full bg-[#FF8D28] px-8 text-base font-bold text-white shadow-[var(--shadow-lift)] transition-all hover:brightness-105"
           >
             {primaryCtaText}
-            <ArrowRight className="size-4 text-accent-foreground" aria-hidden="true" />
+            <ArrowRight className="size-4 text-white" aria-hidden="true" />
           </Link>
           <Link
             href={secondaryCtaUrl}

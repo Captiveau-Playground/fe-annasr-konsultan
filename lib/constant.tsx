@@ -18,6 +18,17 @@ export const CONTACT_INFO = {
   gmapsUrl: "https://maps.google.com",
 };
 
+export const NAV_ITEMS = [
+  { name: "Beranda", href: "/" },
+  { name: "Layanan", href: "/layanan" },
+  { name: "Proyek", href: "/portfolio" },
+  { name: "Tentang Kami", href: "/tentang" },
+  { name: "Artikel", href: "#" },
+  { name: "Karir", href: "/karir" },
+  { name: "Kontak", href: "/kontak" },
+];
+
+
 
 // WhatsApp Widget Redirect Options
 export const WHATSAPP_OPTIONS = [

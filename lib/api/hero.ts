@@ -75,9 +75,10 @@ export function normalizeHeroData(rawItem?: StrapiHeroItem): HeroSectionData {
   const attrs = (rawItem.attributes || rawItem) as StrapiHeroItem;
 
   // Extract tagline / title
-  const fullTagline = attrs.hero_tagline || attrs.title || "CV. An Nasr Konsultan";
-  let title = "CV. An Nasr";
-  let titleHighlight = "Konsultan";
+  const fullTagline =
+    attrs.hero_tagline || attrs.title || "Tepat Merencanakan, Tepat Mengawasi Tepat Membangun";
+  let title = fullTagline;
+  let titleHighlight = "";
 
   if (attrs.title && attrs.titleHighlight) {
     title = attrs.title;
@@ -97,11 +98,11 @@ export function normalizeHeroData(rawItem?: StrapiHeroItem): HeroSectionData {
   const seoItem = Array.isArray(rawSeo) ? rawSeo[0] : rawSeo;
   const seo = seoItem
     ? {
-        metaTitle: seoItem.metaTile || seoItem.metaTitle || seoItem.title,
-        metaDescription: seoItem.metaDescription || seoItem.description,
-        keywords: seoItem.keywords,
-        metaImageUrl: getStrapiMediaUrl(seoItem.metaImage),
-      }
+      metaTitle: seoItem.metaTile || seoItem.metaTitle || seoItem.title,
+      metaDescription: seoItem.metaDescription || seoItem.description,
+      keywords: seoItem.keywords,
+      metaImageUrl: getStrapiMediaUrl(seoItem.metaImage),
+    }
     : undefined;
 
   return {
@@ -117,6 +118,40 @@ export function normalizeHeroData(rawItem?: StrapiHeroItem): HeroSectionData {
       getStrapiMediaUrl(attrs.heroBackground) ||
       getStrapiMediaUrl(attrs.backgroundImage),
     seo,
+    serviceTagline:
+      attrs.service_tagline ||
+      (attrs as any).serviceTagline ||
+      "Layanan An Nasr dalam \nMendukung Proyek Anda",
+    portfolioTagline:
+      attrs.portfolio_tagline ||
+      (attrs as any).portfolioTagline ||
+      "Ratusan Proyek yang Telah Kami Kawal",
+    portfolioCtaBtnText:
+      attrs.portfolio_cta_btn_text ||
+      (attrs as any).portfolioCtaBtnText ||
+      "Lihat semua proyek",
+    clientTagline:
+      attrs.client_tagline ||
+      (attrs as any).clientTagline ||
+      "Dipercaya instansi, lembaga,\ndan mitra usaha",
+    locationTagline:
+      attrs.location_tagline ||
+      (attrs as any).locationTagline ||
+      "Kota dan daerah yang pernah\nkami tangani",
+    faqTagline:
+      attrs.fag_tagline ||
+      attrs.faq_tagline ||
+      (attrs as any).faqTagline ||
+      "Pertanyaan yang sering diajukan",
+    faqDescription:
+      attrs.fag_description ||
+      attrs.faq_description ||
+      (attrs as any).faqDescription ||
+      "Belum menemukan jawabannya? Tim kami siap\nmembantu menjelaskan kebutuhan teknis proyek\nAnda.",
+    faqCtaBtnText:
+      attrs.faq_cta_btn_text ||
+      (attrs as any).faqCtaBtnText ||
+      "Belum menemukan jawabannya? Tim kami siap membantu menjelaskan kebutuhan teknis proyek Anda.",
   };
 }
 

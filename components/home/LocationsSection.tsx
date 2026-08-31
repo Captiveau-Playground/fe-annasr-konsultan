@@ -1,5 +1,6 @@
 import { MapPin } from "lucide-react";
 import Image from "next/image";
+import { fetchHeroSectionData } from "@/lib/api/hero";
 
 const LOCATIONS = [
   { name: "Jombang", top: "70%", left: "40%" },
@@ -14,61 +15,96 @@ const LOCATIONS = [
   { name: "Balikpapan", top: "36%", left: "58%" },
   { name: "Makassar", top: "52%", left: "68%" },
   { name: "Denpasar", top: "74%", left: "55%" },
+  { name: "Jombang", top: "70%", left: "40%" },
+  { name: "Mojokerto", top: "71%", left: "43%" },
+  { name: "Kediri", top: "74%", left: "39%" },
+  { name: "Nganjuk", top: "68%", left: "37%" },
+  { name: "Surabaya", top: "66%", left: "45%" },
+  { name: "Lamongan", top: "63%", left: "42%" },
+  { name: "Malang", top: "76%", left: "42%" },
+  { name: "Semarang", top: "66%", left: "31%" },
+  { name: "Bandung", top: "70%", left: "22%" },
+  { name: "Balikpapan", top: "36%", left: "58%" },
+  { name: "Makassar", top: "52%", left: "68%" },
+  { name: "Denpasar", top: "74%", left: "55%" },
+  { name: "Jombang", top: "70%", left: "40%" },
+  { name: "Mojokerto", top: "71%", left: "43%" },
+  { name: "Kediri", top: "74%", left: "39%" },
+  { name: "Nganjuk", top: "68%", left: "37%" },
+  { name: "Surabaya", top: "66%", left: "45%" },
+  { name: "Lamongan", top: "63%", left: "42%" },
 ];
 
-export default function LocationsSection() {
+interface LocationsSectionProps {
+  tagline?: string;
+}
+
+export default async function LocationsSection({ tagline }: LocationsSectionProps = {}) {
+  let locationTagline = tagline;
+  if (!locationTagline) {
+    try {
+      const heroData = await fetchHeroSectionData();
+      locationTagline = heroData.locationTagline;
+    } catch (e) {
+      console.error("Error fetching location tagline:", e);
+    }
+  }
+
+  const displayTagline =
+    locationTagline || "Kota dan daerah yang pernah\nkami tangani";
+
+  const taglineLines = displayTagline.replace(/\u2028/g, "\n").split("\n");
+
   return (
-    <section className="bg-white px-6 py-20 lg:px-8 lg:py-24">
-      <div className="mx-auto max-w-5xl">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#0066FF]">
-            Jangkauan Proyek
-          </p>
-          <h2 className="mt-3 text-3xl font-extrabold leading-tight text-slate-900 sm:text-4xl lg:text-[2.75rem]">
-            Kota dan daerah yang pernah kami tangani
+    <section className="bg-[#EBF5FE] px-6 py-16 sm:py-20 lg:px-8 lg:py-24 font-sans">
+      <div className="mx-auto max-w-7xl">
+        <div className="mx-auto max-w-3xl text-center mb-10 lg:mb-12">
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-[2.65rem] leading-[1.25]">
+            {taglineLines.map((line, idx) => (
+              <span key={idx} className="block">
+                {line.trim()}
+              </span>
+            ))}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-slate-500">
-            Berbasis di Jombang, pekerjaan kami tersebar di berbagai kota di Indonesia.
-          </p>
         </div>
 
-        <div className="relative mx-auto mt-12 w-full overflow-hidden rounded-[1.5rem] border border-slate-200/80 bg-white p-2 shadow-sm">
-          <div className="relative">
+        {/* Map Card Container */}
+        <div className="relative mx-auto w-full max-w-6xl overflow-hidden rounded-3xl bg-white p-6 sm:p-10 shadow-sm border border-white/80">
+          <div className="relative aspect-[16/8] w-full">
             <Image
-              alt="Ilustrasi peta Indonesia dengan sebaran lokasi proyek"
-              width={1600}
-              height={700}
-              sizes="(max-width: 768px) 100vw, 1000px"
-              loading="lazy"
-              className="w-full rounded-[1.25rem] object-cover"
+              alt="Peta sebaran lokasi proyek CV. AN NASR KONSULTAN di Indonesia"
               src="/images/peta-indonesia.jpg"
+              fill
+              sizes="(max-width: 1280px) 100vw, 1200px"
+              className="object-contain"
             />
-            {LOCATIONS.map((loc) => (
+            {LOCATIONS.slice(0, 12).map((loc, idx) => (
               <span
-                key={loc.name}
-                className="absolute hidden -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-full bg-[#0066FF] px-2.5 py-1 text-[10px] font-semibold text-white shadow-sm sm:inline-flex"
+                key={`${loc.name}-${idx}`}
+                className="absolute hidden -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-full bg-[#FF7A00] p-1 text-[10px] font-semibold text-white shadow-md sm:inline-flex"
                 style={{ top: loc.top, left: loc.left }}
               >
-                <MapPin className="size-3 text-[#70E000]" aria-hidden="true" />
-                {loc.name}
+                <MapPin className="size-3 text-white fill-white" aria-hidden="true" />
               </span>
             ))}
           </div>
         </div>
 
-        <ul className="mt-8 flex flex-wrap justify-center gap-2.5">
-          {LOCATIONS.map((loc) => (
-            <li
-              key={loc.name}
-              className="flex items-center gap-1.5 rounded-full border border-slate-200/80 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-xs"
+        {/* Location Pills Grid */}
+        <div className="mt-10 mx-auto max-w-6xl flex flex-wrap justify-center gap-3">
+          {LOCATIONS.map((loc, idx) => (
+            <span
+              key={`${loc.name}-pill-${idx}`}
+              className="inline-flex items-center gap-1.5 rounded-full bg-[#FF7A00] px-4 py-2 text-xs sm:text-sm font-medium text-white shadow-xs transition-transform hover:scale-105"
             >
-              <MapPin className="size-3.5 text-[#0066FF]" aria-hidden="true" />
+              <MapPin className="size-3.5 text-white shrink-0" aria-hidden="true" />
               {loc.name}
-            </li>
+            </span>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );
 }
+
 

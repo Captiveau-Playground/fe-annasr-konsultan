@@ -72,6 +72,11 @@ export function normalizePortfolioHeroData(rawItem?: PortfolioPageItem): Portfol
 
   const attrs = (rawItem.attributes || rawItem) as PortfolioPageItem;
 
+  const bgImage =
+    getStrapiMediaUrl(attrs.bg_image) ||
+    getStrapiMediaUrl((attrs as any).bgImage) ||
+    getStrapiMediaUrl((attrs as any).hero_bg_image);
+
   const rawSeo = attrs.seo;
   const seoItem = Array.isArray(rawSeo) ? rawSeo[0] : rawSeo;
   const seo = seoItem
@@ -90,16 +95,17 @@ export function normalizePortfolioHeroData(rawItem?: PortfolioPageItem): Portfol
       attrs.description ||
       attrs.hero_description ||
       "Setiap proyek kami dokumentasikan sebagai bukti komitmen terhadap mutu pekerjaan dan ketepatan pelaksanaan di lapangan.",
+    bgImage,
     seo,
   };
 }
 
 /**
- * Server-Side Fetcher for Portfolio Hero Section data from GET /api/portfolio-pages?populate=seo
+ * Server-Side Fetcher for Portfolio Hero Section data from GET /api/portfolio-pages?populate=*
  */
 export async function fetchPortfolioHeroData(): Promise<PortfolioHeroData> {
   const baseUrl = getStrapiBaseUrl();
-  const endpoint = `${baseUrl}/api/portfolio-pages?populate=seo`;
+  const endpoint = `${baseUrl}/api/portfolio-pages?populate=*`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
