@@ -23,9 +23,116 @@ export const NAV_ITEMS = [
   { name: "Layanan", href: "/layanan" },
   { name: "Proyek", href: "/portfolio" },
   { name: "Tentang Kami", href: "/tentang" },
-  { name: "Artikel", href: "#" },
+  { name: "Artikel", href: "/artikel" },
   { name: "Karir", href: "/karir" },
   { name: "Kontak", href: "/kontak" },
+];
+
+export const FEATURED_ARTICLE = {
+  id: "transformasi-digital",
+  title: "Transformasi Digital dalam Operasional Perusahaan",
+  excerpt: "Digitalisasi proses internal bukan sekadar penggantian perangkat, melainkan penataan ulang cara perusahaan mengambil keputusan.",
+  tags: ["SOROTAN UTAMA", "KORPORAT"],
+  category: "KORPORAT",
+  authorName: "Dr. Arif Nugroho",
+  authorRole: "Direktur Operasional",
+  date: "12 Agustus 2026",
+  readTime: "6 menit baca",
+  slug: "transformasi-digital-dalam-operasional-perusahaan",
+  image: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=1200&q=80",
+  contentParagraphs: [
+    "Transformasi digital kerap dipahami secara sempit sebagai pengadaan perangkat lunak baru. Padahal, inti dari transformasi adalah penataan ulang alur kerja, tata kelola data, dan mekanisme pengambilan keputusan di seluruh lini organisasi.",
+    "Dalam tiga tahun terakhir, perusahaan melakukan pemetaan menyeluruh terhadap proses operasional yang berjalan. Hasil pemetaan menunjukkan bahwa sebagian besar keterlambatan bukan berasal dari keterbatasan teknologi, melainkan dari duplikasi persetujuan antarunit yang tidak diperlukan.",
+    "Langkah pertama yang diambil adalah menyederhanakan jalur persetujuan dan menetapkan satu sumber data tunggal untuk setiap kategori informasi. Dengan demikian, setiap unit kerja merujuk pada angka yang sama ketika menyusun laporan bulanan.",
+    "Manajemen berpandangan bahwa keberhasilan transformasi diukur dari kualitas keputusan, bukan dari jumlah sistem yang diadopsi. Oleh karena itu, evaluasi dilakukan setiap kuartal dengan indikator yang disepakati bersama seluruh kepala divisi.",
+    "Ke depan, perusahaan akan melanjutkan penguatan kapasitas sumber daya manusia melalui program pelatihan berkelanjutan, sehingga adopsi teknologi berjalan seiring dengan kesiapan organisasi."
+  ]
+};
+
+export const ARTICLES_LIST = [
+  {
+    id: "tata-kelola",
+    category: "TATA KELOLA",
+    title: "Penerapan Tata Kelola Perusahaan yang Baik",
+    excerpt: "Prinsip transparansi, akuntabilitas, dan kewajiban menjadi landasan seluruh kebijakan yang ditetapkan manajemen.",
+    authorName: "Dr. Arif Nugroho",
+    authorRole: "Direktur Operasional",
+    date: "28 Juli 2026",
+    readTime: "5 menit baca",
+    slug: "penerapan-tata-kelola-perusahaan-yang-baik",
+    image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80",
+    contentParagraphs: [
+      "Prinsip transparansi, akuntabilitas, dan kewajiban menjadi landasan seluruh kebijakan yang ditetapkan manajemen CV. An Nasr Konsultan.",
+      "Penerapan tata kelola yang baik (Good Corporate Governance) memastikan setiap proyek teknik sipil dan konstruksi berjalan sesuai standar regulasi nasional.",
+      "Melalui pengawasan berkala dan audit internal, kualitas hasil pekerjaan serta efisiensi anggaran dapat senantiasa terjaga demi kepuasan klien."
+    ]
+  },
+  {
+    id: "sdm",
+    category: "SUMBER DAYA MANUSIA",
+    title: "Pengembangan Kompetensi Sumber Daya Manusia",
+    excerpt: "Program pelatihan terstruktur disusun untuk memastikan kesiapan karyawan menghadapi kebutuhan industri yang terus berkembang.",
+    authorName: "Dr. Arif Nugroho",
+    authorRole: "Direktur Operasional",
+    date: "15 Juli 2026",
+    readTime: "4 menit baca",
+    slug: "pengembangan-kompetensi-sumber-daya-manusia",
+    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80",
+    contentParagraphs: [
+      "Program pelatihan terstruktur disusun untuk memastikan kesiapan karyawan menghadapi kebutuhan industri yang terus berkembang.",
+      "Peningkatan skill teknis sipil, sertifikasi keahlian, dan pemahaman keselamatan kerja (K3) menjadi fokus utama program sertifikasi tim perencana dan pengawas kami.",
+      "Pengembangan SDM yang konsisten merupakan kunci utama daya saing perusahaan dalam memberikan layanan konsultansi terbaik."
+    ]
+  },
+  {
+    id: "keberlanjutan",
+    category: "KEBERLANJUTAN",
+    title: "Komitmen Keberlanjutan dan Pengelolaan Lingkungan",
+    excerpt: "Perusahaan menargetkan efisiensi energi dan pengurangan limbah operasional secara terukur pada seluruh fasilitas.",
+    authorName: "Dr. Arif Nugroho",
+    authorRole: "Direktur Operasional",
+    date: "30 Juni 2026",
+    readTime: "5 menit baca",
+    slug: "komitmen-keberlanjutan-dan-pengelolaan-lingkungan",
+    image: "https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=800&q=80",
+    contentParagraphs: [
+      "Perusahaan menargetkan efisiensi energi dan pengurangan limbah operasional secara terukur pada seluruh fasilitas.",
+      "Dalam setiap desain perencanaan gedung dan infrastruktur sipil, kami mengintegrasikan konsep green building dan analisis dampak lingkungan.",
+      "Inisiatif ini bertujuan menciptakan pembangunan yang tidak hanya kokoh secara struktur, namun juga ramah bagi ekosistem sekitar."
+    ]
+  },
+  {
+    id: "operasional",
+    category: "OPERASIONAL",
+    title: "Standar Mutu Layanan dan Kepuasan Pelanggan",
+    excerpt: "Penerapan standar mutu yang konsisten menjadi dasar peningkatan kepercayaan pelanggan terhadap layanan perusahaan.",
+    authorName: "Dr. Arif Nugroho",
+    authorRole: "Direktur Operasional",
+    date: "18 Juni 2026",
+    readTime: "4 menit baca",
+    slug: "standar-mutu-layanan-dan-kepuasan-pelanggan",
+    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
+    contentParagraphs: [
+      "Penerapan standar mutu yang konsisten menjadi dasar peningkatan kepercayaan pelanggan terhadap layanan perusahaan.",
+      "Pengawasan ketat dari tahap survei awal, perancangan RAB, hingga eksekusi proyek memastikan hasil kerja tepat spesifikasi dan tepat waktu."
+    ]
+  },
+  {
+    id: "kemitraan",
+    category: "KORPORAT",
+    title: "Kemitraan Strategis dan Rencana Ekspansi Usaha",
+    excerpt: "Perluasan jaringan kemitraan diarahkan untuk memperkuat rantai pasok dan memperluas jangkauan layanan di wilayah baru.",
+    authorName: "Dr. Arif Nugroho",
+    authorRole: "Direktur Operasional",
+    date: "02 Juni 2026",
+    readTime: "4 menit baca",
+    slug: "kemitraan-strategis-dan-rencana-ekspansi-usaha",
+    image: "https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&w=800&q=80",
+    contentParagraphs: [
+      "Perluasan jaringan kemitraan diarahkan untuk memperkuat rantai pasok dan memperluas jangkauan layanan di wilayah baru.",
+      "Sinergi bersama mitra strategis mendukung komitmen perusahaan untuk menghadirkan solusi teknis terintegrasi bagi instansi dan swasta."
+    ]
+  },
 ];
 
 
