@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CONTACT_INFO, NAV_ITEMS } from "@/lib/constant";
 
-const LIGHT_HEADER_ROUTES = ["/kontak", "/karir"];
+const LIGHT_HEADER_ROUTES = ["/kontak", "/karir", "/artikel"];
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -16,6 +16,7 @@ export default function Navbar() {
 
   const isLightPage =
     LIGHT_HEADER_ROUTES.includes(pathname) ||
+    pathname.startsWith("/artikel") ||
     (pathname.startsWith("/layanan/") && pathname !== "/layanan");
   const useDarkText = isScrolled || isLightPage;
 
