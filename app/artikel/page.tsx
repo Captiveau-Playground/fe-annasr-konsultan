@@ -9,7 +9,9 @@ import { constructMetadata, LOCAL_BUSINESS_JSON_LD } from "@/lib/seo";
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
+  const { page } = await fetchArticleData();
   return constructMetadata({
+    seo: page?.seo,
     fallbackTitle: "Artikel & Berita — CV. AN NASR KONSULTAN",
     fallbackDescription:
       "Publikasi resmi mengenai kebijakan, kegiatan operasional, serta perkembangan CV An Nasr Konsultan.",
@@ -18,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ArtikelPage() {
-  const { featuredArticle, articles } = await fetchArticleData();
+  const { page, featuredArticle, articles } = await fetchArticleData();
 
   return (
     <>
@@ -27,7 +29,11 @@ export default async function ArtikelPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_JSON_LD) }}
       />
       <div className="flex flex-col min-h-screen bg-slate-50 font-sans text-slate-800">
-        <ArtikelHeaderSection />
+        <ArtikelHeaderSection
+          title={page?.title}
+          tagline={page?.tagline}
+          description={page?.description}
+        />
         <ArtikelFeaturedSection article={featuredArticle} />
         <ArtikelGridSection articles={articles} />
         <CtaSection />

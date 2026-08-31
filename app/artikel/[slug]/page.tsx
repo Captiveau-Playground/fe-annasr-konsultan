@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: ArtikelDetailPageProps): Prom
   const article = await fetchArticleBySlug(resolvedParams.slug);
 
   return constructMetadata({
+    seo: article?.seo,
     fallbackTitle: `${article.title} — CV. AN NASR KONSULTAN`,
     fallbackDescription: article.excerpt,
     path: `/artikel/${article.slug}`,
@@ -48,7 +49,7 @@ export default async function ArtikelDetailPage({ params }: ArtikelDetailPagePro
       jobTitle: article.authorRole || "Direktur Operasional",
     },
     publisher: LOCAL_BUSINESS_JSON_LD,
-    datePublished: "2026-08-12",
+    datePublished: article.date,
   };
 
   return (
