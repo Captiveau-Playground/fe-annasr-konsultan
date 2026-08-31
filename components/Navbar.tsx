@@ -113,8 +113,8 @@ export default function Navbar() {
             className={cn(
               "inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold cursor-pointer transition-all h-11 rounded-full px-6 text-sm shadow-md",
               isScrolled
-                ? "bg-[#0066FF] text-white hover:bg-blue-700"
-                : "bg-[#78E100] text-slate-950 hover:brightness-105"
+                ? "bg-[#FF8D28] text-white hover:bg-blue-700"
+                : "bg-[#FF8D28] text-slate-950 hover:brightness-105"
             )}
           >
             Konsultasi Sekarang

@@ -39,18 +39,8 @@ export default async function PortfolioPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_JSON_LD) }}
       />
       <div className="flex flex-col min-h-screen bg-background font-sans">
-        {/* Portfolio Hero Section */}
         <PortfolioHeroSection data={heroData} />
-
-        {/* Portfolio Projects Section */}
         <PortfolioGrid projects={projectsData} categories={categoriesData} />
-
-        {/* Clients Section */}
-        <ClientsSection />
-
-        <LocationsSection />
-
-        {/* CTA Section */}
         <CtaSection />
       </div>
     </>
