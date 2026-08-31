@@ -4,6 +4,7 @@ export interface AboutSectionData {
   title?: string;
   tagline?: string;
   description?: string;
+  biography?: string;
   vision?: string;
   mission?: string;
   officeAddress?: string;
@@ -23,6 +24,7 @@ export interface StrapiAboutItem {
   title?: string;
   tagline?: string;
   description?: string;
+  biography?: string;
   vision?: string;
   mission?: string;
   office_address?: string;

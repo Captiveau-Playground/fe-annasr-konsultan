@@ -49,6 +49,7 @@ export default async function TentangPage() {
           data={aboutData}
           title={heroData?.aboutTagline2}
         />
+        <FounderSection data={founderData} useBiography={true} />
         <CtaSection />
       </div>
     </>

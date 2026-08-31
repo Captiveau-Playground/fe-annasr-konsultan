@@ -4,16 +4,34 @@ import { AboutSectionData } from "@/types/about";
 interface VisionMissionSectionProps {
   data?: AboutSectionData;
   title?: string;
+  biography?: string;
 }
 
-export default function VisionMissionSection({ data, title: propTitle }: VisionMissionSectionProps) {
+function parseParagraphs(text?: string): string[] {
+  if (!text) return [];
+  if (text.includes("\n")) {
+    return text.split(/\n+/).map((p) => p.trim()).filter(Boolean);
+  }
+  return [text.trim()];
+}
+
+export default function VisionMissionSection({
+  data,
+  title: propTitle,
+  biography: propBiography,
+}: VisionMissionSectionProps) {
   const title = propTitle || "Tumbuh Bersama Setiap Proyek";
 
-  const p1 =
+  const defaultP1 =
     "CV. An Nasr Konsultan memulai perjalanannya pada 26 April 2024 di Jombang. Berawal dari menangani proyek-proyek skala kecil, khususnya perencanaan hunian dan komersial, kami terus membangun pengalaman melalui setiap proyek yang dipercayakan kepada kami. Seiring berkembangnya kebutuhan dan pengalaman di lapangan, An Nasr memperluas layanan dari perencanaan hingga pengawasan, manajemen konstruksi, perizinan bangunan, dan jasa konstruksi.";
 
-  const p2 =
+  const defaultP2 =
     "Kini, An Nasr telah dipercaya menangani berbagai kebutuhan pembangunan, mulai dari gedung bertingkat, fasilitas umum, perumahan, hingga proyek industri. Dengan dukungan tenaga ahli bersertifikasi, kami terus berkomitmen menjadi mitra yang dipercaya dalam mewujudkan proyek yang aman, efisien, dan tepat guna.";
+
+  const rawBio = propBiography || data?.biography;
+  const paragraphs = rawBio && rawBio.trim().length > 0
+    ? parseParagraphs(rawBio)
+    : [defaultP1, defaultP2];
 
   const vision =
     data?.vision ||
@@ -33,8 +51,9 @@ export default function VisionMissionSection({ data, title: propTitle }: VisionM
 
         {/* Narrative Paragraphs */}
         <div className="mt-6 space-y-4 text-xs sm:text-sm lg:text-[15px] leading-relaxed text-slate-600 max-w-6xl">
-          <p>{p1}</p>
-          <p>{p2}</p>
+          {paragraphs.map((p, idx) => (
+            <p key={idx}>{p}</p>
+          ))}
         </div>
 
         {/* Visi & Misi Outline Cards */}

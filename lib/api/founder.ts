@@ -45,9 +45,11 @@ export function normalizeFounderData(rawItem?: StrapiFounderItem): FounderSectio
     .filter((attachment) => attachment.url !== "");
 
   return {
-    name: attrs.name,
-    position: attrs.position,
+    name: attrs.name || "Nasrulloh, ST",
+    position: attrs.position || "Founder & Direktur",
     description: attrs.description,
+    biography: attrs.biography || (attrs as any).biography,
+    tagline: attrs.tagline || (attrs as any).tagline || "Mengenal Sosok di Balik An Nasr",
     quote: attrs.quote,
     photoUrl,
     photoAlt,
