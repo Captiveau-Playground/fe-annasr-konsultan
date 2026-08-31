@@ -1,11 +1,13 @@
 import ClientsSection from "@/components/home/ClientsSection";
 import CtaSection from "@/components/home/CtaSection";
+import FaqSection from "@/components/home/FaqSection";
 import FounderSection from "@/components/home/FounderSection";
 import HeroSection from "@/components/home/HeroSection";
 import LocationsSection from "@/components/home/LocationsSection";
 import ServicesSection from "@/components/home/ServicesSection";
 import PortfolioGrid from "@/components/PortfolioGrid";
 import { fetchHeroSectionData } from "@/lib/api/hero";
+import { fetchFaqSettingsData } from "@/lib/api/faq";
 import {
   fetchPortfolioCategories,
   fetchPortfolioProjects,
@@ -28,10 +30,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const [heroData, projectsData, categoriesData] = await Promise.all([
+  const [heroData, projectsData, categoriesData, faqData] = await Promise.all([
     fetchHeroSectionData().catch(() => undefined),
     fetchPortfolioProjects().catch(() => undefined),
     fetchPortfolioCategories().catch(() => undefined),
+    fetchFaqSettingsData().catch(() => []),
   ]);
 
   return (
@@ -52,6 +55,12 @@ export default async function Home() {
         />
         <ClientsSection tagline={heroData?.clientTagline} />
         <LocationsSection tagline={heroData?.locationTagline} />
+        <FaqSection
+          tagline={heroData?.faqTagline}
+          description={heroData?.faqDescription}
+          ctaBtnText={heroData?.faqCtaBtnText}
+          faqs={faqData}
+        />
         <CtaSection />
       </div>
     </>

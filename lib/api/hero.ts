@@ -138,6 +138,20 @@ export function normalizeHeroData(rawItem?: StrapiHeroItem): HeroSectionData {
       attrs.location_tagline ||
       (attrs as any).locationTagline ||
       "Kota dan daerah yang pernah\nkami tangani",
+    faqTagline:
+      attrs.fag_tagline ||
+      attrs.faq_tagline ||
+      (attrs as any).faqTagline ||
+      "Pertanyaan yang sering diajukan",
+    faqDescription:
+      attrs.fag_description ||
+      attrs.faq_description ||
+      (attrs as any).faqDescription ||
+      "Belum menemukan jawabannya? Tim kami siap\nmembantu menjelaskan kebutuhan teknis proyek\nAnda.",
+    faqCtaBtnText:
+      attrs.faq_cta_btn_text ||
+      (attrs as any).faqCtaBtnText ||
+      "Belum menemukan jawabannya? Tim kami siap membantu menjelaskan kebutuhan teknis proyek Anda.",
   };
 }
 

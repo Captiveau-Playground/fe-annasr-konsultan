@@ -20,6 +20,9 @@ export interface HeroSectionData {
   portfolioCtaBtnText?: string;
   clientTagline?: string;
   locationTagline?: string;
+  faqTagline?: string;
+  faqDescription?: string;
+  faqCtaBtnText?: string;
 }
 
 export interface StrapiImage {
@@ -62,6 +65,11 @@ export interface StrapiHeroItem {
   portfolio_cta_btn_text?: string;
   client_tagline?: string;
   location_tagline?: string;
+  fag_tagline?: string;
+  faq_tagline?: string;
+  fag_description?: string;
+  faq_description?: string;
+  faq_cta_btn_text?: string;
   hero_bg_image?: StrapiImage;
   seo?: StrapiSeoItem[] | StrapiSeoItem;
   
