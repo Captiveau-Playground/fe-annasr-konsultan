@@ -9,10 +9,10 @@ import { CONTACT_INFO } from "@/lib/constant";
 
 const NAV_ITEMS = [
   { name: "Beranda", href: "/" },
-  { name: "Tentang Kami", href: "/tentang" },
   { name: "Layanan", href: "/layanan" },
-  { name: "Portfolio", href: "/portfolio" },
-  { name: "Klien Kami", href: "/klien" },
+  { name: "Proyek", href: "/portfolio" },
+  { name: "Tentang Kami", href: "/tentang" },
+  { name: "Artikel", href: "#" },
   { name: "Karir", href: "/karir" },
   { name: "Kontak", href: "/kontak" },
 ];
@@ -93,8 +93,8 @@ export default function Navbar() {
                         ? "border-2 border-[#0066FF] bg-blue-500/10 text-[#0066FF] font-semibold"
                         : "border-2 border-white/60 bg-white/10 text-white font-semibold"
                       : isScrolled
-                      ? "text-slate-600 hover:text-[#0066FF] dark:text-slate-300"
-                      : "text-white/80 hover:text-white"
+                        ? "text-slate-600 hover:text-[#0066FF] dark:text-slate-300"
+                        : "text-white/80 hover:text-white"
                   )}
                 >
                   {item.name}
