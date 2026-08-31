@@ -52,10 +52,10 @@ export default function Footer() {
           <h3 className="text-sm font-semibold text-white">Layanan</h3>
           <ul className="mt-5 space-y-3">
             {[
-              { name: "Jasa Perencanaan", href: "/layanan/perencanaan" },
-              { name: "Jasa Pengawasan", href: "/layanan/pengawasan" },
-              { name: "Jasa Perizinan", href: "/layanan/perizinan" },
-              { name: "Jasa Konstruksi", href: "/layanan/konstruksi" },
+              { name: "Jasa Perencanaan", href: "/layanan/jasa-perencanaan" },
+              { name: "Jasa Pengawasan", href: "/layanan/jasa-pengawasan" },
+              { name: "Jasa Perizinan", href: "/layanan/jasa-perizinan" },
+              { name: "Jasa Konstruksi", href: "/layanan/jasa-konstruksi" },
             ].map((item) => (
               <li key={item.name}>
                 <Link

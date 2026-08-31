@@ -24,7 +24,9 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const isLightPage = LIGHT_HEADER_ROUTES.includes(pathname);
+  const isLightPage =
+    LIGHT_HEADER_ROUTES.includes(pathname) ||
+    (pathname.startsWith("/layanan/") && pathname !== "/layanan");
   const useDarkText = isScrolled || isLightPage;
 
   const phone = CONTACT_INFO.phoneNumberClean || "6281200000000";
