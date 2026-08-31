@@ -5,17 +5,7 @@ import { Compass, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { CONTACT_INFO } from "@/lib/constant";
-
-const NAV_ITEMS = [
-  { name: "Beranda", href: "/" },
-  { name: "Layanan", href: "/layanan" },
-  { name: "Proyek", href: "/portfolio" },
-  { name: "Tentang Kami", href: "/tentang" },
-  { name: "Artikel", href: "#" },
-  { name: "Karir", href: "/karir" },
-  { name: "Kontak", href: "/kontak" },
-];
+import { CONTACT_INFO, NAV_ITEMS } from "@/lib/constant";
 
 const LIGHT_HEADER_ROUTES = ["/kontak", "/karir"];
 
