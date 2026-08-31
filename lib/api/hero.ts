@@ -33,11 +33,25 @@ export function getHeroQueryString(populate = "hero_bg_image,seo"): string {
 export function getStrapiMediaUrl(media?: any): string | undefined {
   if (!media) return undefined;
 
+  // Handle direct array, array inside data, or single object
+  const item = Array.isArray(media)
+    ? media[0]
+    : Array.isArray(media?.data)
+    ? media.data[0]
+    : media?.data || media;
+
+  if (!item) return undefined;
+
   let url: string | undefined =
+    item?.url ||
+    item?.attributes?.url ||
+    item?.formats?.large?.url ||
+    item?.formats?.medium?.url ||
+    item?.formats?.small?.url ||
+    item?.formats?.thumbnail?.url ||
     media?.url ||
     media?.data?.attributes?.url ||
-    media?.data?.[0]?.attributes?.url ||
-    media?.formats?.large?.url;
+    media?.data?.[0]?.attributes?.url;
 
   if (!url) return undefined;
 

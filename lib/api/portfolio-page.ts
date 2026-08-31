@@ -81,11 +81,11 @@ export function normalizePortfolioHeroData(rawItem?: PortfolioPageItem): Portfol
   const seoItem = Array.isArray(rawSeo) ? rawSeo[0] : rawSeo;
   const seo = seoItem
     ? {
-        metaTitle: seoItem.metaTile || seoItem.metaTitle || seoItem.title,
-        metaDescription: seoItem.metaDescription || seoItem.description,
-        keywords: seoItem.keywords,
-        metaImageUrl: getStrapiMediaUrl(seoItem.metaImage),
-      }
+      metaTitle: seoItem.metaTile || seoItem.metaTitle || seoItem.title,
+      metaDescription: seoItem.metaDescription || seoItem.description,
+      keywords: seoItem.keywords,
+      metaImageUrl: getStrapiMediaUrl(seoItem.metaImage),
+    }
     : undefined;
 
   return {
@@ -194,6 +194,7 @@ export function normalizePortfolioProjectItem(rawItem: any, index: number): Proj
   if (!rawItem) return { title: "", location: "", category: "" };
 
   const attrs = rawItem.attributes || rawItem;
+  console.log('attrs:', attrs)
 
   const categoryName =
     attrs.portofolio_category_settings?.[0]?.name ||
@@ -253,6 +254,7 @@ export async function fetchPortfolioProjects(): Promise<Project[]> {
 
     if (res.ok) {
       const json: StrapiResponse<any[]> = await res.json();
+      console.log(json);
 
       if (json.data && Array.isArray(json.data) && json.data.length > 0) {
         return json.data.map((item, idx) => normalizePortfolioProjectItem(item, idx));
