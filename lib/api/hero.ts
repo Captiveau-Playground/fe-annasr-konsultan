@@ -75,9 +75,10 @@ export function normalizeHeroData(rawItem?: StrapiHeroItem): HeroSectionData {
   const attrs = (rawItem.attributes || rawItem) as StrapiHeroItem;
 
   // Extract tagline / title
-  const fullTagline = attrs.hero_tagline || attrs.title || "CV. An Nasr Konsultan";
-  let title = "CV. An Nasr";
-  let titleHighlight = "Konsultan";
+  const fullTagline =
+    attrs.hero_tagline || attrs.title || "Tepat Merencanakan, Tepat Mengawasi Tepat Membangun";
+  let title = fullTagline;
+  let titleHighlight = "";
 
   if (attrs.title && attrs.titleHighlight) {
     title = attrs.title;
@@ -117,6 +118,18 @@ export function normalizeHeroData(rawItem?: StrapiHeroItem): HeroSectionData {
       getStrapiMediaUrl(attrs.heroBackground) ||
       getStrapiMediaUrl(attrs.backgroundImage),
     seo,
+    serviceTagline:
+      attrs.service_tagline ||
+      (attrs as any).serviceTagline ||
+      "Layanan An Nasr dalam \nMendukung Proyek Anda",
+    portfolioTagline:
+      attrs.portfolio_tagline ||
+      (attrs as any).portfolioTagline ||
+      "Ratusan Proyek yang Telah Kami Kawal",
+    portfolioCtaBtnText:
+      attrs.portfolio_cta_btn_text ||
+      (attrs as any).portfolioCtaBtnText ||
+      "Lihat semua proyek",
   };
 }
 

@@ -24,6 +24,7 @@ export default async function FounderSection({ data: propData }: FounderSectionP
     "Berpengalaman lebih dari 15 tahun di bidang teknik sipil, mulai dari perencanaan struktur, pengawasan proyek infrastruktur, hingga pelaksanaan konstruksi bangunan pemerintah dan swasta. Beliau mendirikan CV. AN NASR KONSULTAN dengan satu prinsip sederhana: setiap pekerjaan harus dapat dipertanggungjawabkan secara teknis maupun moral.";
   const photoUrl = data?.photoUrl || "/images/founder.jpg";
   const photoAlt = data?.photoAlt || name;
+  const attachments = data?.attachments || [];
 
   return (
     <section className="py-16 md:py-24 bg-white font-sans text-slate-800">
@@ -45,20 +46,35 @@ export default async function FounderSection({ data: propData }: FounderSectionP
 
           {/* Right side: Information */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
-            <span className="text-[#1D4ED8] font-bold text-xs md:text-[13px] tracking-[0.2em] uppercase mb-2">
-              FOUNDER
-            </span>
             <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold text-[#1E293B] leading-[1.2] tracking-tight mb-3">
               {name}
             </h2>
             <div>
-              <span className="bg-[#78E100] text-slate-950 font-bold text-xs md:text-[13px] px-3.5 py-1 rounded-full inline-block mb-6">
+              <span className="bg-[#F59E0B] text-white font-semibold text-xs md:text-[13px] px-3.5 py-1 rounded-full inline-block mb-6">
                 {position}
               </span>
             </div>
             <p className="text-[#64748B] text-base md:text-[16.5px] leading-[1.75] font-normal max-w-xl">
               {description}
             </p>
+
+            {attachments.length > 0 && (
+              <div className="mt-10 grid grid-cols-2 gap-5 md:gap-6 w-full">
+                {attachments.map((attachment) => (
+                  <Image
+                    key={attachment.url}
+                    src={attachment.url}
+                    alt={attachment.alt || `Tim ${name} CV. AN NASR KONSULTAN`}
+                    width={1400}
+                    height={1000}
+                    sizes="(max-width: 1024px) 50vw, 320px"
+                    loading="lazy"
+                    unoptimized
+                    className="aspect-[16/10] w-full object-cover rounded-[1.5rem]"
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

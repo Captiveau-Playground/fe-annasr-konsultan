@@ -15,6 +15,9 @@ export interface HeroSectionData {
   secondaryCtaUrl?: string;
   backgroundImageUrl?: string;
   seo?: HeroSeoData;
+  serviceTagline?: string;
+  portfolioTagline?: string;
+  portfolioCtaBtnText?: string;
 }
 
 export interface StrapiImage {
@@ -52,6 +55,9 @@ export interface StrapiHeroItem {
   hero_description?: string;
   hero_contact_cta_text?: string;
   hero_service_cta_text?: string;
+  service_tagline?: string;
+  portfolio_tagline?: string;
+  portfolio_cta_btn_text?: string;
   hero_bg_image?: StrapiImage;
   seo?: StrapiSeoItem[] | StrapiSeoItem;
   

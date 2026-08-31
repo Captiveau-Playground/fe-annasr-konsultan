@@ -46,9 +46,13 @@ export default async function Home() {
       <div className="flex flex-col min-h-screen">
         <HeroSection data={heroData} />
         <FounderSection />
-        <AboutSection />
-        <ServicesSection />
-        <PortfolioGrid projects={projectsData} categories={categoriesData} />
+        <ServicesSection tagline={heroData?.serviceTagline} />
+        <PortfolioGrid
+          projects={projectsData}
+          categories={categoriesData}
+          tagline={heroData?.portfolioTagline}
+          ctaText={heroData?.portfolioCtaBtnText}
+        />
         <ClientsSection />
         <LocationsSection />
         <ProcessSection />

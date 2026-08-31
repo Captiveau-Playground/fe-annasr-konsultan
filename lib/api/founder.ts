@@ -32,6 +32,18 @@ export function normalizeFounderData(rawItem?: StrapiFounderItem): FounderSectio
     attrs.name ||
     "Founder Photo";
 
+  // Normalize the multi-media attachments gallery
+  const attachments = (Array.isArray(attrs.attachments) ? attrs.attachments : [])
+    .map((media) => ({
+      url: getStrapiMediaUrl(media) || "",
+      alt:
+        (media as any)?.alternativeText ||
+        (media as any)?.caption ||
+        (media as any)?.name ||
+        undefined,
+    }))
+    .filter((attachment) => attachment.url !== "");
+
   return {
     name: attrs.name,
     position: attrs.position,
@@ -39,6 +51,7 @@ export function normalizeFounderData(rawItem?: StrapiFounderItem): FounderSectio
     quote: attrs.quote,
     photoUrl,
     photoAlt,
+    attachments,
   };
 }
 
