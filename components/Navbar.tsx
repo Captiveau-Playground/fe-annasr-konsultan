@@ -17,7 +17,7 @@ const NAV_ITEMS = [
   { name: "Kontak", href: "/kontak" },
 ];
 
-const LIGHT_HEADER_ROUTES = ["/kontak"];
+const LIGHT_HEADER_ROUTES = ["/kontak", "/karir"];
 
 export default function Navbar() {
   const pathname = usePathname();
