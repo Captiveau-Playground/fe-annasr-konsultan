@@ -109,7 +109,7 @@ export default function Navbar() {
           <a
             href={`https://wa.me/${phone}`}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className={cn(
               "inline-flex items-center justify-center gap-2 whitespace-nowrap font-semibold cursor-pointer transition-all h-11 rounded-full px-6 text-sm shadow-md text-white",
               isScrolled
@@ -172,7 +172,7 @@ export default function Navbar() {
             <a
               href={`https://wa.me/${phone}`}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               onClick={() => setMobileMenuOpen(false)}
               className="flex w-full items-center justify-center gap-2 font-bold bg-[#78E100] text-slate-950 shadow hover:brightness-105 h-12 rounded-full px-6 text-base"
             >

@@ -86,7 +86,7 @@ export default function CareerListSection({
                   <a
                     href={waUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="inline-flex w-full items-center justify-center h-11 rounded-full bg-[#FF8D28] text-white text-xs sm:text-sm font-semibold shadow-xs hover:bg-orange-600 transition-colors"
                   >
                     {buttonLabel}
