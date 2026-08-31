@@ -10,6 +10,11 @@ export function normalizeTentangHeroData(rawItem?: AboutUseItem): TentangHeroDat
 
   const attrs = (rawItem.attributes || rawItem) as AboutUseItem;
 
+  const bgImage =
+    getStrapiMediaUrl(attrs.bg_image) ||
+    getStrapiMediaUrl(attrs.hero_bg_image) ||
+    getStrapiMediaUrl((attrs as any).bgImage);
+
   const rawSeo = attrs.seo;
   const seoItem = Array.isArray(rawSeo) ? rawSeo[0] : rawSeo;
   const seo = seoItem
@@ -25,16 +30,17 @@ export function normalizeTentangHeroData(rawItem?: AboutUseItem): TentangHeroDat
     badge: "Tentang Kami",
     title: attrs.hero_title || attrs.title,
     description: attrs.hero_description || attrs.description,
+    bgImage,
     seo,
   };
 }
 
 /**
- * Server-Side Fetcher for Tentang Hero Section data from GET /api/about-uses?populate=seo
+ * Server-Side Fetcher for Tentang Hero Section data from GET /api/about-uses?populate=*
  */
 export async function fetchTentangHeroData(): Promise<TentangHeroData> {
   const baseUrl = getStrapiBaseUrl();
-  const endpoint = `${baseUrl}/api/about-uses?populate=seo`;
+  const endpoint = `${baseUrl}/api/about-uses?populate=*`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",

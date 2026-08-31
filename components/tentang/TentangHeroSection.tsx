@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { fetchTentangHeroData } from "@/lib/api/about-use";
 import { TentangHeroData } from "@/types/about-use";
 
@@ -20,26 +21,34 @@ export default async function TentangHeroSection({ data: propData }: TentangHero
   const description =
     data?.description ||
     "Kami hadir untuk memastikan setiap rencana pembangunan berjalan dengan perhitungan yang matang dan pelaksanaan yang bertanggung jawab.";
+  const bgImage = data?.bgImage || "/images/hero-bg.jpg";
 
   return (
-    <section className="relative overflow-hidden bg-[linear-gradient(135deg,#133d9c_0%,#005ded_100%)] px-5 pb-20 pt-36 lg:px-8 lg:pb-28 lg:pt-44">
-      {/* Blueprint Grid Overlay */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.08)_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-25"
-        aria-hidden="true"
-      />
-      <div className="relative mx-auto max-w-4xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#78E100]">
-          {badge}
-        </p>
-        <h1 className="mt-4 text-4xl font-extrabold leading-tight text-white sm:text-5xl">
+    <section className="cta-gradient relative overflow-hidden px-5 pb-20 pt-36 lg:px-8 lg:pb-28 lg:pt-44 font-sans">
+      {/* Background Image with Overlay & Blueprint Grid */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src={bgImage}
+          alt="Background tentang kami hero"
+          fill
+          sizes="100vw"
+          unoptimized
+          className="object-cover opacity-30 select-none scale-105"
+          priority
+        />
+        <div
+          className="blueprint-grid absolute inset-0 opacity-25"
+          aria-hidden="true"
+        />
+      </div>
+
+      <div className="relative z-20 mx-auto max-w-4xl text-center">
+        <h1 className="text-[30px] sm:text-[38px] lg:text-[48px] font-normal tracking-normal text-white text-center leading-[38px] sm:leading-[48px] lg:leading-[60px]">
           {title}
         </h1>
-        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/80">
-          {description}
-        </p>
       </div>
     </section>
   );
 }
+
 

@@ -39,7 +39,7 @@ export default async function PortfolioHeroSection({ data: propData }: Portfolio
       </div>
 
       <div className="relative z-20 mx-auto max-w-4xl text-center">
-        <h1 className="mt-4 text-4xl font-extrabold leading-tight text-primary-foreground sm:text-5xl">
+        <h1 className="text-[30px] sm:text-[38px] lg:text-[48px] font-normal tracking-normal text-white text-center leading-[38px] sm:leading-[48px] lg:leading-[60px]">
           {tagline}
         </h1>
       </div>

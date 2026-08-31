@@ -37,7 +37,6 @@ export default async function TentangPage() {
       />
       <div className="flex flex-col min-h-screen bg-background font-sans">
         <TentangHeroSection data={heroData} />
-        <FounderSection data={founderData} />
         <AboutSection data={aboutData} />
         <CtaSection />
       </div>
