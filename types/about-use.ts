@@ -11,6 +11,8 @@ export interface AboutUseItem {
   card_description?: string;
   about_tagline_1?: string;
   about_tagline_2?: string;
+  team_tagline?: string;
+  team_title?: string;
   biography?: string;
   bg_image?: StrapiImage;
   hero_bg_image?: StrapiImage;
@@ -28,6 +30,7 @@ export interface TentangHeroData {
   description?: string;
   aboutTagline1?: string;
   aboutTagline2?: string;
+  teamTagline?: string;
   biography?: string;
   bgImage?: string;
   seo?: HeroSeoData;

@@ -32,6 +32,7 @@ export function normalizeTentangHeroData(rawItem?: AboutUseItem): TentangHeroDat
     description: attrs.hero_description || attrs.description,
     aboutTagline1: attrs.about_tagline_1 || (attrs as any).aboutTagline1,
     aboutTagline2: attrs.about_tagline_2 || (attrs as any).aboutTagline2,
+    teamTagline: attrs.team_tagline || attrs.team_title || (attrs as any).teamTagline || "Tim di Balik Setiap Proyek",
     biography: attrs.biography || (attrs as any).biography,
     bgImage,
     seo,

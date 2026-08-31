@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import TentangHeroSection from "@/components/tentang/TentangHeroSection";
 import VisionMissionSection from "@/components/tentang/VisionMissionSection";
+import TeamSection from "@/components/tentang/TeamSection";
 import FounderSection from "@/components/home/FounderSection";
 import AboutSection from "@/components/home/AboutSection";
 import CtaSection from "@/components/home/CtaSection";
@@ -8,6 +9,7 @@ import { fetchTentangHeroData } from "@/lib/api/about-use";
 import { fetchFounderSectionData } from "@/lib/api/founder";
 import { fetchAboutSectionData } from "@/lib/api/about";
 import { fetchServicesSectionData } from "@/lib/api/services";
+import { fetchTeamSettingsData } from "@/lib/api/team";
 
 import { constructMetadata, LOCAL_BUSINESS_JSON_LD } from "@/lib/seo";
 
@@ -25,11 +27,12 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function TentangPage() {
-  const [heroData, founderData, aboutData, servicesData] = await Promise.all([
+  const [heroData, founderData, aboutData, servicesData, teamData] = await Promise.all([
     fetchTentangHeroData().catch(() => undefined),
     fetchFounderSectionData().catch(() => undefined),
     fetchAboutSectionData().catch(() => undefined),
     fetchServicesSectionData().catch(() => []),
+    fetchTeamSettingsData().catch(() => []),
   ]);
 
   return (
@@ -50,6 +53,7 @@ export default async function TentangPage() {
           title={heroData?.aboutTagline2}
         />
         <FounderSection data={founderData} useBiography={true} />
+        <TeamSection tagline={heroData?.teamTagline} members={teamData} />
         <CtaSection />
       </div>
     </>
